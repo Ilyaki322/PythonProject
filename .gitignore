@@ -1,0 +1,47 @@
+### Unity (UnityFront/PythonProject)
+UnityFront/PythonProject/[Ll]ibrary/
+UnityFront/PythonProject/[Tt]emp/
+UnityFront/PythonProject/[Oo]bj/
+UnityFront/PythonProject/[Bb]uild/
+UnityFront/PythonProject/[Bb]uilds/
+UnityFront/PythonProject/[Ll]ogs/
+UnityFront/PythonProject/[Uu]ser[Ss]ettings/
+UnityFront/PythonProject/[Mm]emoryCaptures/
+UnityFront/PythonProject/[Rr]ecordings/
+UnityFront/PythonProject/.vs/
+UnityFront/PythonProject/.idea/
+UnityFront/PythonProject/.vscode/
+UnityFront/PythonProject/*.csproj
+UnityFront/PythonProject/*.sln
+UnityFront/PythonProject/*.user
+UnityFront/PythonProject/*.unitypackage
+UnityFront/PythonProject/*.apk
+UnityFront/PythonProject/*.aab
+
+### React (Frontend/frontend)
+Frontend/frontend/node_modules/
+Frontend/frontend/build/
+Frontend/frontend/.env.local
+Frontend/frontend/.env.*.local
+Frontend/frontend/npm-debug.log*
+Frontend/frontend/yarn-debug.log*
+Frontend/frontend/yarn-error.log*
+Frontend/frontend/.DS_Store
+
+### Flask (Backend/flaskProject)
+Backend/flaskProject/__pycache__/
+Backend/flaskProject/*.py[cod]
+Backend/flaskProject/env/
+Backend/flaskProject/venv/
+Backend/flaskProject/.env
+Backend/flaskProject/.flaskenv
+Backend/flaskProject/instance/
+Backend/flaskProject/tmp/
+Backend/flaskProject/logs/
+Backend/flaskProject/*.log
+Backend/flaskProject/.vscode/
+Backend/flaskProject/.idea/
+Backend/flaskProject/session/
+
+### Global
+.DS_Store
