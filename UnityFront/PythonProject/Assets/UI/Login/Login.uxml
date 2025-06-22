@@ -1,0 +1,28 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Login/Input.uss?fileID=7433441132597879392&amp;guid=3a43296ebf9a4714ab0890c735dd0056&amp;type=3#Input" />
+    <engine:VisualElement name="Container" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0);">
+        <engine:VisualElement name="Login" enabled="true" style="flex-grow: 1; flex-wrap: nowrap; flex-direction: column; width: 1737px; position: absolute; flex-basis: auto; align-items: center; visibility: visible; display: flex;">
+            <engine:Label text="Login" style="width: auto; font-size: 60px; color: rgb(5, 0, 255); padding-bottom: 30px;" />
+            <engine:Label name="LoginError" class="error" style="display: none; -unity-text-align: lower-left; white-space: normal; text-overflow: ellipsis; align-self: flex-start; align-items: auto; justify-content: space-evenly; align-content: auto; left: 585px; flex-direction: column; top: -5px;" />
+            <engine:Label name="RegSuccess" text="Registration Succesful" class="error" style="display: none; -unity-text-align: lower-left; white-space: normal; text-overflow: ellipsis; align-self: flex-start; align-items: auto; justify-content: space-evenly; align-content: auto; left: 585px; flex-direction: column; top: -5px; color: rgb(26, 255, 0);" />
+            <engine:TextField placeholder-text="Username" enabled="true" focusable="true" name="UsernameField" readonly="false" class="input" style="font-size: 25px;" />
+            <engine:TextField placeholder-text="password" name="PasswordField" focusable="true" password="true" class="input" style="font-size: 25px;" />
+            <engine:Button text="Login&#10;" name="LoginButton" selectable="true" focusable="true" style="width: 100px; height: 60px; font-size: 25px; background-color: rgb(115, 120, 236);" />
+            <engine:VisualElement style="flex-grow: 1; flex-direction: row;">
+                <engine:Label text="Not registered yet? " style="width: auto; height: auto; font-size: 20px; background-image: none;" />
+                <engine:Button text="Register here" name="GoToRegisterButton" style="font-size: 20px; background-color: rgba(140, 140, 140, 0); margin-top: -2px; margin-left: -12px; border-left-color: rgba(106, 106, 106, 0); border-right-color: rgba(106, 106, 106, 0); border-top-color: rgba(106, 106, 106, 0); border-bottom-color: rgba(106, 106, 106, 0); color: rgb(0, 80, 185); top: -1px; left: 0;" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement name="Register" enabled="true" style="flex-grow: 1; flex-wrap: nowrap; flex-direction: column; width: 1737px; position: absolute; flex-basis: auto; align-items: center; display: none;">
+            <engine:Button text="Back" name="BackButton" style="width: 120px; height: 60px; font-size: 25px; left: -235px; top: -15px;" />
+            <engine:Label text="Registration&#10;" style="font-size: 60px; padding-bottom: 30px; color: rgb(7, 0, 255);" />
+            <engine:TextField placeholder-text="Username" enabled="true" focusable="true" name="UserRegisterField" readonly="false" class="input" style="font-size: 25px;" />
+            <engine:Label name="UsernameError" triple-click-selects-line="true" class="error" style="display: none; align-self: flex-start; left: 585px;" />
+            <engine:TextField placeholder-text="Email" enabled="true" focusable="true" name="EmailRegisterField" readonly="false" class="input" style="font-size: 25px;" />
+            <engine:Label name="EmailError" class="error" style="display: none; left: 585px; align-self: flex-start;" />
+            <engine:TextField placeholder-text="password" name="PasswordRegisterField" focusable="true" password="true" class="input" style="font-size: 25px;" />
+            <engine:Label name="PasswordError" class="error" style="display: none; align-items: flex-start; left: 585px; -unity-text-align: middle-left; white-space: pre; align-self: flex-start;" />
+            <engine:Button text="Register&#10;" name="RegisterButton" style="width: 120px; height: 60px; font-size: 25px; background-color: rgb(115, 120, 236); top: 25px;" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>
