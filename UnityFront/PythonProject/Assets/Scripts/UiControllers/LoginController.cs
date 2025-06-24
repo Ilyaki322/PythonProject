@@ -7,6 +7,7 @@ public class LoginController : MonoBehaviour
     private UIDocument m_document;
     private VisualElement m_loginElement;
     private VisualElement m_registerElement;
+    private VisualElement m_characterCreation;
 
     private TextField m_loginUsernameField;
     private TextField m_loginPasswordField;
@@ -26,15 +27,21 @@ public class LoginController : MonoBehaviour
     private Button m_registerButton;
     private Button m_backButton;
 
+    private CharacterApi m_characterApi;
+    private CharacterSelectionController m_characterSelectionController;
 
     private void Awake()
     {
+        m_characterApi = GetComponent<CharacterApi>();
+        m_characterSelectionController = GetComponent<CharacterSelectionController>();
+
         m_document = GetComponent<UIDocument>();
         var root = m_document.rootVisualElement;
 
         // Get main UI sections
         m_loginElement = root.Q<VisualElement>("Login");
         m_registerElement = root.Q<VisualElement>("Register");
+        m_characterCreation = root.Q<VisualElement>("CharacterSelectionContainer");
 
         // Login fields
         m_loginUsernameField = root.Q<TextField>("UsernameField");
@@ -82,6 +89,14 @@ public class LoginController : MonoBehaviour
         m_registerElement.style.display = DisplayStyle.Flex;
     }
 
+    private void showSelection(string json)
+    {
+        m_loginElement.style.display = DisplayStyle.None;
+        m_registerElement.style.display = DisplayStyle.None;
+        m_characterCreation.style.display = DisplayStyle.Flex;
+        m_characterSelectionController.LoadCharacters(json);
+    }
+
 
     #region button events
     private void OnLoginClicked()
@@ -98,7 +113,11 @@ public class LoginController : MonoBehaviour
             },
             (string text) =>
             {
-                Debug.Log(text);
+                m_characterApi.setToken(text);
+                StartCoroutine(m_characterApi.GetCharacters((json) =>
+                {
+                    showSelection(json);
+                }));
             }
         ));
     }

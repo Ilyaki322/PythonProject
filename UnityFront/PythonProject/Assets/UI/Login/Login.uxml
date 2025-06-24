@@ -1,6 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Login/Input.uss?fileID=7433441132597879392&amp;guid=3a43296ebf9a4714ab0890c735dd0056&amp;type=3#Input" />
-    <engine:VisualElement name="LoginContainer" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); display: none;">
+    <engine:VisualElement name="LoginContainer" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); display: flex;">
         <engine:VisualElement name="Login" enabled="true" style="flex-grow: 1; flex-wrap: nowrap; flex-direction: column; width: 1737px; position: absolute; flex-basis: auto; align-items: center; visibility: visible; display: flex;">
             <engine:Label text="Login" style="width: auto; font-size: 60px; color: rgb(5, 0, 255); padding-bottom: 30px;" />
             <engine:Label name="LoginError" class="error" style="display: none; -unity-text-align: lower-left; white-space: normal; text-overflow: ellipsis; align-self: flex-start; align-items: auto; justify-content: space-evenly; align-content: auto; left: 585px; flex-direction: column; top: -5px;" />
@@ -25,7 +25,7 @@
             <engine:Button text="Register&#10;" name="RegisterButton" style="width: 120px; height: 60px; font-size: 25px; background-color: rgb(115, 120, 236); top: 25px;" />
         </engine:VisualElement>
     </engine:VisualElement>
-    <engine:VisualElement name="CharacterSelectionContainer" style="justify-content: space-between; align-items: flex-start; display: flex;">
+    <engine:VisualElement name="CharacterSelectionContainer" style="justify-content: space-between; align-items: flex-start; display: none;">
         <engine:ListView item-template="project://database/Assets/UI/CharacterSelection/SelectionEntry.uxml?fileID=9197481963319205126&amp;guid=34af50a393baa79498d346627221da9a&amp;type=3#SelectionEntry" name="CharacterList" header-title="Characters" style="flex-basis: initial; flex-shrink: initial;" />
     </engine:VisualElement>
     <engine:VisualElement name="CharacterCreation" style="flex-direction: row; height: 100%; align-items: stretch; justify-content: flex-start; align-content: auto; flex-grow: 1; display: none;">

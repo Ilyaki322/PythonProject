@@ -19,8 +19,11 @@ public class CharacterSelectionController : MonoBehaviour
 
     private int lastClickedIndex = 0;
 
+    private CharacterApi m_characterApi;
+
     private void Awake()
     {
+        m_characterApi = GetComponent<CharacterApi>();
         m_document = GetComponent<UIDocument>();
         var root = m_document.rootVisualElement;
 
@@ -29,9 +32,24 @@ public class CharacterSelectionController : MonoBehaviour
         m_charList = root.Q<ListView>("CharacterList");
 
         m_dummy.SetActive(false);
+        m_charList.selectionChanged += onCharacterClick;
+    }
+
+    public void LoadCharacters(string json)
+    {
+        CharacterListWrapper wrapper = JsonUtility.FromJson<CharacterListWrapper>(json);
+        if (wrapper.count > 5) wrapper.count = 5;
+        if (wrapper.count > 0)
+        {
+            m_dummy.SetActive(true);
+            m_creator.Generate(wrapper.characters[0]);
+        }
+        for (int i = 0; i < wrapper.count; i++)
+        {
+            m_characterList[i] = wrapper.characters[i];
+        }
 
         testInit();
-        m_charList.selectionChanged += onCharacterClick;
     }
 
     private void testInit()
@@ -80,6 +98,7 @@ public class CharacterSelectionController : MonoBehaviour
 
     public void Save(CharacterDTO c)
     {
+        StartCoroutine(m_characterApi.AddCharacter(c));
         m_characterList[lastClickedIndex] = c;
 
         m_selectionElement.style.display = DisplayStyle.Flex;
@@ -87,5 +106,12 @@ public class CharacterSelectionController : MonoBehaviour
         m_dummy.SetActive(true);
         m_creator.Generate(m_characterList[lastClickedIndex]);
         m_charList.RefreshItems();
+    }
+
+    [System.Serializable]
+    public class CharacterListWrapper
+    {
+        public int count;
+        public List<CharacterDTO> characters;
     }
 }
