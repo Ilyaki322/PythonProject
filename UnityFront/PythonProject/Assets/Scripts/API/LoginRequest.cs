@@ -21,7 +21,8 @@ public class LoginRequest
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            onSuccuess(request.downloadHandler.text);
+            LoginResponse resp = JsonUtility.FromJson<LoginResponse>(request.downloadHandler.text);
+            onSuccuess(resp.token);
         }
         else
         {
@@ -34,5 +35,12 @@ public class LoginRequest
     {
         public string username;
         public string password;
+    }
+
+    [System.Serializable]
+    public class LoginResponse
+    {
+        public string message;
+        public string token;
     }
 }

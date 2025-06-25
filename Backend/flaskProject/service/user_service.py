@@ -10,7 +10,7 @@ def authenticate_user(username: str, password: str):
 
     user = User.query.filter_by(username=username).first()
     if user and bcrypt.check_password_hash(user.password, password):
-        return {'status': 'success', 'message': 'Login successful'}
+        return {'status': 'success', 'message': 'Login successful', 'user_id': user.id}
 
     return {'status': 'error', 'message': 'Wrong username or password'}
 
