@@ -2,21 +2,6 @@ from db import db
 
 
 class Character(db.Model):
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'level': self.level,
-            'hair': self.hair,
-            'helmet': self.helmet,
-            'beard': self.beard,
-            'armor': self.armor,
-            'pants': self.pants,
-            'weapon': self.weapon,
-            'back': self.back,
-            'user_id': self.user_id
-        }
-
     __tablename__ = 'characters'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -33,3 +18,30 @@ class Character(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', back_populates='characters')
+
+    inventory = db.relationship("CharacterInventory", back_populates="character", cascade="all, delete-orphan")
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'level': self.level,
+            'hair': self.hair,
+            'helmet': self.helmet,
+            'beard': self.beard,
+            'armor': self.armor,
+            'pants': self.pants,
+            'weapon': self.weapon,
+            'back': self.back,
+            'user_id': self.user_id,
+        }
+
+    def get_inventory_dict(self):
+        return [
+            {
+                'item': entry.item.to_dict(),
+                'count': entry.count,
+                'index': entry.index
+            }
+            for entry in self.inventory
+        ]
