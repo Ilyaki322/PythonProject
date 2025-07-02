@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.Port;
 
 public class InventoryController
 {
@@ -80,6 +79,9 @@ public class InventoryController
         IEnumerable<ItemDetails> itemDetails;
         int capacity = 20;
 
+        bool fromAPI = false;
+        InventoryApi inventoryApi;
+
         public Builder(InventoryView view)
         {
             this.view = view;
@@ -91,6 +93,13 @@ public class InventoryController
             return this;
         }
 
+        public Builder WithApi(InventoryApi inventoryApi)
+        {
+            this.inventoryApi = inventoryApi;
+            fromAPI = true;
+            return this;
+        }
+
         public Builder WithCapacity(int cap)
         {
             capacity = cap;
@@ -99,10 +108,19 @@ public class InventoryController
 
         public InventoryController Build()
         {
-            InventoryModel model = itemDetails != null
+            InventoryModel model;
+
+            if (fromAPI)
+            {
+                model = new InventoryModel(capacity, inventoryApi);
+            }
+            else
+            {
+                model = itemDetails != null
                 ? new InventoryModel(itemDetails, capacity)
                 : new InventoryModel(Array.Empty<ItemDetails>(), capacity);
-
+            }
+            
             return new InventoryController(model, view, capacity);
         }
     }

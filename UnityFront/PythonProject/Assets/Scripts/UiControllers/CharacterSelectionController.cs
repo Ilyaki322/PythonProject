@@ -12,27 +12,34 @@ public class CharacterSelectionController : MonoBehaviour
 
     [SerializeField] private GameObject m_dummy;
     [SerializeField] private CharacterCreator m_creator;
+    [SerializeField] private Inventory m_invetory;
 
     private ListView m_charList;
+    private Button m_playButton;
 
     private CharacterDTO[] m_characterList = new CharacterDTO[5];
 
     private int lastClickedIndex = 0;
 
     private CharacterApi m_characterApi;
+    private InventoryApi m_invetoryApi;
 
     private void Awake()
     {
         m_characterApi = GetComponent<CharacterApi>();
+        m_invetoryApi = GetComponent<InventoryApi>();
+
         m_document = GetComponent<UIDocument>();
         var root = m_document.rootVisualElement;
 
         m_selectionElement = root.Q<VisualElement>("CharacterSelectionContainer");
         m_creationElement = root.Q<VisualElement>("CharacterCreation");
         m_charList = root.Q<ListView>("CharacterList");
+        m_playButton = root.Q<Button>("PlayButton");
 
         m_dummy.SetActive(false);
         m_charList.selectionChanged += onCharacterClick;
+        m_playButton.clicked += OnPlayClicked;
     }
 
     public void LoadCharacters(string json)
@@ -91,9 +98,15 @@ public class CharacterSelectionController : MonoBehaviour
         }
         else
         {
+            m_invetoryApi.setCharID(selectedChar.id);
             m_creator.Generate(selectedChar);
         }
         m_dummy.SetActive(true);
+    }
+
+    private void OnPlayClicked()
+    {
+        m_invetory.LoadInventory(m_invetoryApi);
     }
 
     public void Save(CharacterDTO c)

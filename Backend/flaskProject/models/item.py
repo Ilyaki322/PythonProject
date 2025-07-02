@@ -16,5 +16,4 @@ class Item(db.Model):
             'id': self.id,
             'name': self.name,
             'description': self.description,
-            'icon': base64.b64encode(self.icon).decode('utf-8') if self.icon else None,
         }

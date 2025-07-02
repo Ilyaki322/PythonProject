@@ -13,8 +13,10 @@ def update_items_route():
 
 
 @inventory_route.route('/get', methods=['GET'])
-@jwt_required
+@jwt_required()
 def get_inventory():
-    data = request.get_json()
-    return get_char_inventory(data.get("char_id"))
+    char_id = request.headers.get('CharID')
+    if not char_id:
+        return jsonify({"error": "CharID missing"}), 400
+    return get_char_inventory(char_id)
 

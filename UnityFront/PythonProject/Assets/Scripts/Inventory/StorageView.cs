@@ -21,7 +21,18 @@ public abstract class StorageView : MonoBehaviour
 
     public event Action<Slot, Slot> OnDrop;
 
-    void Start()
+    //void Start()
+    //{
+    //    m_ghostIcon.RegisterCallback<PointerMoveEvent>(OnPointerMove);
+    //    m_ghostIcon.RegisterCallback<PointerUpEvent>(OnPointerUp);
+
+    //    foreach (Slot slot in Slots)
+    //    {
+    //        slot.OnStartDrag += OnPointerDown;
+    //    }
+    //}
+
+    public void InitView()
     {
         m_ghostIcon.RegisterCallback<PointerMoveEvent>(OnPointerMove);
         m_ghostIcon.RegisterCallback<PointerUpEvent>(OnPointerUp);

@@ -28,11 +28,14 @@ public class LoginController : MonoBehaviour
     private Button m_backButton;
 
     private CharacterApi m_characterApi;
+    private InventoryApi m_invetoryApi;
+
     private CharacterSelectionController m_characterSelectionController;
 
     private void Awake()
     {
         m_characterApi = GetComponent<CharacterApi>();
+        m_invetoryApi = GetComponent<InventoryApi>();
         m_characterSelectionController = GetComponent<CharacterSelectionController>();
 
         m_document = GetComponent<UIDocument>();
@@ -114,6 +117,7 @@ public class LoginController : MonoBehaviour
             (string text) =>
             {
                 m_characterApi.setToken(text);
+                m_invetoryApi.setToken(text);
                 StartCoroutine(m_characterApi.GetCharacters((json) =>
                 {
                     showSelection(json);

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -9,11 +10,13 @@ public class Inventory : MonoBehaviour
 
     InventoryController m_controller;
 
-    private void Awake()
+    public void LoadInventory(InventoryApi api)
     {
         m_controller = new InventoryController.Builder(m_view)
-            .WithStartingItems(m_startingItems)
+            .WithApi(api)
             .WithCapacity(m_capacity)
             .Build();
+
+        m_view.InitView();
     }
 }
