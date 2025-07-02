@@ -4,6 +4,7 @@ using UnityEngine;
 [Serializable]
 public class CharacterDTO
 {
+    public int id = -1;
     public string name = "empty";
     public int level = 1;
 

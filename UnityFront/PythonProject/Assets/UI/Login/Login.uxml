@@ -25,8 +25,9 @@
             <engine:Button text="Register&#10;" name="RegisterButton" style="width: 120px; height: 60px; font-size: 25px; background-color: rgb(115, 120, 236); top: 25px;" />
         </engine:VisualElement>
     </engine:VisualElement>
-    <engine:VisualElement name="CharacterSelectionContainer" style="justify-content: space-between; align-items: flex-start; display: none;">
+    <engine:VisualElement name="CharacterSelectionContainer" style="justify-content: space-between; align-items: flex-start; display: none; flex-grow: 1;">
         <engine:ListView item-template="project://database/Assets/UI/CharacterSelection/SelectionEntry.uxml?fileID=9197481963319205126&amp;guid=34af50a393baa79498d346627221da9a&amp;type=3#SelectionEntry" name="CharacterList" header-title="Characters" style="flex-basis: initial; flex-shrink: initial;" />
+        <engine:Button text="Play" name="PlayButton" style="background-color: rgb(212, 226, 14); align-items: auto; justify-content: flex-start; align-self: center; align-content: auto; margin-bottom: 40px; font-size: 80px; display: flex;" />
     </engine:VisualElement>
     <engine:VisualElement name="CharacterCreation" style="flex-direction: row; height: 100%; align-items: stretch; justify-content: flex-start; align-content: auto; flex-grow: 1; display: none;">
         <engine:VisualElement name="ButtonsContainer" style="padding-left: 30px; left: 0;">
