@@ -5,13 +5,10 @@ from routes.login_routes import login_route
 from routes.char_selection_routes import selection_route
 from routes.inventory_routes import inventory_route
 from flask_jwt_extended import JWTManager
-
+from config import DevConfig
+from routes.oauth_routes import oauth_bp
 app = Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin:Aa123456@localhost:5433/pyproj'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-app.config["JWT_SECRET_KEY"] = "wellwellwell322"
+app.config.from_object(DevConfig)
 
 jwt = JWTManager(app)
 
@@ -20,6 +17,7 @@ bcrypt.init_app(app)
 
 app.register_blueprint(selection_route, url_prefix='/characters')
 app.register_blueprint(login_route)
+app.register_blueprint(oauth_bp, url_prefix='/login')
 app.register_blueprint(inventory_route, url_prefix='/inventory')
 
 if __name__ == '__main__':

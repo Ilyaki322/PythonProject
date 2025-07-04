@@ -1,5 +1,8 @@
+using System;
+using System.Collections;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UIElements;
 
 public class LoginController : MonoBehaviour
@@ -23,6 +26,7 @@ public class LoginController : MonoBehaviour
     private Label m_regSuccess;
 
     private Button m_loginButton;
+    private Button m_googleLoginBtn;
     private Button m_goToRegisterButton;
     private Button m_registerButton;
     private Button m_backButton;
@@ -31,6 +35,8 @@ public class LoginController : MonoBehaviour
     private InventoryApi m_invetoryApi;
 
     private CharacterSelectionController m_characterSelectionController;
+
+    private string m_oauthState; // Used to track the OAuth state for Google login
 
     private void Awake()
     {
@@ -63,6 +69,8 @@ public class LoginController : MonoBehaviour
 
         // Buttons
         m_loginButton = root.Q<Button>("LoginButton");
+        m_googleLoginBtn = root.Q<Button>("GoogleLogin");
+
         m_registerButton = root.Q<Button>("RegisterButton");
         m_backButton = root.Q<Button>("BackButton");
         m_goToRegisterButton = root.Q<Button>("GoToRegisterButton");
@@ -72,9 +80,49 @@ public class LoginController : MonoBehaviour
         m_registerButton.clicked += OnRegisterClicked;
         m_backButton.clicked += OnBackClicked;
         m_goToRegisterButton.clicked += OnToRegister;
+        m_googleLoginBtn.clicked += OnGoogleLoginClicked;
 
         // Initially show login UI
         showLoginUI();
+    }
+
+    private void OnGoogleLoginClicked()
+    {
+        m_oauthState = Guid.NewGuid().ToString();
+        Application.OpenURL($"http://localhost:5000/login/google?state={m_oauthState}");
+
+        //Start polling for the JWT
+        StartCoroutine(PollForToken(m_oauthState));
+    }
+
+    private IEnumerator PollForToken(string state)
+    {
+        while (true)
+        {
+            using var req = UnityWebRequest.Get($"http://localhost:5000/login/status?state={state}");
+            yield return req.SendWebRequest();
+
+            if (req.result == UnityWebRequest.Result.Success &&
+                !string.IsNullOrEmpty(req.downloadHandler.text))
+            {
+                // got the JWT
+                var resp = JsonUtility.FromJson<TokenResponse>(req.downloadHandler.text);
+
+                m_characterApi.setToken(resp.token);
+                m_invetoryApi.setToken(resp.token);
+                StartCoroutine(m_characterApi.GetCharacters(json => showSelection(json)));
+                yield break;  // stop polling
+            }
+
+            // wait before next try
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    [Serializable]
+    private class TokenResponse
+    {
+        public string token;
     }
 
     private void showLoginUI(DisplayStyle regSucess = DisplayStyle.None)
@@ -179,12 +227,12 @@ public class LoginController : MonoBehaviour
         if (email == "")
         {
             ShowRegisterError("email", "this field is required");
-            noError =  false;
+            noError = false;
         }
         if (pass == "")
         {
             ShowRegisterError("password", "this field is required");
-            noError =  false;
+            noError = false;
         }
 
         return noError;
@@ -198,7 +246,7 @@ public class LoginController : MonoBehaviour
         if (!Regex.IsMatch(username, @"^[a-zA-Z]{4,10}$"))
         {
             ShowRegisterError("username", "Invalid username. Must be 4-10 letters (a-z, A-Z) only.");
-            noError =  false;
+            noError = false;
         }
 
         // Email: basic email format validation
@@ -212,7 +260,7 @@ public class LoginController : MonoBehaviour
         if (!Regex.IsMatch(password, @"^[a-zA-Z0-9]{5,}$"))
         {
             ShowRegisterError("password", "Invalid password. Must be at least 5 characters (letters and digits only).");
-            noError =  false;
+            noError = false;
         }
 
         return noError;
