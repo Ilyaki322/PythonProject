@@ -10,3 +10,10 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
 
     characters = db.relationship('Character', back_populates='user', cascade='all, delete-orphan')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+        }

@@ -7,7 +7,10 @@ from routes.inventory_routes import inventory_route
 from flask_jwt_extended import JWTManager
 from config import DevConfig
 from routes.oauth_routes import oauth_bp
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:3000"])
 app.config.from_object(DevConfig)
 
 jwt = JWTManager(app)

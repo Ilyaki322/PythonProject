@@ -20,3 +20,9 @@ def add_char():
     data = request.get_json()
     return ac(data, user_id)
 
+
+@selection_route.route('/<user_id>', methods=['GET'])
+def get_character_by_id(user_id):
+    return gt(user_id)
+
+

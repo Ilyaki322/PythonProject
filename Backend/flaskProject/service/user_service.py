@@ -1,5 +1,8 @@
 import re
 import os
+
+from flask import jsonify
+
 from db import db, bcrypt
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
@@ -69,3 +72,10 @@ def register_user(username: str, password: str, email: str):
     db.session.commit()
 
     return {'success': True, 'message': 'User registered successfully'}
+
+
+def get_users():
+    users = User.query.all()
+    return jsonify({
+        "users": [u.to_dict() for u in users]
+    })
