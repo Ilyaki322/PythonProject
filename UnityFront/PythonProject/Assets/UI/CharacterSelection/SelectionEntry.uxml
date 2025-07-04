@@ -1,5 +1,5 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement name="Container" style="flex-direction: column; align-items: center; justify-content: space-evenly; align-self: center;">
+    <engine:VisualElement name="Container" style="flex-direction: column; align-items: center; justify-content: space-evenly; align-self: center; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
         <engine:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(53, 24, 24);">
             <engine:Label text="Level" name="LevelLabel" style="font-size: 20px; color: rgb(255, 255, 255);" />
             <engine:Label text="Name&#10;" name="NameLabel" style="font-size: 20px; color: rgb(255, 255, 255); -unity-text-align: upper-center; align-items: center; justify-content: flex-start;" />

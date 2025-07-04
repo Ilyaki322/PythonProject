@@ -1,7 +1,38 @@
-from models.user import User
 import re
-from db import db
-from db import bcrypt
+import os
+from db import db, bcrypt
+from google.oauth2 import id_token
+from google.auth.transport import requests as google_requests
+from models.user import User
+
+
+def authenticate_or_create_google_user(id_token_str: str):
+    try:
+        idinfo = id_token.verify_oauth2_token(
+            id_token_str,
+            google_requests.Request(),
+            os.getenv("GOOGLE_CLIENT_ID")
+        )
+    except ValueError:
+        return {"success": False, "message": "Invalid Google token"}
+
+    email = idinfo.get("email")
+    if not email:
+        return {"success": False, "message": "Google token missing email"}
+
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        # auto-generate a password; they’ll log in only via Google
+        random_pw = bcrypt.generate_password_hash(os.urandom(16)).decode()
+        user = User(
+            username=email.split("@")[0],
+            email=email,
+            password=random_pw
+        )
+        db.session.add(user)
+        db.session.commit()
+
+    return {"success": True, "user_id": user.id}
 
 
 def authenticate_user(username: str, password: str):
