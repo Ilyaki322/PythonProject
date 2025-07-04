@@ -1,0 +1,77 @@
+/* CharacterCreationPage.uss */
+
+.creation-panel {
+  flex-direction: row;
+  height: 100%;
+  align-items: stretch;
+  justify-content: flex-start;
+  flex-grow: 1;
+  display: none; /* toggled in code */
+}
+
+.buttons-container {
+  padding-left: 30px;
+}
+
+.slot-row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-grow: 1;
+  margin-bottom: 16px;
+}
+
+.slot-button {
+  background-color: transparent;
+  width: 59px;
+  height: 28px;
+}
+
+.arrow-left {
+  /* left-arrow image */
+  background-image: url("project://database/Assets/Sprites/Arrow2.png#Arrow2_0");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.arrow-right {
+  /* right-arrow image */
+  background-image: url("project://database/Assets/Sprites/Arrow.png#Arrow_0");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.slot-label {
+  font-size: 25px;
+  margin: 0 10px;
+}
+
+.create-panel {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  padding-right: 100px;
+}
+
+.create-header {
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+.create-row {
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.btn-create {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.input-name {
+  font-size: 40px;
+  width: 250px;
+  height: 56px;
+  margin-top: 10px;
+}

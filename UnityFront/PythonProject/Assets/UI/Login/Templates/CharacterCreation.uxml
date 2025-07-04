@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:engine="UnityEngine.UIElements"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd">
+
+  <!-- Character Creation Page -->
+  <Style src="project://database/Assets/UI/Login/Uss/CharacterCreation.uss#CharacterCreation" />
+
+  <engine:VisualElement name="CharacterCreation" class="creation-panel">
+    <engine:VisualElement name="ButtonsContainer" class="buttons-container">
+
+      <!-- Slot rows -->
+      <engine:VisualElement class="slot-row">
+        <engine:Button name="HelmetLeftButton" class="slot-button arrow-left" />
+        <engine:Label class="slot-label" text="Helmet" />
+        <engine:Button name="HelmetRightButton" class="slot-button arrow-right" />
+      </engine:VisualElement>
+
+      <engine:VisualElement class="slot-row">
+        <engine:Button name="HairLeftButton" class="slot-button arrow-left" />
+        <engine:Label class="slot-label" text="Hair" />
+        <engine:Button name="HairRightButton" class="slot-button arrow-right" />
+      </engine:VisualElement>
+
+      <engine:VisualElement class="slot-row">
+        <engine:Button name="BeardLeftButton" class="slot-button arrow-left" />
+        <engine:Label class="slot-label" text="Beard" />
+        <engine:Button name="BeardRightButton" class="slot-button arrow-right" />
+      </engine:VisualElement>
+
+      <engine:VisualElement class="slot-row">
+        <engine:Button name="ArmorLeftButton" class="slot-button arrow-left" />
+        <engine:Label class="slot-label" text="Armor" />
+        <engine:Button name="ArmorRightButton" class="slot-button arrow-right" />
+      </engine:VisualElement>
+
+      <engine:VisualElement class="slot-row">
+        <engine:Button name="PantsLeftButton" class="slot-button arrow-left" />
+        <engine:Label class="slot-label" text="Pants" />
+        <engine:Button name="PantsRightButton" class="slot-button arrow-right" />
+      </engine:VisualElement>
+
+      <engine:VisualElement class="slot-row">
+        <engine:Button name="WeaponLeftButton" class="slot-button arrow-left" />
+        <engine:Label class="slot-label" text="Weapon" />
+        <engine:Button name="WeaponRightButton" class="slot-button arrow-right" />
+      </engine:VisualElement>
+
+      <engine:VisualElement class="slot-row">
+        <engine:Button name="BackLeftButton" class="slot-button arrow-left" />
+        <engine:Label class="slot-label" text="Back" />
+        <engine:Button name="BackRightButton" class="slot-button arrow-right" />
+      </engine:VisualElement>
+
+    </engine:VisualElement>
+
+    <!-- Creation panel -->
+    <engine:VisualElement class="create-panel">
+      <engine:Label class="create-header" text="New Character" />
+      <engine:VisualElement class="create-row">
+        <engine:Button name="CreateButton" text="Create" class="btn-create" />
+        <engine:TextField name="CharacterNameField" placeholder-text="Enter name" class="input-name" />
+      </engine:VisualElement>
+    </engine:VisualElement>
+  </engine:VisualElement>
+
+</engine:UXML>

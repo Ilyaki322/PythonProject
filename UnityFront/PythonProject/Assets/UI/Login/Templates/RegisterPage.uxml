@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:engine="UnityEngine.UIElements"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd">
+
+    <Style src="project://database/Assets/UI/Login/Uss/RegistrationPage.uss#RegistrationPage" />
+
+  <!-- Registration Page Template -->
+  <engine:VisualElement name="Register" class="registration-panel">
+    <engine:Label text="Registration" class="registration-header" />
+
+    <!-- Username -->
+    <engine:TextField
+      name="UserRegisterField"
+      placeholder-text="Username"
+      class="input-field" />
+    <engine:Label name="UsernameError" class="message error" />
+
+    <!-- Email -->
+    <engine:TextField
+      name="EmailRegisterField"
+      placeholder-text="Email"
+      class="input-field" />
+    <engine:Label name="EmailError" class="message error" />
+
+    <!-- Password -->
+    <engine:TextField
+      name="PasswordRegisterField"
+      placeholder-text="Password"
+      password="true"
+      class="input-field" />
+    <engine:Label name="PasswordError" class="message error" />
+
+    <!-- Register Button -->
+    <engine:Button name="RegisterButton" text="Register" class="btn-primary" />
+    <engine:Button name="BackButton" text="Back" class="btn-primary" />
+
+  </engine:VisualElement>
+
+</engine:UXML>

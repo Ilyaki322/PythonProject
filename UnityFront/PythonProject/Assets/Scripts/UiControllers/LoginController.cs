@@ -27,7 +27,7 @@ public class LoginController : MonoBehaviour
 
     private Button m_loginButton;
     private Button m_googleLoginBtn;
-    private Button m_goToRegisterButton;
+    private Label m_goToRegisterLink;
     private Button m_registerButton;
     private Button m_backButton;
 
@@ -73,13 +73,13 @@ public class LoginController : MonoBehaviour
 
         m_registerButton = root.Q<Button>("RegisterButton");
         m_backButton = root.Q<Button>("BackButton");
-        m_goToRegisterButton = root.Q<Button>("GoToRegisterButton");
+        m_goToRegisterLink = root.Q<Label>("GoToRegisterButton");
 
         // Register events
         m_loginButton.clicked += OnLoginClicked;
         m_registerButton.clicked += OnRegisterClicked;
         m_backButton.clicked += OnBackClicked;
-        m_goToRegisterButton.clicked += OnToRegister;
+        m_goToRegisterLink.RegisterCallback<ClickEvent>(evt => OnToRegister());
         m_googleLoginBtn.clicked += OnGoogleLoginClicked;
 
         // Initially show login UI

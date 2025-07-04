@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:engine="UnityEngine.UIElements"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd"
+>
+    <Style src="project://database/Assets/UI/Login/Uss/LoginPage.uss" />
+    
+    <Template name="Login" src="project://database/Assets/UI/Login/Templates/LoginPage.uxml#Login" />
+    <Template name="Register" src="project://database/Assets/UI/Login/Templates/RegisterPage.uxml#Register" />
+    <Template name="CharacterSelection" src="project://database/Assets/UI/Login/Templates/CharacterSelection.uxml#CharacterSelection" />
+    <Template name="CharacterCreation" src="project://database/Assets/UI/Login/Templates/CharacterCreation.uxml#CharacterCreation" />
+
+    <engine:VisualElement name="Root" class="page-container">
+        <engine:Instance template="Login" />
+        <engine:Instance template="Register"/>
+        <engine:Instance template="CharacterSelection"/>
+        <engine:Instance template="CharacterCreation"/>
+    </engine:VisualElement>
+
+</engine:UXML>

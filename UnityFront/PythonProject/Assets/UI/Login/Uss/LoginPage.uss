@@ -1,0 +1,123 @@
+﻿/* === Full-screen black background & centering === */
+.page-container {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.login-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  padding: 30px;
+  background-color: #222;
+  border-radius: 8px;
+}
+
+/* Header */
+.login-header {
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.message {
+  width: 100%;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: white;
+}
+.message.error   { color: #cc0000; display: none; }
+.message.success { color: #00aa00; display: none; }
+
+/* Input fields */
+.input-field {
+  width: 100%;
+  margin-top: 8px; margin-bottom: 8px;
+  padding: 10px;
+  font-size: 18px;
+  background-color: #333;
+  color: white;
+
+  /* explicit borders instead of shorthand */
+  border-top-width: 1px;    border-top-color: #555;
+  border-right-width: 1px;  border-right-color: #555;
+  border-bottom-width: 1px; border-bottom-color: #555;
+  border-left-width: 1px;   border-left-color: #555;
+  border-radius: 4px;
+
+  /* placeholder pseudo not supported, so you can't style placeholder text here */
+}
+
+
+.button-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+
+/* Primary login button */
+.btn-primary {
+  background-color: #7378ec;
+  color: white;
+  padding-top: 10px; padding-bottom: 10px;
+  padding-left: 20px; padding-right: 20px;
+  font-size: 18px;
+  border-radius: 4px;
+}
+
+/* Google login button */
+.btn-google {
+  display:           flex;
+  flex-direction:    row;
+  align-items:       center;
+  background-color:  #00aeff;
+  color:             white;
+  padding:           10px 20px;
+  font-size:         18px;
+  border-radius:     4px;
+}
+
+/* Google icon inside btn-google */
+.google-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  background-image:    url("/Assets/UI/Icons/google-icon.png");
+  background-repeat:   no-repeat;
+  background-size:     contain;
+}
+
+/* Register-link row (below buttons) */
+.register-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  margin-top: 16px;
+}
+.register-text {
+  color: white;
+  margin-right: 4px;
+}
+
+/* Styled Label as link instead of Button */
+.btn-link {
+  color: white;
+  font-size: 16px;
+  /* explicit bottom border instead of shorthand */
+  border-bottom-width: 1px; 
+  border-bottom-color: white;
+  padding-bottom: 2px;
+  /* -unity-text-align is supported if needed: */
+  /* -unity-text-align: center; */
+}

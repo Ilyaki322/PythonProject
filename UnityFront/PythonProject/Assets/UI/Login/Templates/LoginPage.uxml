@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:engine="UnityEngine.UIElements"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd">
+
+    <engine:VisualElement name="Login" class="login-panel">
+
+        <engine:Label text="Login" class="login-header" />
+
+        <!-- error / success messages -->
+        <engine:Label name="LoginError"   class="message error" />
+        <engine:Label name="RegSuccess"   class="message success" text="Registration Successful" />
+
+        <!-- inputs -->
+        <engine:TextField name="UsernameField" placeholder-text="Username" class="input-field" />
+        <engine:TextField name="PasswordField" placeholder-text="Password" password="true" class="input-field" />
+
+        <!-- buttons row -->
+        <engine:VisualElement class="button-row">
+          <engine:Button name="LoginButton" text="Login" class="btn-primary" />
+
+          <engine:Button name="GoogleLogin" class="btn-google">
+              <engine:VisualElement class="google-icon"/>
+              <engine:Label text="Login with Google" />
+          </engine:Button>
+        </engine:VisualElement>
+
+        <engine:VisualElement class="register-row">
+            <engine:Label text="Not registered yet?" class="register-text" />
+            <engine:Label name="GoToRegisterButton" text="Register here" class="btn-link" focusable="true" />
+        </engine:VisualElement>
+
+    </engine:VisualElement>
+</engine:UXML>
