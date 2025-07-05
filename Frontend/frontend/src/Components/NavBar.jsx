@@ -10,7 +10,12 @@ const NavBar = () => {
   return (
     <Container fluid className='bg-secondary'>
       <Row>
-        <Col className="bg-dark text-white pt-4" style={{ height: '100vh' }} >
+        <Col className="bg-dark text-white pt-3" style={{ height: '100vh' }} >
+          <Row className="justify-center mb-2">
+            <div className="text-center">
+              <h3>Admin</h3>
+            </div>
+          </Row>
           <div className="d-flex flex-column">
             <Button as={Link} to="/" variant="outline-light" className="mb-3">
               Users

@@ -1,19 +1,79 @@
-import { useState } from 'react';
+import Spinner from 'react-bootstrap/Spinner';
 import useAPI from '../CustomHooks/useAPI'
-import UserAccordion from './UserAccordion';
+import Table from 'react-bootstrap/Table';
+import IconButton from './IconButton';
+import AlertComponent from './AlertComponent';
+import { useState } from 'react';
+import UserInfo from './UserInfo';
 
 const UsersPage = () => {
+    const [data, loading, error] = useAPI('http://localhost:5000/users', 'failed to fetch users');
+    const [showUserInfo, setShowUserInfo] = useState(false);
+    const [selectedUserIndex, setSelectedUserIndex] = useState(null);
 
-    const [data, loading, error, setData, refetch] = useAPI('http://localhost:5000/users', 'failed to fetch users');
-    const [show, setShow] = useState(false);
+    function renderTable(user, index) {
+        return (
+            <tr key={index}>
+                <td>{index}</td>
+                <td>{user.username}</td>
+                <td>{user.email}</td>
+                <td>
+                    <div className="d-flex gap-2 justify-content-center">
+                        <IconButton icon="bi bi-trash-fill" className='bg-danger' Click={() => { }} />
+                        <IconButton icon="bi bi-info-circle-fill" className='bg-primary' onClick={() => {
+                            setSelectedUserIndex(index);
+                            setShowUserInfo(true);
+                        }} />
+                    </div>
+                </td>
+            </tr>);
+    }
+
+    if (error) {
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+                <AlertComponent show='true' onHide={() => { }} msg={error} />
+            </div>
+        )
+    }
+
+    if (loading) {
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+                <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+            </div>
+        );
+    }
+
+    if (showUserInfo) {
+        return (
+            <UserInfo user={data.users[selectedUserIndex]} onBack={() => setShowUserInfo(false)} />
+        )
+    }
 
     return (
-        <div>
-            {data.users?.map((user, index) => (
-                <UserAccordion key={user.id} username={user.username} email={user.email} userID={user.id} />
-            ))}
+        <div className="container-fluid d-flex flex-column" style={{ height: '100vh', overflow: 'hidden' }}>
+            <div className="table-responsive flex-grow-1" style={{ overflowY: 'auto' }}>
+                <Table striped bordered hover size="sm" className="mt-2 text-center">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                            <th>Statistics</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.users?.map((user, index) => renderTable(user, index))}
+                    </tbody>
+                </Table>
+            </div>
         </div>
     );
+
 }
 
 export default UsersPage
