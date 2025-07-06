@@ -1,6 +1,6 @@
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import Blueprint, request, jsonify
-from service.inventory_service import update_items, get_char_inventory, get_all_items
+from service.inventory_service import update_items, get_char_inventory, get_all_items, update_slot
 
 inventory_route = Blueprint('inventory_route', __name__)
 
@@ -31,3 +31,11 @@ def get_character_by_id(char_id):
 def get_all_items_route():
     return get_all_items()
 
+
+@inventory_route.route('/update_slot', methods=['PUT'])
+def update_slot_route():
+    data = request.get_json()
+    if data.get("character_id") is None or data.get("index") is None:
+        return jsonify({"error": "Missing character_id or index"}), 400
+
+    return update_slot(data)

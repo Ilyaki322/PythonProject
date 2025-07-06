@@ -26,6 +26,11 @@ const UsersPage = () => {
                         }} />
                     </div>
                 </td>
+                <td>
+                    <div className="d-flex gap-2 justify-content-center">
+                        <IconButton icon="bi bi-download" className='bg-warning' Click={() => { }} />
+                    </div>
+                </td>
             </tr>);
     }
 

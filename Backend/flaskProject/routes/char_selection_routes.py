@@ -2,6 +2,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import Blueprint, request, jsonify
 from service.character_service import get_characters as gt
 from service.character_service import add_character as ac
+from service.character_service import edit_character
 
 selection_route = Blueprint('selection_route', __name__)
 
@@ -26,4 +27,9 @@ def add_char():
 def get_character_by_id(user_id):
     return gt(user_id)
 
+
+@selection_route.route('/update_character', methods=['PATCH'])
+def update_character_route():
+    data = request.get_json()
+    return edit_character(data)
 

@@ -20,7 +20,7 @@ const NavBar = () => {
             <Button as={Link} to="/" variant="outline-light" className="mb-3">
               Users
             </Button>
-            <Button as={Link} to="/counter" variant="outline-light" className="mb-3">
+            <Button as={Link} to="/Items" variant="outline-light" className="mb-3">
               Items
             </Button>
             <Button as={Link} to="/About" variant="outline-light" className="mb-3">

@@ -52,3 +52,29 @@ def get_all_items():
         })
 
     return jsonify(result)
+
+
+def update_slot(data):
+    entry = CharacterInventory.query.filter_by(character_id=data['character_id'], index=data['index']).first()
+    code = 200
+
+    if entry:
+        if data['item_id'] is None:
+            db.session.delete(entry)
+        else:
+            entry.item_id = data['item_id']
+            entry.count = data['count']
+
+    else:
+        if data['item_id'] is not None:
+            new_entry = CharacterInventory(
+                character_id=data['character_id'],
+                item_id=data['item_id'],
+                count=data['count'],
+                index=data['index']
+            )
+            db.session.add(new_entry)
+            code = 201
+
+    db.session.commit()
+    return jsonify({"success": True}), code
