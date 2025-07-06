@@ -7,9 +7,10 @@ import { useState } from 'react';
 import UserInfo from './UserInfo';
 
 const UsersPage = () => {
-    const [data, loading, error] = useAPI('http://localhost:5000/users', 'failed to fetch users');
+    const [data, loading, error, setData] = useAPI('http://localhost:5000/users', 'failed to fetch users');
     const [showUserInfo, setShowUserInfo] = useState(false);
     const [selectedUserIndex, setSelectedUserIndex] = useState(null);
+    const [deleteError, setDeleteError] = useState(null);
 
     function renderTable(user, index) {
         return (
@@ -19,7 +20,7 @@ const UsersPage = () => {
                 <td>{user.email}</td>
                 <td>
                     <div className="d-flex gap-2 justify-content-center">
-                        <IconButton icon="bi bi-trash-fill" className='bg-danger' Click={() => { }} />
+                        <IconButton icon="bi bi-trash-fill" className='bg-danger' onClick={() => deleteUser(user.id)} />
                         <IconButton icon="bi bi-info-circle-fill" className='bg-primary' onClick={() => {
                             setSelectedUserIndex(index);
                             setShowUserInfo(true);
@@ -28,16 +29,41 @@ const UsersPage = () => {
                 </td>
                 <td>
                     <div className="d-flex gap-2 justify-content-center">
-                        <IconButton icon="bi bi-download" className='bg-warning' Click={() => { }} />
+                        <IconButton icon="bi bi-download" className='bg-warning' onClick={() => { }} />
                     </div>
                 </td>
             </tr>);
     }
 
-    if (error) {
+    function deleteUser(userID) {
+        fetch('/delete', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_id: userID
+            })
+        })
+            .then(res => {
+                if (!res.ok) throw new Error('Failed to Delete user');
+                return res.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    setData(prevData => ({
+                        ...prevData,
+                        users: prevData.users.filter(user => user.id !== userID)
+                    }));
+                }
+            })
+            .catch(err => {
+                setDeleteError("Failed to delete user")
+            });
+    }
+
+    if (error || deleteError) {
         return (
             <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-                <AlertComponent show='true' onHide={() => { }} msg={error} />
+                <AlertComponent show='true' onHide={() => { }} msg={error || deleteError} />
             </div>
         )
     }

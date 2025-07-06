@@ -4,8 +4,9 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { BrowserRouter, Route, Routes } from "react-router";
 import NavBar from "./Components/NavBar";
 import UsersPage from './Components/UsersPage';
-import About from './Components/About';
 import ItemsPage from './Components/ItemsPage';
+import Recover from './Components/Recover';
+import Home from './Components/Home';
 
 function App() {
 
@@ -13,9 +14,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<NavBar />}>
-          <Route path="/" element={<UsersPage />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/Users" element={<UsersPage />} />
           <Route path="/Items" element={<ItemsPage />} />
-          <Route path="/About" element={<About />} />
+          <Route path="/Recover" element={<Recover />} />
         </Route>
       </Routes>
     </BrowserRouter>

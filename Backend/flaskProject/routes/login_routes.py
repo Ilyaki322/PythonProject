@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from service.user_service import authenticate_user, register_user, get_users
+from service.user_service import authenticate_user, register_user, get_users, set_deleted
 from flask_jwt_extended import create_access_token
 
 login_route = Blueprint('login_route', __name__)
@@ -30,4 +30,21 @@ def register():
 
 @login_route.route('/users', methods=['GET'])
 def get_users_route():
-    return get_users()
+    return get_users(False)
+
+
+@login_route.route('/deleted_users', methods=['GET'])
+def get_deleted_users_route():
+    return get_users(True)
+
+
+@login_route.route('/delete', methods=['PATCH'])
+def delete_user_route():
+    data = request.get_json()
+    return set_deleted(data, True)
+
+
+@login_route.route('/recover', methods=['PATCH'])
+def recover_user_route():
+    data = request.get_json()
+    return set_deleted(data, False)

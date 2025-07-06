@@ -3,8 +3,22 @@ from models.character import Character
 from db import db
 
 
-def get_characters(user_id):
-    characters = Character.query.filter(Character.user_id == user_id).all()
+def get_characters(user_id, deleted):
+    characters = Character.query.filter(
+        Character.user_id == user_id,
+        Character.is_deleted == deleted
+    ).all()
+    return jsonify({
+        "count": len(characters),
+        "characters": [c.to_dict() for c in characters]
+    })
+
+
+def get_characters_deleted():
+    characters = Character.query.filter(
+        Character.is_deleted == True
+    ).all()
+
     return jsonify({
         "count": len(characters),
         "characters": [c.to_dict() for c in characters]
@@ -45,3 +59,17 @@ def edit_character(data):
     db.session.commit()
 
     return jsonify({"success": True, "character": character.to_dict()}), 200
+
+
+def set_delete_character(data, to_delete):
+    character = Character.query.filter_by(id=data['character_id']).first()
+
+    if not character:
+        return jsonify({"success": False}), 404
+
+    character.is_deleted = to_delete
+    db.session.commit()
+
+    return jsonify({"success": True}), 200
+
+

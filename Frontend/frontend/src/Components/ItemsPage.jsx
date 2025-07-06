@@ -6,7 +6,6 @@ import { Spinner } from "react-bootstrap";
 const ItemsPage = () => {
     const [itemData, itemLoading, itemError] = useAPI(`http://localhost:5000/inventory/items`, 'failed to fetch items');
 
-
     const renderCard = (item, index) => (
         <div key={item.id || index} className="col">
             <Card className="h-100">

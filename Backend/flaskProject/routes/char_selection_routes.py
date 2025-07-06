@@ -2,7 +2,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import Blueprint, request, jsonify
 from service.character_service import get_characters as gt
 from service.character_service import add_character as ac
-from service.character_service import edit_character
+from service.character_service import edit_character, set_delete_character, get_characters_deleted
 
 selection_route = Blueprint('selection_route', __name__)
 
@@ -11,7 +11,7 @@ selection_route = Blueprint('selection_route', __name__)
 @jwt_required()
 def get_characters():
     user_id = get_jwt_identity()
-    return gt(user_id)
+    return gt(user_id, False)
 
 
 @selection_route.route('/add', methods=['POST'])
@@ -25,11 +25,28 @@ def add_char():
 # ##### ADD AUTHORIZATION!
 @selection_route.route('/<user_id>', methods=['GET'])
 def get_character_by_id(user_id):
-    return gt(user_id)
+    return gt(user_id, False)
+
+
+@selection_route.route('/deleted', methods=['GET'])
+def get_character_by_id_deleted():
+    return get_characters_deleted()
 
 
 @selection_route.route('/update_character', methods=['PATCH'])
 def update_character_route():
     data = request.get_json()
     return edit_character(data)
+
+
+@selection_route.route('/delete_character', methods=['PATCH'])
+def delete_character_route():
+    data = request.get_json()
+    return set_delete_character(data, True)
+
+
+@selection_route.route('/recover_character', methods=['PATCH'])
+def recover_character_route():
+    data = request.get_json()
+    return set_delete_character(data, False)
 

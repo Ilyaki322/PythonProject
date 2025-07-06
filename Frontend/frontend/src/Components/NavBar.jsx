@@ -18,13 +18,16 @@ const NavBar = () => {
           </Row>
           <div className="d-flex flex-column">
             <Button as={Link} to="/" variant="outline-light" className="mb-3">
+              Home
+            </Button>
+            <Button as={Link} to="/Users" variant="outline-light" className="mb-3">
               Users
             </Button>
             <Button as={Link} to="/Items" variant="outline-light" className="mb-3">
               Items
             </Button>
-            <Button as={Link} to="/About" variant="outline-light" className="mb-3">
-              About
+            <Button as={Link} to="/Recover" variant="outline-light" className="mb-3">
+              Recover
             </Button>
           </div>
         </Col>

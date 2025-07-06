@@ -10,6 +10,8 @@ const UserInfo = ({ user, onBack }) => {
     const [charData, charLoading, charError, setCharData] = useAPI(`http://localhost:5000/characters/${user.id}`, 'failed to fetch users characters');
     const [itemData, itemLoading, itemError] = useAPI(`http://localhost:5000/inventory/items`, 'failed to fetch items');
 
+    const [deleteError, setDeleteError] = useState(null);
+
     const [editingId, setEditingId] = useState(null);
     const [editedName, setEditedName] = useState('');
     const [editedLevel, setEditedLevel] = useState(0);
@@ -22,7 +24,7 @@ const UserInfo = ({ user, onBack }) => {
                     <Card.Title className="text-center">Character #{character.id}</Card.Title>
 
                     <div className="d-flex gap-2">
-                        <IconButton icon="bi bi-trash-fill" className='bg-danger' Click={() => { }} />
+                        <IconButton icon="bi bi-trash-fill" className='bg-danger' onClick={() => deleteChar(character.id)} />
                         <IconButton icon="bi bi-pencil-fill" className='bg-warning' onClick={() => {
                             setEditingId(character.id);
                             setEditedName(character.name);
@@ -46,7 +48,7 @@ const UserInfo = ({ user, onBack }) => {
                     <Card.Title className="text-center">Character #{character.id}</Card.Title>
 
                     <div className="d-flex gap-2">
-                        <IconButton icon="bi bi-trash-fill" className='bg-danger' Click={() => { }} />
+                        <IconButton icon="bi bi-trash-fill" className='bg-danger' onClick={() => deleteChar(character.id)} />
                         <IconButton icon="bi bi-check-lg" className='bg-success' onClick={saveEdit} />
                     </div>
 
@@ -75,6 +77,32 @@ const UserInfo = ({ user, onBack }) => {
             </Card>
         );
     };
+
+    function deleteChar(charID) {
+        fetch('characters/delete_character', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                character_id: charID
+            })
+        })
+            .then(res => {
+                if (!res.ok) throw new Error('Failed to Delete character');
+                return res.json();
+            })
+            .then(data => {
+                if (data.success) {
+
+                    setCharData(prevData => ({
+                        ...charData,
+                        characters: prevData.characters.filter(char => char.id !== charID)
+                    }));
+                }
+            })
+            .catch(err => {
+                setDeleteError('Failed to Delete character')
+            });
+    }
 
     function saveEdit() {
         fetch('/characters/update_character', {
@@ -112,10 +140,10 @@ const UserInfo = ({ user, onBack }) => {
             });
     }
 
-    if (itemError || charError) {
+    if (itemError || charError || deleteError) {
         return (
             <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-                <AlertComponent show='true' onHide={() => { }} msg={"Fetching data failed."} />
+                <AlertComponent show='true' onHide={() => { }} msg={itemError || charError || deleteError} />
             </div>
         )
     }
