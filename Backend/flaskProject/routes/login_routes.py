@@ -4,6 +4,9 @@ from flask_jwt_extended import create_access_token
 
 login_route = Blueprint('login_route', __name__)
 
+ADMIN_USER = 'admin'
+ADMIN_PASSWORD = 'admin'
+
 
 @login_route.route('/login', methods=['POST'])
 def login():
@@ -15,6 +18,19 @@ def login():
         return jsonify({'message': result['message'], 'token': access_token}), 200
     else:
         return jsonify({'message': result['message']}), 400
+
+
+@login_route.route('/login_admin', methods=['POST'])
+def login_admin():
+    data = request.get_json()
+    username = data.get("username")
+    password = data.get("password")
+
+    if username == ADMIN_USER and password == ADMIN_PASSWORD:
+        access_token = create_access_token(identity='ADMIN')
+        return jsonify({'message': 'success', 'token': access_token}), 200
+
+    return jsonify({'message': 'Username or password are incorrect'}), 400
 
 
 @login_route.route('/register', methods=['POST'])

@@ -1,11 +1,21 @@
 import useAPI from "../CustomHooks/useAPI";
 import Card from 'react-bootstrap/Card';
-import AlertComponent from "./AlertComponent";
+import AlertComponent from "./UtilityComponents/AlertComponent";
 import { Spinner } from "react-bootstrap";
 
+/**
+ * A page to see all items available in the game.
+ * @returns react component.
+ */
 const ItemsPage = () => {
     const [itemData, itemLoading, itemError] = useAPI(`http://localhost:5000/inventory/items`, 'failed to fetch items');
 
+    /**
+     * Utility function to render a single bootstrap card.
+     * @param {object} item - a single item object, as gotten from db.
+     * @param {int} index - index of the item in the loop.
+     * @returns html/jsx piece.
+     */
     const renderCard = (item, index) => (
         <div key={item.id || index} className="col">
             <Card className="h-100">

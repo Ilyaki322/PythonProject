@@ -1,5 +1,6 @@
 from flask import jsonify
 from models.character import Character
+from models.user import User
 from db import db
 
 
@@ -15,13 +16,20 @@ def get_characters(user_id, deleted):
 
 
 def get_characters_deleted():
-    characters = Character.query.filter(
-        Character.is_deleted == True
-    ).all()
+    # Query deleted characters with their users in one go
+    characters = Character.query.filter(Character.is_deleted == True).all()
+
+    # Build a list of dicts with character info + username
+    character_data = []
+    for c in characters:
+        user = User.query.filter_by(id=c.user_id).first()
+        character_dict = c.to_dict()
+        character_dict['user_name'] = user.username if user else 'Unknown'
+        character_data.append(character_dict)
 
     return jsonify({
-        "count": len(characters),
-        "characters": [c.to_dict() for c in characters]
+        "count": len(character_data),
+        "characters": character_data
     })
 
 

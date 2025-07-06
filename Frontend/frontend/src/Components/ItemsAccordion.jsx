@@ -6,11 +6,18 @@ import { useState } from "react";
 
 const INVENTORY_SIZE = 20;
 
+/**
+ * A bootstrap Accordion to represent the characters inventories.
+ * @param {int} charID - database id of the inventory owner.
+ * @param {object array} itemData - all existing items in the db. 
+ * @returns 
+ */
 const ItemsAccordion = ({ charID, itemData }) => {
     const [data, loading, error, setData] = useAPI(`http://localhost:5000/inventory/${charID}`, 'failed to fetch items');
     const [showModal, setShowModal] = useState(false);
     const [selected, setSelected] = useState(null);
 
+    // Map from id to item for quick lookup
     const itemMap = {};
     itemData?.forEach(item => {
         itemMap[item.id] = item;
@@ -24,6 +31,10 @@ const ItemsAccordion = ({ charID, itemData }) => {
         }
     });
 
+    /**
+     * updates the states and db on Edit.
+     * @param {object} newEntry - {name, index, count} of an item.
+     */
     function onSaveItem(newEntry) {
         const item = itemData?.find(item => item.name === newEntry.name);
         const itemID = item ? item.id : null
@@ -49,9 +60,13 @@ const ItemsAccordion = ({ charID, itemData }) => {
             });
         }
 
+        const token = sessionStorage.getItem('jwt');
         fetch('/inventory/update_slot', {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify({
                 character_id: charID,
                 item_id: itemID,
@@ -62,6 +77,10 @@ const ItemsAccordion = ({ charID, itemData }) => {
         setData(newData);
     }
 
+    /**
+     * @param {int} slotIndex - index of the slot
+     * @returns a piece of html/jsx to loop for all inventory slots.
+     */
     function renderSlot(slotIndex) {
         const entry = inventoryMap[slotIndex];
         const isEmpty = !entry || !entry.item;

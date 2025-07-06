@@ -16,10 +16,15 @@ export default function useAPI(API, errorMsg) {
     const [error, setError] = useState(null);
 
     const fetchData = useCallback(async () => {
+        const token = sessionStorage.getItem('jwt');
         let isMounted = true;
         try {
             setLoading(true);
-            const res = await fetch(API);
+            const res = await fetch(API, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             if (!res.ok) throw new Error(`${res.statusText}`);
             const json = await res.json();
             if (isMounted) setData(json);

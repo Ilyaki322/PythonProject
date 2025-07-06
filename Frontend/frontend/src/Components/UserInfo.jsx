@@ -1,11 +1,18 @@
-import IconButton from "./IconButton";
+import IconButton from "./UtilityComponents/IconButton";
 import Card from 'react-bootstrap/Card';
 import useAPI from "../CustomHooks/useAPI";
 import ItemsAccordion from "./ItemsAccordion";
-import AlertComponent from "./AlertComponent";
+import AlertComponent from "./UtilityComponents/AlertComponent";
 import { Spinner } from "react-bootstrap";
 import { useState } from "react";
 
+/**
+ * A page to see all users characters and their inventory.
+ * Fetches users characters and all items from db.
+ * @param {object} user - users data.
+ * @param {function} onBack - returns to UserPage.
+ * @returns react component.
+ */
 const UserInfo = ({ user, onBack }) => {
     const [charData, charLoading, charError, setCharData] = useAPI(`http://localhost:5000/characters/${user.id}`, 'failed to fetch users characters');
     const [itemData, itemLoading, itemError] = useAPI(`http://localhost:5000/inventory/items`, 'failed to fetch items');
@@ -16,6 +23,11 @@ const UserInfo = ({ user, onBack }) => {
     const [editedName, setEditedName] = useState('');
     const [editedLevel, setEditedLevel] = useState(0);
 
+    /**
+     * renders a single bootstrap card entry for each character.
+     * @param {object} character - single character object as gotten from the db.
+     * @returns html/jsx piece
+     */
     function renderCard(character) {
         if (character.id === editingId) return renderEditCard(character)
         return (
@@ -41,6 +53,11 @@ const UserInfo = ({ user, onBack }) => {
         );
     };
 
+    /**
+     * A special render for when an edit button is clicked.
+     * @param {object} character - single character object as gotten from the db.
+     * @returns html/jsx piece
+     */
     function renderEditCard(character) {
         return (
             <Card key={character.id} className="mt-2 bg-warning">
@@ -78,10 +95,20 @@ const UserInfo = ({ user, onBack }) => {
         );
     };
 
+    /**
+     * sends a request to the db and:
+     * on success: updates the states.
+     * on failure: shows an error.
+     * @param {int} charID - id of the character
+     */
     function deleteChar(charID) {
+        const token = sessionStorage.getItem('jwt');
         fetch('characters/delete_character', {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify({
                 character_id: charID
             })
@@ -104,14 +131,23 @@ const UserInfo = ({ user, onBack }) => {
             });
     }
 
+    /**
+     * sends a request to the db to save changes and:
+     * on success: updates the states.
+     * on failure: shows an error.
+     */
     function saveEdit() {
+        const token = sessionStorage.getItem('jwt');
         fetch('/characters/update_character', {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify({
                 character_id: editingId,
                 name: editedName,
-                level: parseInt(editedLevel)  // ensure number type
+                level: parseInt(editedLevel)
             })
         })
             .then(res => {

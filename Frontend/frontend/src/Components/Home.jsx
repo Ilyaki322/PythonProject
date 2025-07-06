@@ -1,6 +1,10 @@
-import About from './About';
+import About from './UtilityComponents/About';
 import { Card } from 'react-bootstrap';
 
+/**
+ * A Home page, to give a short into to the site, and info about the authors.
+ * @returns react component
+ */
 const Home = () => {
     return (
         <div className="container-fluid d-flex flex-column mt-5" style={{ height: '100vh', overflow: 'hidden' }}>

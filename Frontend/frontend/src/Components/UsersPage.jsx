@@ -1,17 +1,31 @@
 import Spinner from 'react-bootstrap/Spinner';
 import useAPI from '../CustomHooks/useAPI'
 import Table from 'react-bootstrap/Table';
-import IconButton from './IconButton';
-import AlertComponent from './AlertComponent';
+import IconButton from './UtilityComponents/IconButton';
+import AlertComponent from './UtilityComponents/AlertComponent';
 import { useState } from 'react';
 import UserInfo from './UserInfo';
 
+/**
+ * This page fetches all not deleted users, and shows a table with an option to:
+ * 1. delete the user.
+ * 2. see more info.
+ * 3. download statistics about him.
+ * On clicking the info buttons takes us to UserInfo component.
+ * @returns react component
+ */
 const UsersPage = () => {
     const [data, loading, error, setData] = useAPI('http://localhost:5000/users', 'failed to fetch users');
     const [showUserInfo, setShowUserInfo] = useState(false);
     const [selectedUserIndex, setSelectedUserIndex] = useState(null);
     const [deleteError, setDeleteError] = useState(null);
 
+    /**
+     * Renders a single bootstrap table entry.
+     * @param {object} user a single user, as gotten from the db.
+     * @param {int} index - index of the user in the loop.
+     * @returns html/jsx piece.
+     */
     function renderTable(user, index) {
         return (
             <tr key={index}>
@@ -35,10 +49,20 @@ const UsersPage = () => {
             </tr>);
     }
 
+    /**
+     * sends a request to the backend and:
+     * success: updates the states.
+     * failure: shows an error.
+     * @param {int} userID - id of the user
+     */
     function deleteUser(userID) {
+        const token = sessionStorage.getItem('jwt');
         fetch('/delete', {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify({
                 user_id: userID
             })
