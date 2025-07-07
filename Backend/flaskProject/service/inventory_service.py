@@ -1,4 +1,3 @@
-from flask import jsonify
 from models.item import Item
 from models.inventory import CharacterInventory
 from db import db
@@ -6,7 +5,6 @@ import base64
 
 
 def update_items(items_json):
-    print(len(items_json))
     for item_data in items_json:
         guid = item_data.get('id')
 
@@ -28,14 +26,14 @@ def update_items(items_json):
 def get_char_inventory(char_id):
     inventory = CharacterInventory.query.filter_by(character_id=char_id).all()
 
-    return jsonify([
+    return [
         {
             'item': entry.item.to_dict() if entry.item else None,
             'count': entry.count,
             'index': entry.index
         }
         for entry in inventory
-    ])
+    ]
 
 
 def get_all_items():
@@ -51,7 +49,7 @@ def get_all_items():
             "icon": icon_b64,
         })
 
-    return jsonify(result)
+    return result
 
 
 def update_slot(data):
@@ -77,4 +75,4 @@ def update_slot(data):
             code = 201
 
     db.session.commit()
-    return jsonify({"success": True}), code
+    return {"success": True}, code

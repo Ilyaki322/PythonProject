@@ -1,4 +1,3 @@
-from flask import jsonify
 from models.character import Character
 from models.user import User
 from db import db
@@ -9,17 +8,13 @@ def get_characters(user_id, deleted):
         Character.user_id == user_id,
         Character.is_deleted == deleted
     ).all()
-    return jsonify({
-        "count": len(characters),
-        "characters": [c.to_dict() for c in characters]
-    })
+
+    return [c.to_dict() for c in characters]
 
 
 def get_characters_deleted():
-    # Query deleted characters with their users in one go
     characters = Character.query.filter(Character.is_deleted == True).all()
 
-    # Build a list of dicts with character info + username
     character_data = []
     for c in characters:
         user = User.query.filter_by(id=c.user_id).first()
@@ -27,10 +22,7 @@ def get_characters_deleted():
         character_dict['user_name'] = user.username if user else 'Unknown'
         character_data.append(character_dict)
 
-    return jsonify({
-        "count": len(character_data),
-        "characters": character_data
-    })
+    return character_data
 
 
 def add_character(data, user_id):
@@ -50,34 +42,26 @@ def add_character(data, user_id):
     db.session.add(character)
     db.session.commit()
 
-    return jsonify(character.to_dict()), 201
+    return character.to_dict()
 
 
 def edit_character(data):
-    character = Character.query.filter_by(id=data['character_id']).first()
+    character = Character.query.get_or_404(data['character_id'])
 
-    if not character:
-        return jsonify({"success": False}), 404
-
-    if 'name' in data:
-        character.name = data['name']
-    if 'level' in data:
-        character.level = data['level']
+    character.name = data['name']
+    character.level = data['level']
 
     db.session.commit()
 
-    return jsonify({"success": True, "character": character.to_dict()}), 200
+    return character.to_dict()
 
 
 def set_delete_character(data, to_delete):
-    character = Character.query.filter_by(id=data['character_id']).first()
-
-    if not character:
-        return jsonify({"success": False}), 404
+    character = Character.query.get_or_404(data['character_id'])
 
     character.is_deleted = to_delete
     db.session.commit()
 
-    return jsonify({"success": True}), 200
+    return character
 
 

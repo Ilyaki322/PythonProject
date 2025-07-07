@@ -16,6 +16,7 @@ const ItemsAccordion = ({ charID, itemData }) => {
     const [data, loading, error, setData] = useAPI(`http://localhost:5000/inventory/${charID}`, 'failed to fetch items');
     const [showModal, setShowModal] = useState(false);
     const [selected, setSelected] = useState(null);
+    const [itemError, setItemError] = useState(null);
 
     // Map from id to item for quick lookup
     const itemMap = {};
@@ -32,49 +33,61 @@ const ItemsAccordion = ({ charID, itemData }) => {
     });
 
     /**
-     * updates the states and db on Edit.
-     * @param {object} newEntry - {name, index, count} of an item.
-     */
-    function onSaveItem(newEntry) {
+ * Updates the backend and local state on item edit.
+ * @param {object} newEntry - {name, index, count} of an item.
+ */
+    async function onSaveItem(newEntry) {
         const item = itemData?.find(item => item.name === newEntry.name);
-        const itemID = item ? item.id : null
+        const itemID = item ? item.id : null;
 
-        let updated = false;
-        const newData = data.map(entry => {
-            if (entry.index === newEntry.index) {
-                updated = true;
-                return {
+        const token = sessionStorage.getItem('jwt');
+
+        try {
+            const res = await fetch('/inventory/update_slot', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    character_id: charID,
+                    item_id: itemID,
+                    count: newEntry.count,
+                    index: newEntry.index
+                })
+            });
+
+            if (!res.ok) {
+                throw new Error(`Failed to update item: ${res.statusText}`);
+            }
+
+            // Only update state if request is successful
+            let updated = false;
+            const newData = data.map(entry => {
+                if (entry.index === newEntry.index) {
+                    updated = true;
+                    return {
+                        item: item,
+                        count: newEntry.count,
+                        index: newEntry.index
+                    };
+                }
+                return entry;
+            });
+
+            if (!updated) {
+                newData.push({
                     item: item,
                     count: newEntry.count,
                     index: newEntry.index
-                };
+                });
             }
-            return entry;
-        });
 
-        if (!updated) {
-            newData.push({
-                item: item,
-                count: newEntry.count,
-                index: newEntry.index
-            });
+            setData(newData);
+            setItemError(null);
+        } catch (error) {
+            setItemError('Failed to update inventory slot.');
         }
-
-        const token = sessionStorage.getItem('jwt');
-        fetch('/inventory/update_slot', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                character_id: charID,
-                item_id: itemID,
-                count: newEntry.count,
-                index: newEntry.index
-            })
-        });
-        setData(newData);
     }
 
     /**
@@ -144,8 +157,8 @@ const ItemsAccordion = ({ charID, itemData }) => {
                             <Spinner animation="border" size="sm" className="me-2" />
                             <span>Loading items...</span>
                         </div>
-                    ) : error ? (
-                        <p className="text-danger">{error}</p>
+                    ) : error || itemError ? (
+                        <p className="text-danger">{error || itemError}</p>
                     ) : (
                         <div className="row row-cols-5 g-3">
                             {[...Array(INVENTORY_SIZE).keys()].map(i => renderSlot(i))}

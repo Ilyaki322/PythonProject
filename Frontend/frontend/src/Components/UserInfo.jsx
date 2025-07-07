@@ -18,6 +18,7 @@ const UserInfo = ({ user, onBack }) => {
     const [itemData, itemLoading, itemError] = useAPI(`http://localhost:5000/inventory/items`, 'failed to fetch items');
 
     const [deleteError, setDeleteError] = useState(null);
+    const [itemEditError, setItemEditError] = useState(null);
 
     const [editingId, setEditingId] = useState(null);
     const [editedName, setEditedName] = useState('');
@@ -28,12 +29,12 @@ const UserInfo = ({ user, onBack }) => {
      * @param {object} character - single character object as gotten from the db.
      * @returns html/jsx piece
      */
-    function renderCard(character) {
-        if (character.id === editingId) return renderEditCard(character)
+    function renderCard(character, index) {
+        if (character.id === editingId) return renderEditCard(character, index)
         return (
             <Card key={character.id} className="mt-2">
                 <Card.Body>
-                    <Card.Title className="text-center">Character #{character.id}</Card.Title>
+                    <Card.Title className="text-center">Character #{index}</Card.Title>
 
                     <div className="d-flex gap-2">
                         <IconButton icon="bi bi-trash-fill" className='bg-danger' onClick={() => deleteChar(character.id)} />
@@ -58,11 +59,11 @@ const UserInfo = ({ user, onBack }) => {
      * @param {object} character - single character object as gotten from the db.
      * @returns html/jsx piece
      */
-    function renderEditCard(character) {
+    function renderEditCard(character, index) {
         return (
             <Card key={character.id} className="mt-2 bg-warning">
                 <Card.Body>
-                    <Card.Title className="text-center">Character #{character.id}</Card.Title>
+                    <Card.Title className="text-center">Character #{index}</Card.Title>
 
                     <div className="d-flex gap-2">
                         <IconButton icon="bi bi-trash-fill" className='bg-danger' onClick={() => deleteChar(character.id)} />
@@ -118,13 +119,10 @@ const UserInfo = ({ user, onBack }) => {
                 return res.json();
             })
             .then(data => {
-                if (data.success) {
-
-                    setCharData(prevData => ({
-                        ...charData,
-                        characters: prevData.characters.filter(char => char.id !== charID)
-                    }));
-                }
+                setCharData(prevData => ({
+                    ...charData,
+                    characters: prevData.characters.filter(char => char.id !== charID)
+                }));
             })
             .catch(err => {
                 setDeleteError('Failed to Delete character')
@@ -155,31 +153,29 @@ const UserInfo = ({ user, onBack }) => {
                 return res.json();
             })
             .then(data => {
-                if (data.success) {
-                    // Update local charData
-                    const updatedCharacters = charData.characters.map(char =>
-                        char.id === editingId
-                            ? { ...char, name: editedName, level: parseInt(editedLevel) }
-                            : char
-                    );
-                    setCharData({
-                        ...charData,
-                        characters: updatedCharacters
-                    });
-                }
+                // Update local charData
+                const updatedCharacters = charData.characters.map(char =>
+                    char.id === editingId
+                        ? { ...char, name: editedName, level: parseInt(editedLevel) }
+                        : char
+                );
+                setCharData({
+                    ...charData,
+                    characters: updatedCharacters
+                });
 
                 setEditingId(null);
             })
             .catch(err => {
-                console.error('Error updating character:', err);
+                setItemEditError("Item editing failed.");
                 setEditingId(null);
             });
     }
 
-    if (itemError || charError || deleteError) {
+    if (itemError || charError || deleteError || itemEditError) {
         return (
             <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-                <AlertComponent show='true' onHide={() => { }} msg={itemError || charError || deleteError} />
+                <AlertComponent show='true' onHide={() => { }} msg={itemError || charError || deleteError || itemEditError} />
             </div>
         )
     }
@@ -215,7 +211,7 @@ const UserInfo = ({ user, onBack }) => {
                         </Card.Body>
                     </Card>
 
-                    {charData.characters?.map((character) => renderCard(character))}
+                    {charData.characters?.map((character, index) => renderCard(character, index + 1))}
                 </div>
             </div>
         </div>

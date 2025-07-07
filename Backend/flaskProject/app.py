@@ -8,9 +8,11 @@ from flask_jwt_extended import JWTManager
 from config import DevConfig
 from routes.oauth_routes import oauth_bp
 from flask_cors import CORS
+from errors.errors import register_error_handlers
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000"])
+app.config['PROPAGATE_EXCEPTIONS'] = True
 app.config.from_object(DevConfig)
 
 jwt = JWTManager(app)
@@ -18,10 +20,12 @@ jwt = JWTManager(app)
 db.init_app(app)
 bcrypt.init_app(app)
 
-app.register_blueprint(selection_route, url_prefix='/characters')
 app.register_blueprint(login_route)
 app.register_blueprint(oauth_bp, url_prefix='/login')
+app.register_blueprint(selection_route, url_prefix='/characters')
 app.register_blueprint(inventory_route, url_prefix='/inventory')
+
+register_error_handlers(app)
 
 if __name__ == '__main__':
     with app.app_context():
