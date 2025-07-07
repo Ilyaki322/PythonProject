@@ -4,6 +4,8 @@ from db import db
 class Character(db.Model):
     __tablename__ = 'characters'
 
+    is_deleted = db.Column(db.Boolean, default=False, nullable=False)
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     level = db.Column(db.Integer, default=1)

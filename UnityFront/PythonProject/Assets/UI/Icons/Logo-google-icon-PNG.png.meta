@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Logo-google-icon-PNG_0: -2277127157413032655
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
