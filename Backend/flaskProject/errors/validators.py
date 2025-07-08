@@ -26,3 +26,7 @@ def validate_character_delete_data(data):
 def validate_slot_update(data):
     validate_required_fields(data, ['character_id', 'index', 'item_id', 'count'])
 
+
+def validate_user_delete(data):
+    validate_required_fields(data, ['user_id'])
+

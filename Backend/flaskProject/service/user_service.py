@@ -1,8 +1,6 @@
 import re
 import os
 
-from flask import jsonify
-
 from db import db, bcrypt
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
@@ -78,9 +76,7 @@ def register_user(username: str, password: str, email: str):
 
 def get_users(deleted):
     users = User.query.filter(User.is_deleted == deleted).all()
-    return jsonify({
-        "users": [u.to_dict() for u in users]
-    })
+    return [u.to_dict() for u in users]
 
 
 def set_deleted(data, deleted):
@@ -88,4 +84,4 @@ def set_deleted(data, deleted):
     user.is_deleted = deleted
     db.session.commit()
 
-    return {'success': True}, 200
+    return {'success': True}
