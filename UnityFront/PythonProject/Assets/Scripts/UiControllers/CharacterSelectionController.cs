@@ -11,6 +11,7 @@ public class CharacterSelectionController : MonoBehaviour
     private VisualElement m_creationElement;
 
     [SerializeField] private GameObject m_dummy;
+    [SerializeField] private GameController m_gameController;
     [SerializeField] private CharacterCreator m_creator;
     [SerializeField] private Inventory m_invetory;
 
@@ -20,6 +21,7 @@ public class CharacterSelectionController : MonoBehaviour
     private CharacterDTO[] m_characterList = new CharacterDTO[5];
 
     private int lastClickedIndex = 0;
+    private int m_selectedCharID;
 
     private CharacterApi m_characterApi;
     private InventoryApi m_invetoryApi;
@@ -50,6 +52,7 @@ public class CharacterSelectionController : MonoBehaviour
         {
             m_dummy.SetActive(true);
             m_creator.Generate(wrapper.characters[0]);
+            m_selectedCharID = wrapper.characters[0].id;
         }
         for (int i = 0; i < wrapper.count; i++)
         {
@@ -101,12 +104,22 @@ public class CharacterSelectionController : MonoBehaviour
             m_invetoryApi.setCharID(selectedChar.id);
             m_creator.Generate(selectedChar);
         }
+
+        m_selectedCharID = selectedChar.id;
         m_dummy.SetActive(true);
     }
 
     private void OnPlayClicked()
     {
-        m_invetory.LoadInventory(m_invetoryApi);
+        // hide current ui
+        m_selectionElement.style.display = DisplayStyle.None;
+        m_creationElement.style.display = DisplayStyle.None;
+        m_dummy.SetActive(false);
+
+        //m_invetory.LoadInventory(m_invetoryApi);
+        m_gameController.SetCharacter(m_selectedCharID);
+        m_gameController.Connect();
+
     }
 
     public void Save(CharacterDTO c)

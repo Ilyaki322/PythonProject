@@ -33,6 +33,7 @@ public class LoginController : MonoBehaviour
 
     private CharacterApi m_characterApi;
     private InventoryApi m_invetoryApi;
+    [SerializeField] private GameController m_gameController;
 
     private CharacterSelectionController m_characterSelectionController;
 
@@ -110,6 +111,7 @@ public class LoginController : MonoBehaviour
 
                 m_characterApi.setToken(resp.token);
                 m_invetoryApi.setToken(resp.token);
+                m_gameController.SetToken(resp.token);
                 StartCoroutine(m_characterApi.GetCharacters(json => showSelection(json)));
                 yield break;  // stop polling
             }
@@ -164,6 +166,7 @@ public class LoginController : MonoBehaviour
             },
             (string text) =>
             {
+                m_gameController.SetToken(text);
                 m_characterApi.setToken(text);
                 m_invetoryApi.setToken(text);
                 StartCoroutine(m_characterApi.GetCharacters((json) =>
