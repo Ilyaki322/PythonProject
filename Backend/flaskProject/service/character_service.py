@@ -25,6 +25,11 @@ def get_characters_deleted():
     return character_data
 
 
+def get_char_by_id(character_id):
+    character = Character.query.filter_by(id=character_id).first()
+    return character.to_dict()
+
+
 def add_character(data, user_id):
     character = Character(
         name=data.get('name'),

@@ -16,3 +16,11 @@ public class CharacterDTO
     public int weapon = 0;
     public int back = 0;
 }
+
+[System.Serializable]
+public class MatchDTO
+{
+    public CharacterDTO player_character;
+    public CharacterDTO enemy_character;
+    public bool is_starting;
+}
