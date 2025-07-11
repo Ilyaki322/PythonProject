@@ -57,7 +57,7 @@ def init_socket_handlers(app_instance, socketio_instance):
             start_match(players[0], players[1])
 
     @_socketio.on('LeaveQueue')
-    def handle_leave_queue(data):
+    def handle_leave_queue():
         user_sid = request.sid
         if user_sid:
             removed = players_in_queue.pop(user_sid, None)

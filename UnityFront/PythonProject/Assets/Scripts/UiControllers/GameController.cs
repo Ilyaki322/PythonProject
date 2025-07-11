@@ -254,6 +254,8 @@ public class GameController : MonoBehaviour
         m_combatUI.style.display = DisplayStyle.None;
         m_endGameUI.style.display = DisplayStyle.Flex;
         m_endGameLabel.text = result;
+        m_shieldLeft.RemoveFromClassList("ShieldIcon--enabled");
+        m_shieldRight.RemoveFromClassList("ShieldIcon--enabled");
     }
 
     public void OnDead()

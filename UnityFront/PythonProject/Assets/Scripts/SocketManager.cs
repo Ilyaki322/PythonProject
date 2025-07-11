@@ -95,18 +95,8 @@ public class SocketManager : MonoBehaviour
         m_socket.Connect();
     }
 
-    public void OnEnterQueue(int charID)
-    {
-        print("Clicked EnterQueue");
-        m_socket.Emit("EnterQueue", new {charID = charID});
-    }
-
-    public void OnLeaveQueue()
-    {
-        print("Clicked LeaveQueue");
-        m_socket.Emit("LeaveQueue", "unity: left queue");
-    }
-
+    public void OnEnterQueue(int charID) => m_socket.Emit("EnterQueue", new {charID = charID});
+    public void OnLeaveQueue() => m_socket.Emit("LeaveQueue");
     public void OnAttack() => m_socket.Emit("Attack");
     public void OnDefend() => m_socket.Emit("Defend");
     public void OnItemUse() => m_socket.Emit("UseItem");

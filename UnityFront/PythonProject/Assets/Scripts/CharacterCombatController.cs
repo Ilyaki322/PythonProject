@@ -28,6 +28,8 @@ public class CharacterCombatController : MonoBehaviour
         m_maxHealth = 100;
         m_currentHealth = 100;
 
+        m_def = false;
+
         m_healthLabel = healthLabel;
         m_healthFill = healthFill;
 
