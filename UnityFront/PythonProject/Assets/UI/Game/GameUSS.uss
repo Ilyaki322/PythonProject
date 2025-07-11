@@ -1,0 +1,135 @@
+VisualElement {}
+
+.Container {
+	flex-grow: 1;
+}
+
+.Container.StatusContainer {
+	align-items: center;
+	flex-grow: 0;
+	height: 80px;
+}
+
+.Container.HpContainer {
+	flex-direction: row;
+}
+
+.Container.RightPlayer {
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.Container.EndGameContainer {
+	align-items: center;
+	justify-content: center;
+}
+
+.HealhBackground {
+	background-color: black;
+	left: 60px;
+	top: -10px;
+	height: 40px;
+	width: 220px;
+}
+
+
+.HealhBackgroundRight {
+	background-color: black;
+	right: 60px;
+	top: -10px;
+	height: 40px;
+	width: 220px;
+}
+
+.HealthFill {
+	background-color: red;
+	flex-shrink: 0;
+	height: 100%;
+    width: 100%;
+	position: absolute;
+	overflow: hidden;
+}
+
+.TimerBackground {
+	background-color: black;
+	height: 20px;
+	width: 80%;
+}
+
+.TimeFill {
+	background-color: white;
+	flex-shrink: 0;
+	height: 100%;
+    width: 100%;
+	position: absolute;
+	overflow: hidden;
+}
+
+.Container.ButtonContainer {
+	flex-direction: row;
+	flex-wrap: wrap;
+	height: 180px;
+	width: 260px;
+	left: 320px;
+	bottom: -150px;
+}
+
+.ActionButton {
+	height: 80px;
+	width: 120px;
+	font-size: 25px;
+}
+
+.ActionButton.SurrenderButton {
+	background-color: red;
+}
+
+.Header {
+	font-size: 45px;
+}
+
+.NameLabel {
+	font-size: 25px;
+	margin: 10px;
+}
+
+.NameLabel.Left {
+	left: 50px;
+}
+
+.NameLabel.Right {
+	right: 50px;
+}
+
+.HealthLabel {
+	top: -3px;
+	align-self: center;
+	font-size: 25px;
+	color: white;
+}
+
+.ShieldIcon {
+	position: absolute;
+	--unity-image: url("../../../Assets/Sprites/Shield.png");
+
+	transition: width 1s ease-out, height 1s ease-out, opacity  1s ease-out;
+	height: 96px;
+	width: 96px;
+	opacity: 0;
+}
+
+.ShieldIcon.ShieldLeft {
+	left: 220px;
+	top: 3px;
+}
+
+.ShieldIcon.ShieldRight {
+	left: -33px;
+	top: 3px;
+}
+
+.ShieldIcon.ShieldIcon--enabled {
+	height: 32px;
+	width: 32px;
+	opacity: 1.0;
+}

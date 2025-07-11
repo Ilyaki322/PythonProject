@@ -1,0 +1,44 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Game/GameUSS.uss?fileID=7433441132597879392&amp;guid=79468de2ebde4264da9d344272add9ae&amp;type=3#GameUSS" />
+    <engine:VisualElement name="Container" class="Container" style="display: flex;">
+        <engine:Button text="Find Match" name="FindButton" enabled="true" class="UIButton" />
+    </engine:VisualElement>
+    <engine:VisualElement name="CombatUI" class="Container" style="display: none;">
+        <engine:VisualElement class="Container StatusContainer">
+            <engine:Label name="StatusLabel" text="test" class="Header" />
+            <engine:VisualElement class="TimerBackground">
+                <engine:VisualElement name="TimeFill" class="TimeFill" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement class="Container HpContainer">
+            <engine:VisualElement class="Container LeftPlayer">
+                <engine:Label name="PlayerName1" text="playernametest" class="NameLabel Left" />
+                <engine:VisualElement class="HealhBackground">
+                    <engine:VisualElement name="HealthFill1" class="HealthFill" />
+                    <engine:Label name="PlayerHealth1" text="100/100" class="HealthLabel" />
+                    <engine:Image name="ShieldLeft" enabled="true" class="ShieldIcon ShieldLeft" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement class="Container RightPlayer">
+                <engine:Label name="PlayerName2" text="playernametest" class="NameLabel Right" />
+                <engine:VisualElement class="HealhBackgroundRight">
+                    <engine:VisualElement name="HealthFill2" class="HealthFill" style="flex-grow: 0;" />
+                    <engine:Label name="PlayerHealth2" text="100/100" class="HealthLabel" />
+                    <engine:Image name="ShieldRight" enabled="true" class="ShieldIcon ShieldRight" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement class="Container">
+            <engine:VisualElement class="Container ButtonContainer">
+                <engine:Button name="Button1" text="Attack" class="ActionButton" />
+                <engine:Button name="Button2" text="Defend" class="ActionButton" />
+                <engine:Button name="Button3" text="Items" class="ActionButton" />
+                <engine:Button name="Button4" text="Surrender" class="ActionButton SurrenderButton" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:VisualElement name="EndGameContainer" class="Container EndGameContainer" style="display: none;">
+        <engine:Label text="Result" name="ResultLabel" class="Header" />
+        <engine:Button text="Continue" name="ContinueButton" class="ActionButton" />
+    </engine:VisualElement>
+</engine:UXML>

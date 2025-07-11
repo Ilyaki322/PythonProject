@@ -1,5 +1,6 @@
 import re
 import os
+
 from db import db, bcrypt
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
@@ -40,6 +41,8 @@ def authenticate_user(username: str, password: str):
         return {'status': 'error', 'message': 'Please enter your username and password'}
 
     user = User.query.filter_by(username=username).first()
+    if user.is_deleted:
+        return {'status': 'error', 'message': 'Your account was suspended.'}
     if user and bcrypt.check_password_hash(user.password, password):
         return {'status': 'success', 'message': 'Login successful', 'user_id': user.id}
 
@@ -69,3 +72,16 @@ def register_user(username: str, password: str, email: str):
     db.session.commit()
 
     return {'success': True, 'message': 'User registered successfully'}
+
+
+def get_users(deleted):
+    users = User.query.filter(User.is_deleted == deleted).all()
+    return [u.to_dict() for u in users]
+
+
+def set_deleted(data, deleted):
+    user = User.query.filter_by(id=data['user_id']).first()
+    user.is_deleted = deleted
+    db.session.commit()
+
+    return {'success': True}
