@@ -50,6 +50,10 @@ def google_callback():
 
     # 3) Verify & issue our JWT
     result = authenticate_or_create_google_user(id_token_str)
+
+    if not result.get("success"):
+        abort(401, "Invalid credentials")
+
     jwt = create_access_token(identity=str(result["user_id"]))
 
     # 4) store it under that state

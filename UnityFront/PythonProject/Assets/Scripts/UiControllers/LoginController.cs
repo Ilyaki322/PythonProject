@@ -7,6 +7,8 @@ using UnityEngine.UIElements;
 
 public class LoginController : MonoBehaviour
 {
+    [SerializeField] private GameController m_gameController;
+
     private UIDocument m_document;
     private VisualElement m_loginElement;
     private VisualElement m_registerElement;
@@ -166,6 +168,7 @@ public class LoginController : MonoBehaviour
         // stash the token & fetch characters
         m_characterApi.setToken(token);
         m_invetoryApi.setToken(token);
+        m_gameController.SetToken(token);
         StartCoroutine(m_characterApi.GetCharacters(json => showSelection(json)));
     }
 
@@ -254,6 +257,7 @@ public class LoginController : MonoBehaviour
             {
                 m_characterApi.setToken(text);
                 m_invetoryApi.setToken(text);
+                m_gameController.SetToken(text);
                 StartCoroutine(m_characterApi.GetCharacters((json) =>
                 {
                     showSelection(json);
