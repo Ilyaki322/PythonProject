@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
 
     private VisualElement m_container;
     private VisualElement m_combatUI;
+    private VisualElement m_endGameUI;
 
     private VisualElement m_timeFill;
     private VisualElement m_healthFillPlayer1;
@@ -32,6 +33,7 @@ public class GameController : MonoBehaviour
     private Image m_shieldRight;
 
     private Button m_findGameButton;
+    private Button m_endGameButton;
     private Button m_ActionButton1;
     private Button m_ActionButton2;
     private Button m_ActionButton3;
@@ -42,6 +44,7 @@ public class GameController : MonoBehaviour
     private Label m_healthPlayer1;
     private Label m_healthPlayer2;
     private Label m_statusBar;
+    private Label m_endGameLabel;
 
     private bool m_inQueue = false;
 
@@ -68,6 +71,7 @@ public class GameController : MonoBehaviour
         var root = m_document.rootVisualElement;
         m_container = root.Q<VisualElement>("Container");
         m_combatUI = root.Q<VisualElement>("CombatUI");
+        m_endGameUI = root.Q<VisualElement>("EndGameContainer");
 
         m_timeFill = root.Q<VisualElement>("TimeFill");
         m_healthFillPlayer1 = root.Q<VisualElement>("HealthFill1");
@@ -76,11 +80,13 @@ public class GameController : MonoBehaviour
         m_shieldLeft = root.Q<Image>("ShieldLeft");
         m_shieldRight = root.Q<Image>("ShieldRight");
 
+        m_endGameButton = root.Q<Button>("ContinueButton");
         m_ActionButton1 = root.Q<Button>("Button1");
         m_ActionButton2 = root.Q<Button>("Button2");
         m_ActionButton3 = root.Q<Button>("Button3");
         m_ActionButton4 = root.Q<Button>("Button4");
 
+        m_endGameLabel = root.Q<Label>("ResultLabel");
         m_namePlayer1 = root.Q<Label>("PlayerName1");
         m_namePlayer2 = root.Q<Label>("PlayerName2");
         m_healthPlayer1 = root.Q<Label>("PlayerHealth1");
@@ -118,7 +124,15 @@ public class GameController : MonoBehaviour
             NextTurn();
         };
 
-        m_container.style.visibility = Visibility.Hidden;
+        m_endGameButton.clicked += () =>
+        {
+            m_endGameUI.style.display = DisplayStyle.None;
+            m_combatUI.style.display = DisplayStyle.None;
+            m_container.style.display = DisplayStyle.Flex;
+        };
+
+        m_container.style.display = DisplayStyle.None;
+        m_endGameUI.style.display = DisplayStyle.None;
     }
 
     private void Update()
@@ -139,7 +153,7 @@ public class GameController : MonoBehaviour
         m_socketManager.Connect(() =>
         {
             m_socketManager.InitSocket(m_enemyController);
-            MainThreadDispatcher.Instance.Enqueue(() => m_container.style.visibility = Visibility.Visible);
+            MainThreadDispatcher.Instance.Enqueue(() => m_container.style.display = DisplayStyle.Flex);
         });
     }
 
@@ -192,6 +206,8 @@ public class GameController : MonoBehaviour
         m_counter = m_maxTurnTimer;
 
         m_inQueue = false;
+        m_findGameButton.text = "Find Match";
+
         m_container.style.display = DisplayStyle.None;
         m_combatUI.style.display = DisplayStyle.Flex;
 
@@ -218,6 +234,34 @@ public class GameController : MonoBehaviour
 
         m_playerController.Init(m_healthPlayer1, m_healthFillPlayer1, m_enemyController, this);
         m_enemyController.Init(m_healthPlayer2, m_healthFillPlayer2, m_playerController, this);
+    }
+
+    public void OnWin()
+    {
+        endGameUI("Victory!");
+
+    }
+
+    public void OnLose()
+    {
+        endGameUI("Defeat!");
+    }
+
+    private void endGameUI(string result)
+    {
+        m_player.SetActive(false);
+        m_enemy.SetActive(false);
+        m_combatUI.style.display = DisplayStyle.None;
+        m_endGameUI.style.display = DisplayStyle.Flex;
+        m_endGameLabel.text = result;
+    }
+
+    public void OnDead()
+    {
+        if (m_gameStatus == status_t.EnemyTurn)
+        {
+            m_socketManager.OnFourthButton();
+        }
     }
 
     public void TurnShieldOn()

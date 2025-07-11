@@ -45,9 +45,11 @@ public class CharacterCombatController : MonoBehaviour
         }
 
         m_currentHealth -= damage;
-        if (m_currentHealth < 0)
+        if (m_currentHealth <= 0)
         {
-
+            m_animator.SetTrigger("Die");
+            m_animator.SetBool("EditChk", false);
+            m_gameController.OnDead();
         }
 
         float healthRatio = (float)m_currentHealth / m_maxHealth;
@@ -81,8 +83,7 @@ public class CharacterCombatController : MonoBehaviour
 
     public void OnFourthButton()
     {
-        Debug.Log("????!");
         m_animator.SetTrigger("Die");
-        m_animator.SetBool("EditChk", true);
+        m_animator.SetBool("EditChk", false);
     }
 }

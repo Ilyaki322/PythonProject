@@ -33,8 +33,12 @@
                 <engine:Button name="Button1" text="Attack" class="ActionButton" />
                 <engine:Button name="Button2" text="Defend" class="ActionButton" />
                 <engine:Button name="Button3" text="Items" class="ActionButton" />
-                <engine:Button name="Button4" text="???" class="ActionButton" />
+                <engine:Button name="Button4" text="Surrender" class="ActionButton SurrenderButton" />
             </engine:VisualElement>
         </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:VisualElement name="EndGameContainer" class="Container EndGameContainer" style="display: none;">
+        <engine:Label text="Result" name="ResultLabel" class="Header" />
+        <engine:Button text="Continue" name="ContinueButton" class="ActionButton" />
     </engine:VisualElement>
 </engine:UXML>

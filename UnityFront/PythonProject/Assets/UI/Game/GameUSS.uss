@@ -19,6 +19,11 @@ VisualElement {}
 	align-items: flex-end;
 }
 
+.Container.EndGameContainer {
+	align-items: center;
+	justify-content: center;
+}
+
 .HealhBackground {
 	background-color: black;
 	left: 60px;
@@ -73,6 +78,10 @@ VisualElement {}
 	height: 80px;
 	width: 120px;
 	font-size: 25px;
+}
+
+.ActionButton.SurrenderButton {
+	background-color: red;
 }
 
 .Header {

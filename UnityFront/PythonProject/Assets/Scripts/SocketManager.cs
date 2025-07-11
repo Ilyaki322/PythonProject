@@ -41,12 +41,20 @@ public class SocketManager : MonoBehaviour
             });
         });
 
-        m_socket.On("FourthButton", (res) =>
+        m_socket.On("Win", (res) =>
         {
             MainThreadDispatcher.Instance.Enqueue(() =>
             {
                 enemyController.OnFourthButton();
-                m_gameController.NextTurn();
+                m_gameController.OnWin();
+            });
+        });
+
+        m_socket.On("Lose", (res) =>
+        {
+            MainThreadDispatcher.Instance.Enqueue(() =>
+            {
+                m_gameController.OnLose();
             });
         });
     }
@@ -102,7 +110,7 @@ public class SocketManager : MonoBehaviour
     public void OnAttack() => m_socket.Emit("Attack");
     public void OnDefend() => m_socket.Emit("Defend");
     public void OnItemUse() => m_socket.Emit("UseItem");
-    public void OnFourthButton() => m_socket.Emit("FourthButton");
+    public void OnFourthButton() => m_socket.Emit("EndGame");
 
     async void OnDestroy()
     {

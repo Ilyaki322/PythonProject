@@ -26,7 +26,9 @@ class GameManager:
         self.is_player1_turn = not self.is_player1_turn
         emit("UseItem", to=dest)
 
-    def on_fourth_button(self, user_sid):
-        dest = self.player2_sid if self.is_player1_turn else self.player1_sid
-        self.is_player1_turn = not self.is_player1_turn
-        emit("FourthButton", to=dest)
+    def on_end_game(self, user_sid):
+        loser = user_sid
+        winner = self.player1_sid if user_sid == self.player2_sid else self.player2_sid
+        emit("Win", to=winner)
+        emit("Lose", to=loser)
+

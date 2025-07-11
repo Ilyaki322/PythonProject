@@ -43,6 +43,10 @@ def init_socket_handlers(app_instance, socketio_instance):
 
     @_socketio.on('EnterQueue')
     def handle_enter_queue(data):
+        # !!!!!
+        # check that user cant queue twice, if you queue, reconnect get other sid and queue,
+        # you fight yourself.
+        # !!!!!
         char_id = data.get('charID')
         players_in_queue[request.sid] = char_id
         print(f"Player entered queue with char: {char_id}")
@@ -88,14 +92,15 @@ def init_socket_handlers(app_instance, socketio_instance):
         else:
             print("ERROR, USER NOT IN MATCH")
 
-    @_socketio.on('FourthButton')
+    @_socketio.on('EndGame')
     def handle_attack():
         user_sid = request.sid
         game = find_match(user_sid)
         if game:
-            game.on_fourth_button(user_sid)
+            game.on_end_game(user_sid)
         else:
             print("ERROR, USER NOT IN MATCH")
+        ongoing_matches.remove(game)
 
 
 def start_match(player1, player2):
