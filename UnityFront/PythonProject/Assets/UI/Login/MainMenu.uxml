@@ -1,22 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<engine:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:engine="UnityEngine.UIElements"
-    xmlns:editor="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd"
->
-    <Style src="project://database/Assets/UI/Login/Uss/LoginPage.uss" />
-    
-    <Template name="Login" src="project://database/Assets/UI/Login/Templates/LoginPage.uxml#Login" />
-    <Template name="Register" src="project://database/Assets/UI/Login/Templates/RegisterPage.uxml#Register" />
-    <Template name="CharacterSelection" src="project://database/Assets/UI/Login/Templates/CharacterSelection.uxml#CharacterSelection" />
-    <Template name="CharacterCreation" src="project://database/Assets/UI/Login/Templates/CharacterCreation.uxml#CharacterCreation" />
-
-    <engine:VisualElement name="Root" class="page-container">
-        <engine:Instance template="Login" />
-        <engine:Instance template="Register"/>
-        <engine:Instance template="CharacterSelection"/>
-        <engine:Instance template="CharacterCreation"/>
-    </engine:VisualElement>
-
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:Template name="LoginPage" src="project://database/Assets/UI/Login/Templates/LoginPage.uxml?fileID=9197481963319205126&amp;guid=6f76b3a8e9b2f13468ae3ffb7ea58119&amp;type=3#LoginPage" />
+    <engine:Template name="RegisterPage" src="project://database/Assets/UI/Login/Templates/RegisterPage.uxml?fileID=9197481963319205126&amp;guid=fb932283a0944b9409dac785db350e53&amp;type=3#RegisterPage" />
+    <engine:Template name="CharacterSelection" src="project://database/Assets/UI/Login/Templates/CharacterSelection.uxml?fileID=9197481963319205126&amp;guid=38eba54a9e270c74986d46ddc4ea1c98&amp;type=3#CharacterSelection" />
+    <engine:Template name="CharacterCreation" src="project://database/Assets/UI/Login/Templates/CharacterCreation.uxml?fileID=9197481963319205126&amp;guid=0fb01569f7fdfdd4db3057497fc558d6&amp;type=3#CharacterCreation" />
+    <Style src="project://database/Assets/UI/Login/Uss/MainMenu.uss?fileID=7433441132597879392&amp;guid=d18ba038bb28f2a4188c89ccddf32cf6&amp;type=3#MainMenu" />
+    <engine:Instance template="LoginPage" name="Login" class="background" style="height: 1081px; flex-direction: column; align-items: stretch; justify-content: space-around; flex-grow: 1; display: flex;" />
+    <engine:Instance template="RegisterPage" name="Register" class="background display-none" style="height: 750px; flex-grow: 1;" />
+    <engine:Instance template="CharacterSelection" name="CharacterSelection" class="display-none" style="width: 100%; height: 100%;" />
+    <engine:Instance template="CharacterCreation" name="CharacterCreation" class="display-none" style="height: 798px;" />
 </engine:UXML>

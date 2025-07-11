@@ -7,6 +7,8 @@ public class CharacterSelectionController : MonoBehaviour
     [SerializeField] VisualTreeAsset m_entry;
 
     [SerializeField] private UIDocument m_document;
+
+    private VisualElement m_loginElement;
     private VisualElement m_selectionElement;
     private VisualElement m_creationElement;
 
@@ -16,6 +18,9 @@ public class CharacterSelectionController : MonoBehaviour
 
     private ListView m_charList;
     private Button m_playButton;
+    private Button m_deleteButton;
+    private Button m_logoutButton;
+    private Button m_cancelButton;
 
     private CharacterDTO[] m_characterList = new CharacterDTO[5];
 
@@ -32,14 +37,20 @@ public class CharacterSelectionController : MonoBehaviour
         m_document = GetComponent<UIDocument>();
         var root = m_document.rootVisualElement;
 
-        m_selectionElement = root.Q<VisualElement>("CharacterSelectionContainer");
+        m_loginElement = root.Q<VisualElement>("Login");
+        m_selectionElement = root.Q<VisualElement>("CharacterSelection");
         m_creationElement = root.Q<VisualElement>("CharacterCreation");
         m_charList = root.Q<ListView>("CharacterList");
         m_playButton = root.Q<Button>("PlayButton");
+        m_deleteButton = root.Q<Button>("DeleteButton");
+        m_logoutButton = root.Q<Button>("LogoutButton");
+        m_cancelButton = root.Q<Button>("CancelButton");
 
         m_dummy.SetActive(false);
         m_charList.selectionChanged += onCharacterClick;
         m_playButton.clicked += OnPlayClicked;
+        m_cancelButton.clicked += onCancelClick;
+        m_logoutButton.clicked += onLogoutclick;
     }
 
     public void LoadCharacters(string json)
@@ -84,6 +95,21 @@ public class CharacterSelectionController : MonoBehaviour
 
         
         m_charList.selectionType = SelectionType.Single;
+    }
+
+    private void onCancelClick()
+    {
+        m_selectionElement.style.display = DisplayStyle.Flex;
+        m_creationElement.style.display = DisplayStyle.None;
+        m_dummy.SetActive(true);
+        m_creator.Generate(m_characterList[lastClickedIndex]);
+    }
+
+    private void onLogoutclick()
+    {
+        m_characterApi.Logout();
+        m_loginElement.style.display = DisplayStyle.Flex;
+        m_selectionElement.style.display = DisplayStyle.None;
     }
 
     private void onCharacterClick(IEnumerable<object> selectedItems)

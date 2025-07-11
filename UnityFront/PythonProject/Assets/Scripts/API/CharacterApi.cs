@@ -12,7 +12,7 @@ public class CharacterApi : MonoBehaviour
     private string m_token;
 
     public void setToken(string token) => m_token = token;
-
+    public void Logout() => m_token = string.Empty;
     public IEnumerator AddCharacter(CharacterDTO character)
     {
         string json = JsonUtility.ToJson(character);

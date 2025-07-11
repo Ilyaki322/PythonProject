@@ -10,7 +10,8 @@ public class LoginController : MonoBehaviour
     private UIDocument m_document;
     private VisualElement m_loginElement;
     private VisualElement m_registerElement;
-    private VisualElement m_characterCreation;
+    private VisualElement m_characterSelection;
+    private VisualElement m_errorContainer;
 
     private TextField m_loginUsernameField;
     private TextField m_loginPasswordField;
@@ -31,6 +32,15 @@ public class LoginController : MonoBehaviour
     private Button m_registerButton;
     private Button m_backButton;
 
+    // Loading overlay elements for spinner when oauth2 is called
+    private VisualElement m_loadingOverlay;
+    private VisualElement m_spinner;
+    private Button m_overlayCancel;
+    private bool m_cancelPolling;
+    private Coroutine m_pollingCoroutine;
+    private float m_spinnerAngle = 0f;
+    private bool m_isSpinning = false;
+
     private CharacterApi m_characterApi;
     private InventoryApi m_invetoryApi;
 
@@ -45,18 +55,33 @@ public class LoginController : MonoBehaviour
         m_characterSelectionController = GetComponent<CharacterSelectionController>();
 
         m_document = GetComponent<UIDocument>();
+
+        initializeQuerys();
+        SubscribeToEvents();
+        // Initially show login UI
+        showLoginUI();
+    }
+
+    void initializeQuerys()
+    {
         var root = m_document.rootVisualElement;
 
         // Get main UI sections
         m_loginElement = root.Q<VisualElement>("Login");
         m_registerElement = root.Q<VisualElement>("Register");
-        m_characterCreation = root.Q<VisualElement>("CharacterSelectionContainer");
+        m_characterSelection = root.Q<VisualElement>("CharacterSelection");
 
         // Login fields
         m_loginUsernameField = root.Q<TextField>("UsernameField");
         m_loginPasswordField = root.Q<TextField>("PasswordField");
+        m_errorContainer = root.Q<VisualElement>("ErrorContainer");
         m_loginError = root.Q<Label>("LoginError");
         m_regSuccess = root.Q<Label>("RegSuccess");
+
+        // Loading overlay elements
+        m_loadingOverlay = root.Q<VisualElement>("LoadingOverlay");
+        m_spinner = root.Q<VisualElement>("Spinner");
+        m_overlayCancel = root.Q<Button>("OverlayCancel");
 
         // Register fields
         m_registerUsernameField = root.Q<TextField>("UserRegisterField");
@@ -75,79 +100,141 @@ public class LoginController : MonoBehaviour
         m_backButton = root.Q<Button>("BackButton");
         m_goToRegisterLink = root.Q<Label>("GoToRegisterButton");
 
+    }
+
+    void SubscribeToEvents()
+    {
+        m_overlayCancel.clicked += AbortLogin;
+
         // Register events
         m_loginButton.clicked += OnLoginClicked;
         m_registerButton.clicked += OnRegisterClicked;
         m_backButton.clicked += OnBackClicked;
         m_goToRegisterLink.RegisterCallback<ClickEvent>(evt => OnToRegister());
         m_googleLoginBtn.clicked += OnGoogleLoginClicked;
-
-        // Initially show login UI
-        showLoginUI();
     }
 
-    private void OnGoogleLoginClicked()
-    {
-        m_oauthState = Guid.NewGuid().ToString();
-        Application.OpenURL($"http://localhost:5000/login/google?state={m_oauthState}");
 
-        //Start polling for the JWT
-        StartCoroutine(PollForToken(m_oauthState));
-    }
-
-    private IEnumerator PollForToken(string state)
+    private void Update()
     {
-        while (true)
+        if (m_isSpinning)
         {
-            using var req = UnityWebRequest.Get($"http://localhost:5000/login/status?state={state}");
-            yield return req.SendWebRequest();
-
-            if (req.result == UnityWebRequest.Result.Success &&
-                !string.IsNullOrEmpty(req.downloadHandler.text))
-            {
-                // got the JWT
-                var resp = JsonUtility.FromJson<TokenResponse>(req.downloadHandler.text);
-
-                m_characterApi.setToken(resp.token);
-                m_invetoryApi.setToken(resp.token);
-                StartCoroutine(m_characterApi.GetCharacters(json => showSelection(json)));
-                yield break;  // stop polling
-            }
-
-            // wait before next try
-            yield return new WaitForSeconds(1f);
+            m_spinnerAngle += 360f * Time.deltaTime;
+            m_spinner.style.rotate = new Rotate(new Angle(m_spinnerAngle % 360f, AngleUnit.Degree));
         }
     }
 
-    [Serializable]
-    private class TokenResponse
+    #region Google Login
+    private void OnGoogleLoginClicked()
     {
-        public string token;
+        var lr = new LoginRequest();
+        m_oauthState = lr.InitiateGoogleLogin();
+
+        ShowLoadingOverlay();
+
+        m_pollingCoroutine = StartCoroutine(lr.PollForToken(m_oauthState,
+                shouldCancel: () => m_cancelPolling,
+                onError: HandleGoogleLoginError,
+                onSuccess: HandleGoogleLoginSuccess));
     }
+
+    private void ShowLoadingOverlay()
+    {
+        m_cancelPolling = false;
+        m_loadingOverlay.style.display = DisplayStyle.Flex;
+        m_isSpinning = true;
+    }
+
+    private void HideLoadingOverlay()
+    {
+        m_loadingOverlay.style.display = DisplayStyle.None;
+        m_isSpinning = false;
+    }
+
+    private void HandleGoogleLoginError(string error)
+    {
+        HideLoadingOverlay();
+        m_errorContainer.style.display = DisplayStyle.Flex;
+        m_loginError.text = error;
+        m_loginError.style.display = DisplayStyle.Flex;
+    }
+
+    private void HandleGoogleLoginSuccess(string token)
+    {
+        HideLoadingOverlay();
+
+        // stash the token & fetch characters
+        m_characterApi.setToken(token);
+        m_invetoryApi.setToken(token);
+        StartCoroutine(m_characterApi.GetCharacters(json => showSelection(json)));
+    }
+
+    private void AbortLogin()
+    {
+        m_cancelPolling = true;
+        if (m_pollingCoroutine != null) StopCoroutine(m_pollingCoroutine);
+
+        LoginErrorReset();
+
+        m_loadingOverlay.style.display = DisplayStyle.None;
+        m_errorContainer.style.display = DisplayStyle.Flex;
+        m_loginError.text = "Connection aborted. Please try again.";
+        m_loginError.style.display = DisplayStyle.Flex;
+    }
+
+    #endregion
 
     private void showLoginUI(DisplayStyle regSucess = DisplayStyle.None)
     {
-        m_loginElement.style.display = DisplayStyle.Flex;
-        m_registerElement.style.display = DisplayStyle.None;
+
+
+        if (m_loginElement != null) m_loginElement.style.display = DisplayStyle.Flex;
+        if (m_registerElement != null) m_registerElement.style.display = DisplayStyle.None;
 
         m_loginError.style.display = DisplayStyle.None;
+
+        m_errorContainer.style.display = regSucess;
         m_regSuccess.style.display = regSucess;
+
+        ClearRegisterForm();
     }
 
     private void ShowRegisterUI()
     {
-        m_loginElement.style.display = DisplayStyle.None;
-        m_registerElement.style.display = DisplayStyle.Flex;
+        if (m_loginElement != null) m_loginElement.style.display = DisplayStyle.None;
+        if (m_registerElement != null) m_registerElement.style.display = DisplayStyle.Flex;
+        
+        // Clear login errors
+        m_errorContainer.style.display = DisplayStyle.None;
+        m_loginError.style.display = DisplayStyle.None;
+
+        // Clear register form and errors
+        ClearRegisterForm();
     }
 
+    private void ClearRegisterForm()
+    {
+        // Clear input fields
+        if (m_registerUsernameField != null) m_registerUsernameField.value = "";
+        if (m_registerPasswordField != null) m_registerPasswordField.value = "";
+        if (m_registerEmailField != null) m_registerEmailField.value = "";
+
+        // Hide all error messages
+        if (m_usernameError != null) m_usernameError.style.display = DisplayStyle.None;
+        if (m_emailError != null) m_emailError.style.display = DisplayStyle.None;
+        if (m_passwordError != null) m_passwordError.style.display = DisplayStyle.None;
+    }
+
+    //to fix. /* =========================================================================== */
     private void showSelection(string json)
     {
         m_loginElement.style.display = DisplayStyle.None;
-        m_registerElement.style.display = DisplayStyle.None;
-        m_characterCreation.style.display = DisplayStyle.Flex;
+        if (m_characterSelection != null) m_characterSelection.style.display = DisplayStyle.Flex;
+
         m_characterSelectionController.LoadCharacters(json);
     }
 
+    /* =========================================================================== */
 
     #region button events
     private void OnLoginClicked()
@@ -159,6 +246,7 @@ public class LoginController : MonoBehaviour
         StartCoroutine(lg.Login(username, password,
             (string error) =>
             {
+                m_errorContainer.style.display = DisplayStyle.Flex;
                 m_loginError.text = "password or username are incorrect";
                 m_loginError.style.display = DisplayStyle.Flex;
             },
@@ -172,6 +260,13 @@ public class LoginController : MonoBehaviour
                 }));
             }
         ));
+    }
+
+    private void LoginErrorReset()
+    {
+        m_errorContainer.style.display = DisplayStyle.None;
+        m_loginError.style.display = DisplayStyle.None;
+        m_regSuccess.style.display = DisplayStyle.None;
     }
 
     private void OnRegisterClicked()
@@ -240,6 +335,7 @@ public class LoginController : MonoBehaviour
 
     private bool validate(string username, string password, string email)
     {
+        ClearErrorFields();
         bool noError = true;
 
         // Username: only letters, length between 4 and 10
@@ -266,29 +362,44 @@ public class LoginController : MonoBehaviour
         return noError;
     }
 
-    #endregion
     private void ShowRegisterError(string field, string message)
     {
-        m_usernameError.style.display = DisplayStyle.None;
-        m_emailError.style.display = DisplayStyle.None;
-        m_passwordError.style.display = DisplayStyle.None;
-
         switch (field)
         {
             case "username":
-                m_usernameError.text = message;
-                m_usernameError.style.display = DisplayStyle.Flex;
+                if (m_usernameError != null)
+                {
+                    m_usernameError.text = message;
+                    m_usernameError.style.display = DisplayStyle.Flex;
+                }
                 break;
             case "email":
-                m_emailError.text = message;
-                m_emailError.style.display = DisplayStyle.Flex;
+                if (m_emailError != null)
+                {
+                    m_emailError.text = message;
+                    m_emailError.style.display = DisplayStyle.Flex;
+                }
                 break;
             case "password":
-                m_passwordError.text = message;
-                m_passwordError.style.display = DisplayStyle.Flex;
+                if (m_passwordError != null)
+                {
+                    m_passwordError.text = message;
+                    m_passwordError.style.display = DisplayStyle.Flex;
+                }
                 break;
         }
     }
+
+    private void ClearErrorFields()
+    {
+        // First hide all errors
+        if (m_usernameError != null) m_usernameError.style.display = DisplayStyle.None;
+        if (m_emailError != null) m_emailError.style.display = DisplayStyle.None;
+        if (m_passwordError != null) m_passwordError.style.display = DisplayStyle.None;
+    }
+
+
+    #endregion
 
     [System.Serializable]
     public class RegisterErrorResponse

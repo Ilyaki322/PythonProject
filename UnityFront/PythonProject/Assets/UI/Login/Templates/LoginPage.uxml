@@ -1,36 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
-<engine:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:engine="UnityEngine.UIElements"
-    xmlns:editor="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd">
-
-    <engine:VisualElement name="Login" class="login-panel">
-
-        <engine:Label text="Login" class="login-header" />
-
-        <!-- error / success messages -->
-        <engine:Label name="LoginError"   class="message error" />
-        <engine:Label name="RegSuccess"   class="message success" text="Registration Successful" />
-
-        <!-- inputs -->
-        <engine:TextField name="UsernameField" placeholder-text="Username" class="input-field" />
-        <engine:TextField name="PasswordField" placeholder-text="Password" password="true" class="input-field" />
-
-        <!-- buttons row -->
-        <engine:VisualElement class="button-row">
-          <engine:Button name="LoginButton" text="Login" class="btn-primary" />
-
-          <engine:Button name="GoogleLogin" class="btn-google">
-              <engine:VisualElement class="google-icon"/>
-              <engine:Label text="Login with Google" />
-          </engine:Button>
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Login/Uss/spinner.uss?fileID=7433441132597879392&amp;guid=fba2eaa723ea81e4389c3d9d7cd4d0e3&amp;type=3#spinner" />
+    <Style src="project://database/Assets/UI/Login/Uss/LoginPage.uss?fileID=7433441132597879392&amp;guid=0fa8aedb80e245b40b018811ef418b24&amp;type=3#LoginPage" />
+    <engine:VisualElement name="LoginRoot" class="login-root" style="flex-direction: column; justify-content: center;">
+        <engine:VisualElement name="Login" class="login-panel" style="justify-content: space-around; align-self: center; align-items: center; height: 75%; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; border-bottom-left-radius: 30px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;">
+            <engine:Label text="Login" class="login-header" />
+            <engine:VisualElement name="ErrorContainer" style="flex-grow: 1; flex-direction: row; justify-content: space-between; align-items: center; width: 100%; height: 100%; flex-wrap: nowrap; flex-basis: auto; display: none;">
+                <engine:Label name="RegSuccess" text="Registration successful!" class="message success" style="height: 57px;" />
+                <engine:Label name="LoginError" class="message error" />
+            </engine:VisualElement>
+            <engine:TextField name="UsernameField" placeholder-text="Username" class="input-field" />
+            <engine:TextField name="PasswordField" placeholder-text="Password" password="true" class="input-field" />
+            <engine:VisualElement class="button-row" style="flex-shrink: 0;">
+                <engine:Button name="LoginButton" text="Login" class="btn-primary" />
+                <engine:Button name="GoogleLogin" class="btn-google">
+                    <engine:VisualElement class="google-icon" />
+                    <engine:Label text="Login with Google" />
+                </engine:Button>
+            </engine:VisualElement>
+            <engine:VisualElement class="register-row" style="justify-content: center; margin-top: 2px; margin-right: 2px; margin-bottom: 2px; margin-left: 2px; align-self: flex-start;">
+                <engine:Label text="Not registered yet?" class="register-text" style="margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; -unity-text-align: middle-left;" />
+                <engine:Label name="GoToRegisterButton" text="Register here" focusable="true" enable-rich-text="true" class="btn-link" style="margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; -unity-text-align: middle-left;" />
+            </engine:VisualElement>
         </engine:VisualElement>
-
-        <engine:VisualElement class="register-row">
-            <engine:Label text="Not registered yet?" class="register-text" />
-            <engine:Label name="GoToRegisterButton" text="Register here" class="btn-link" focusable="true" />
+        <engine:VisualElement name="LoadingOverlay" class="overlay" style="display: none; flex-grow: 1; justify-content: space-around; align-items: center; flex-direction: column; align-self: center; width: 100%; height: 100%;">
+            <engine:VisualElement name="VisualElement" class="overlay-frame" style="width: 50%; height: 25%; justify-content: space-between;">
+                <engine:VisualElement name="Spinner" class="spinner" />
+                <engine:Label text="Please complete login in your browser..." class="overlay-message" />
+                <engine:Button name="OverlayCancel" text="Cancel" class="btn-cancel" />
+            </engine:VisualElement>
         </engine:VisualElement>
-
     </engine:VisualElement>
 </engine:UXML>

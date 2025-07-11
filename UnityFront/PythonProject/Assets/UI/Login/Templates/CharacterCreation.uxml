@@ -1,69 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?>
-<engine:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:engine="UnityEngine.UIElements"
-    xmlns:editor="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd">
-
-  <!-- Character Creation Page -->
-  <Style src="project://database/Assets/UI/Login/Uss/CharacterCreation.uss#CharacterCreation" />
-
-  <engine:VisualElement name="CharacterCreation" class="creation-panel">
-    <engine:VisualElement name="ButtonsContainer" class="buttons-container">
-
-      <!-- Slot rows -->
-      <engine:VisualElement class="slot-row">
-        <engine:Button name="HelmetLeftButton" class="slot-button arrow-left" />
-        <engine:Label class="slot-label" text="Helmet" />
-        <engine:Button name="HelmetRightButton" class="slot-button arrow-right" />
-      </engine:VisualElement>
-
-      <engine:VisualElement class="slot-row">
-        <engine:Button name="HairLeftButton" class="slot-button arrow-left" />
-        <engine:Label class="slot-label" text="Hair" />
-        <engine:Button name="HairRightButton" class="slot-button arrow-right" />
-      </engine:VisualElement>
-
-      <engine:VisualElement class="slot-row">
-        <engine:Button name="BeardLeftButton" class="slot-button arrow-left" />
-        <engine:Label class="slot-label" text="Beard" />
-        <engine:Button name="BeardRightButton" class="slot-button arrow-right" />
-      </engine:VisualElement>
-
-      <engine:VisualElement class="slot-row">
-        <engine:Button name="ArmorLeftButton" class="slot-button arrow-left" />
-        <engine:Label class="slot-label" text="Armor" />
-        <engine:Button name="ArmorRightButton" class="slot-button arrow-right" />
-      </engine:VisualElement>
-
-      <engine:VisualElement class="slot-row">
-        <engine:Button name="PantsLeftButton" class="slot-button arrow-left" />
-        <engine:Label class="slot-label" text="Pants" />
-        <engine:Button name="PantsRightButton" class="slot-button arrow-right" />
-      </engine:VisualElement>
-
-      <engine:VisualElement class="slot-row">
-        <engine:Button name="WeaponLeftButton" class="slot-button arrow-left" />
-        <engine:Label class="slot-label" text="Weapon" />
-        <engine:Button name="WeaponRightButton" class="slot-button arrow-right" />
-      </engine:VisualElement>
-
-      <engine:VisualElement class="slot-row">
-        <engine:Button name="BackLeftButton" class="slot-button arrow-left" />
-        <engine:Label class="slot-label" text="Back" />
-        <engine:Button name="BackRightButton" class="slot-button arrow-right" />
-      </engine:VisualElement>
-
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Login/Uss/CharacterCreation.uss?fileID=7433441132597879392&amp;guid=c8039e58216067b4aab56e2b4b4c16b5&amp;type=3#CharacterCreation" />
+    <engine:VisualElement name="CharacterCreation" class="creation-panel" style="display: flex; width: 100%;">
+        <engine:VisualElement name="ButtonsContainer" class="buttons-container" style="align-items: stretch; justify-content: center; align-content: center; height: 69%; top: 18%;">
+            <engine:VisualElement class="slot-row space-between">
+                <engine:Button name="HelmetLeftButton" class="slot-button arrow-left" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+                <engine:Label text="Helmet" class="slot-label" />
+                <engine:Button name="HelmetRightButton" class="slot-button arrow-right" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+            </engine:VisualElement>
+            <engine:VisualElement class="slot-row space-between">
+                <engine:Button name="HairLeftButton" class="slot-button arrow-left" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+                <engine:Label text="Hair" class="slot-label" />
+                <engine:Button name="HairRightButton" class="slot-button arrow-right" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+            </engine:VisualElement>
+            <engine:VisualElement class="slot-row space-between">
+                <engine:Button name="BeardLeftButton" class="slot-button arrow-left" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+                <engine:Label text="Beard" class="slot-label" />
+                <engine:Button name="BeardRightButton" class="slot-button arrow-right" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+            </engine:VisualElement>
+            <engine:VisualElement class="slot-row space-between">
+                <engine:Button name="ArmorLeftButton" class="slot-button arrow-left" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+                <engine:Label text="Armor" class="slot-label" />
+                <engine:Button name="ArmorRightButton" class="slot-button arrow-right" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+            </engine:VisualElement>
+            <engine:VisualElement class="slot-row space-between">
+                <engine:Button name="PantsLeftButton" class="slot-button arrow-left" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+                <engine:Label text="Pants" class="slot-label" />
+                <engine:Button name="PantsRightButton" class="slot-button arrow-right" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+            </engine:VisualElement>
+            <engine:VisualElement class="slot-row space-between">
+                <engine:Button name="WeaponLeftButton" class="slot-button arrow-left" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+                <engine:Label text="Weapon" class="slot-label" />
+                <engine:Button name="WeaponRightButton" class="slot-button arrow-right" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+            </engine:VisualElement>
+            <engine:VisualElement class="slot-row space-between">
+                <engine:Button name="BackLeftButton" class="slot-button arrow-left" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+                <engine:Label text="Back" class="slot-label" />
+                <engine:Button name="BackRightButton" class="slot-button arrow-right" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement name="VisualElement" class="create-panel" style="left: auto;">
+            <engine:Label text="New Character" class="create-header" style="top: -35%; left: -87px;" />
+            <engine:VisualElement class="create-row" style="bottom: -35%; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); left: -13%;">
+                <engine:VisualElement style="flex-grow: 1; flex-direction: row; width: 241px; justify-content: space-around; align-items: center;">
+                    <engine:Button name="CreateButton" text="Create" class="btn-create btn-all" />
+                    <engine:Button text="Cancel" name="CancelButton" class="btn-all btn-create" style="background-color: rgb(253, 193, 127);" />
+                </engine:VisualElement>
+                <engine:TextField name="CharacterNameField" placeholder-text="Enter name" class="input-name" style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; border-left-color: rgba(0, 0, 0, 0.37); border-right-color: rgba(0, 0, 0, 0.37); border-top-color: rgba(0, 0, 0, 0.37); border-bottom-color: rgba(0, 0, 0, 0.37); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px;" />
+            </engine:VisualElement>
+        </engine:VisualElement>
     </engine:VisualElement>
-
-    <!-- Creation panel -->
-    <engine:VisualElement class="create-panel">
-      <engine:Label class="create-header" text="New Character" />
-      <engine:VisualElement class="create-row">
-        <engine:Button name="CreateButton" text="Create" class="btn-create" />
-        <engine:TextField name="CharacterNameField" placeholder-text="Enter name" class="input-name" />
-      </engine:VisualElement>
-    </engine:VisualElement>
-  </engine:VisualElement>
-
 </engine:UXML>

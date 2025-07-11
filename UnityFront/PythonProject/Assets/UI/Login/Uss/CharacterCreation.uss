@@ -1,77 +1,94 @@
-/* CharacterCreationPage.uss */
-
 .creation-panel {
-  flex-direction: row;
-  height: 100%;
-  align-items: stretch;
-  justify-content: flex-start;
-  flex-grow: 1;
-  display: none; /* toggled in code */
+    flex-direction: row;
+    height: 100%;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-grow: 1;
+    display: none;
 }
 
 .buttons-container {
-  padding-left: 30px;
+    padding-left: 30px;
 }
 
 .slot-row {
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  flex-grow: 1;
-  margin-bottom: 16px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-grow: 1;
+    margin-bottom: 16px;
 }
 
 .slot-button {
-  background-color: transparent;
-  width: 59px;
-  height: 28px;
+    background-color: transparent;
+    width: 59px;
+    height: 28px;
 }
 
 .arrow-left {
-  /* left-arrow image */
-  background-image: url("project://database/Assets/Sprites/Arrow2.png#Arrow2_0");
-  background-repeat: no-repeat;
-  background-position: center;
+    background-image: url("project://database/Assets/Sprites/Arrow2.png?fileID=-353356149577196032&guid=0491cea92efb8ba46b207028c2e0704b&type=3#Arrow2_0");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .arrow-right {
-  /* right-arrow image */
-  background-image: url("project://database/Assets/Sprites/Arrow.png#Arrow_0");
-  background-repeat: no-repeat;
-  background-position: center;
+    background-image: url("project://database/Assets/Sprites/Arrow.png?fileID=-4346244404228752641&guid=323d710818558ab49a8c7c479da794e7&type=3#Arrow_0");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .slot-label {
-  font-size: 25px;
-  margin: 0 10px;
+    font-size: 25px;
+    margin: 0 10px;
 }
 
 .create-panel {
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  padding-right: 100px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding-right: 100px;
 }
 
 .create-header {
-  font-size: 50px;
-  margin-bottom: 20px;
+    font-size: 50px;
+    margin-bottom: 20px;
 }
 
 .create-row {
-  flex-direction: column-reverse;
-  align-items: center;
+    flex-direction: column-reverse;
+    align-items: center;
 }
 
 .btn-create {
-  font-size: 20px;
-  margin-top: 10px;
+    font-size: 20px;
+    margin-top: 10px;
 }
 
 .input-name {
-  font-size: 40px;
-  width: 250px;
-  height: 56px;
-  margin-top: 10px;
+    font-size: 40px;
+    width: 250px;
+    height: 56px;
+    margin-top: 10px;
+}
+
+.space-between {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-all {
+    background-color: rgb(146, 226, 161);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-left-color: rgba(1, 99, 98, 0.47);
+    border-right-color: rgba(1, 99, 98, 0.47);
+    border-top-color: rgba(1, 99, 98, 0.47);
+    border-bottom-color: rgba(1, 99, 98, 0.47);
 }

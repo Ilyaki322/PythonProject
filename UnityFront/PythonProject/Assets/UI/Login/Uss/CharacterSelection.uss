@@ -1,25 +1,66 @@
-/* CharacterSelectionPage.uss */
-
-.selection-panel {
+﻿
+.selection-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;       /* <— this is mandatory! */
+}
+/* Top region: side-by-side panels */
+.selection-content {
+  display: flex;
+  flex: 1;                    /* takes all space above the bar */
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
-  flex-grow: 1;
-  display: none;
+  padding: 20px;
 }
 
-.character-list {
-  flex-basis: 65%;
-  flex-grow: 1;
-  margin-right: 20px;
-}
-
-.btn-play {
-  background-color: #d4e20e;
-  color: #333;
-  padding: 20px 40px;
-  font-size: 36px;
+/* LEFT: fixed 20% width, vertical-centered list */
+.left-panel {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(0,0,0,0.4);
   border-radius: 8px;
-  align-self: center;
+  padding: 10px;
+  overflow: scroll;
 }
+
+/* CENTER: preview takes all the “gap” */
+.preview-panel {
+  flex: 1;
+  margin: 0 20px;
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* RIGHT spacer: same width as left */
+.right-panel {
+  width: 20%;
+}
+
+/* Bottom bar: fixed 60px tall */
+.action-bar {
+  flex-shrink: 0;   /* never collapse */
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: rgba(0,0,0,0.3);
+}
+
+/* Buttons */
+.btn-delete, .btn-play, .btn-logout {
+  min-width: 100px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 18px;
+}
+.btn-delete { background-color: rgba(220,100,80,0.8); color: #fff; }
+.btn-play   { background-color: #C8C8C8;                 color: #000; }
+.btn-logout { background-color: rgba(200,50,50,0.8);     color: #fff; }
+

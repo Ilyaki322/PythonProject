@@ -1,123 +1,269 @@
-﻿/* === Full-screen black background & centering === */
-.page-container {
-  position: absolute;
-  top: 0; bottom: 0;
-  left: 0; right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
+.login-root {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(32, 70, 120, 0.77);
+    border-left-color: rgb(55, 49, 49);
+    border-right-color: rgb(55, 49, 49);
+    border-top-color: rgb(55, 49, 49);
+    border-bottom-color: rgb(55, 49, 49);
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
 }
 
-.login-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 500px;
-  padding: 30px;
-  background-color: #222;
-  border-radius: 8px;
-}
-
-/* Header */
 .login-header {
-  font-size: 48px;
-  margin-bottom: 20px;
-  color: white;
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: white;
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
 }
 
 .message {
-  width: 100%;
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: white;
+    width: 100%;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: white;
+    -unity-text-align: middle-center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    white-space: normal;
+    overflow: visible;
+    display: none;
 }
-.message.error   { color: #cc0000; display: none; }
-.message.success { color: #00aa00; display: none; }
 
-/* Input fields */
+.message.error {
+    color: rgb(255, 107, 107);
+    background-color: rgba(255, 107, 107, 0.1);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-color: rgba(255, 107, 107, 0.3);
+    border-right-color: rgba(255, 107, 107, 0.3);
+    border-bottom-color: rgba(255, 107, 107, 0.3);
+    border-left-color: rgba(255, 107, 107, 0.3);
+}
+
+.message.success {
+    color: rgb(81, 207, 102);
+    background-color: rgba(81, 207, 102, 0.1);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-color: rgba(81, 207, 102, 0.3);
+    border-right-color: rgba(81, 207, 102, 0.3);
+    border-bottom-color: rgba(81, 207, 102, 0.3);
+    border-left-color: rgba(81, 207, 102, 0.3);
+}
+
 .input-field {
-  width: 100%;
-  margin-top: 8px; margin-bottom: 8px;
-  padding: 10px;
-  font-size: 18px;
-  background-color: #333;
-  color: white;
-
-  /* explicit borders instead of shorthand */
-  border-top-width: 1px;    border-top-color: #555;
-  border-right-width: 1px;  border-right-color: #555;
-  border-bottom-width: 1px; border-bottom-color: #555;
-  border-left-width: 1px;   border-left-color: #555;
-  border-radius: 4px;
-
-  /* placeholder pseudo not supported, so you can't style placeholder text here */
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: black;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-top-color: rgba(255, 255, 255, 0.2);
+    border-right-color: rgba(255, 255, 255, 0.2);
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+    border-left-color: rgba(255, 255, 255, 0.2);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
+.input-field:focus {
+    border-top-color: rgb(102, 126, 234);
+    border-right-color: rgb(102, 126, 234);
+    border-bottom-color: rgb(102, 126, 234);
+    border-left-color: rgb(102, 126, 234);
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.input-field:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+}
 
 .button-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
-  margin-top: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
-
-/* Primary login button */
 .btn-primary {
-  background-color: #7378ec;
-  color: white;
-  padding-top: 10px; padding-bottom: 10px;
-  padding-left: 20px; padding-right: 20px;
-  font-size: 18px;
-  border-radius: 4px;
+    background-color: rgb(102, 126, 234);
+    color: white;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 24px;
+    padding-right: 24px;
+    font-size: 16px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin-right: 10px;
+    flex-grow: 1;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    -unity-font-style: bold;
 }
 
-/* Google login button */
+.btn-primary:hover {
+    background-color: rgb(90, 103, 216);
+}
+
+.btn-primary:active {
+    background-color: rgb(76, 81, 191);
+}
+
 .btn-google {
-  display:           flex;
-  flex-direction:    row;
-  align-items:       center;
-  background-color:  #00aeff;
-  color:             white;
-  padding:           10px 20px;
-  font-size:         18px;
-  border-radius:     4px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: rgb(51, 51, 51);
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 16px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    flex-grow: 1;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-top-color: rgb(224, 224, 224);
+    border-right-color: rgb(224, 224, 224);
+    border-bottom-color: rgb(224, 224, 224);
+    border-left-color: rgb(224, 224, 224);
 }
 
-/* Google icon inside btn-google */
+.btn-google:hover {
+    background-color: rgb(245, 245, 245);
+    border-top-color: rgb(208, 208, 208);
+    border-right-color: rgb(208, 208, 208);
+    border-bottom-color: rgb(208, 208, 208);
+    border-left-color: rgb(208, 208, 208);
+}
+
 .google-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
-  background-image:    url("/Assets/UI/Icons/google-icon.png");
-  background-repeat:   no-repeat;
-  background-size:     contain;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    background-image: url("project://database/Assets/UI/Icons/google-icon.png?fileID=1934367633628144196&guid=0a507cc76695fde49b1286fad743ca6b&type=3#google-icon_0");
 }
 
-/* Register-link row (below buttons) */
 .register-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  margin-top: 16px;
-}
-.register-text {
-  color: white;
-  margin-right: 4px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 16px;
 }
 
-/* Styled Label as link instead of Button */
+.register-text {
+    color: rgb(255, 255, 255);
+    margin-right: 8px;
+    font-size: 14px;
+}
+
 .btn-link {
-  color: white;
-  font-size: 16px;
-  /* explicit bottom border instead of shorthand */
-  border-bottom-width: 1px; 
-  border-bottom-color: white;
-  padding-bottom: 2px;
-  /* -unity-text-align is supported if needed: */
-  /* -unity-text-align: center; */
+    color: rgb(143, 160, 238);
+    font-size: 14px;
+    border-bottom-width: 2px;
+    border-bottom-color: rgb(102, 126, 234);
+    padding-bottom: 6px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-left-width: 2px;
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.btn-link:hover {
+    color: rgb(90, 103, 216);
+    border-bottom-color: rgb(90, 103, 216);
+}
+
+.login-panel {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    min-width: 320px;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-self: center;
+    align-content: center;
+    height: 69%;
+    background-color: rgba(0, 0, 0, 0.96);
+    border-top-left-radius: 58px;
+    border-top-right-radius: 58px;
+    border-bottom-right-radius: 58px;
+    border-bottom-left-radius: 58px;
+    border-top-width: 31px;
+    border-right-width: 31px;
+    border-bottom-width: 31px;
+    border-left-width: 31px;
+}
+
+.login-root {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgba(0, 0, 0, 0);
+    background-position-x: 0;
+    background-position-y: 0;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.padding {
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
