@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -23,7 +24,12 @@ public class GameController : MonoBehaviour
     private VisualElement m_container;
     private VisualElement m_combatUI;
 
-    private VisualElement m_timeFill; 
+    private VisualElement m_timeFill;
+    private VisualElement m_healthFillPlayer1;
+    private VisualElement m_healthFillPlayer2;
+
+    private Image m_shieldLeft;
+    private Image m_shieldRight;
 
     private Button m_findGameButton;
     private Button m_ActionButton1;
@@ -64,6 +70,11 @@ public class GameController : MonoBehaviour
         m_combatUI = root.Q<VisualElement>("CombatUI");
 
         m_timeFill = root.Q<VisualElement>("TimeFill");
+        m_healthFillPlayer1 = root.Q<VisualElement>("HealthFill1");
+        m_healthFillPlayer2 = root.Q<VisualElement>("HealthFill2");
+
+        m_shieldLeft = root.Q<Image>("ShieldLeft");
+        m_shieldRight = root.Q<Image>("ShieldRight");
 
         m_ActionButton1 = root.Q<Button>("Button1");
         m_ActionButton2 = root.Q<Button>("Button2");
@@ -73,9 +84,8 @@ public class GameController : MonoBehaviour
         m_namePlayer1 = root.Q<Label>("PlayerName1");
         m_namePlayer2 = root.Q<Label>("PlayerName2");
         m_healthPlayer1 = root.Q<Label>("PlayerHealth1");
-        m_healthPlayer2 = root.Q<Label>("PlayerHealth1");
+        m_healthPlayer2 = root.Q<Label>("PlayerHealth2");
         m_statusBar = root.Q<Label>("StatusLabel");
-
 
         m_findGameButton = root.Q<Button>("FindButton");
         m_findGameButton.clicked += onFind;
@@ -204,6 +214,32 @@ public class GameController : MonoBehaviour
             m_gameStatus = status_t.EnemyTurn;
             m_statusBar.text = "Enemy Turn";
             activateButtons(false);
+        }
+
+        m_playerController.Init(m_healthPlayer1, m_healthFillPlayer1, m_enemyController, this);
+        m_enemyController.Init(m_healthPlayer2, m_healthFillPlayer2, m_playerController, this);
+    }
+
+    public void TurnShieldOn()
+    {
+        if (m_gameStatus == status_t.PlayerTurn)
+        {
+            m_shieldLeft.AddToClassList("ShieldIcon--enabled");
+        }
+        else
+        {
+            m_shieldRight.AddToClassList("ShieldIcon--enabled");
+        }
+    }
+
+    public void TurnShieldOff()
+    {
+        if (m_gameStatus == status_t.PlayerTurn) {
+            m_shieldRight.RemoveFromClassList("ShieldIcon--enabled");
+        }
+        else
+        {
+            m_shieldLeft.RemoveFromClassList("ShieldIcon--enabled");
         }
     }
 }

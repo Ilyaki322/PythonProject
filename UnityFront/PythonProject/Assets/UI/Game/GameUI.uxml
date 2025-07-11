@@ -14,15 +14,17 @@
             <engine:VisualElement class="Container LeftPlayer">
                 <engine:Label name="PlayerName1" text="playernametest" class="NameLabel Left" />
                 <engine:VisualElement class="HealhBackground">
-                    <engine:VisualElement class="HealthFill" />
+                    <engine:VisualElement name="HealthFill1" class="HealthFill" />
                     <engine:Label name="PlayerHealth1" text="100/100" class="HealthLabel" />
+                    <engine:Image name="ShieldLeft" enabled="true" class="ShieldIcon ShieldLeft" />
                 </engine:VisualElement>
             </engine:VisualElement>
             <engine:VisualElement class="Container RightPlayer">
                 <engine:Label name="PlayerName2" text="playernametest" class="NameLabel Right" />
                 <engine:VisualElement class="HealhBackgroundRight">
-                    <engine:VisualElement class="HealthFill" style="flex-grow: 0;" />
+                    <engine:VisualElement name="HealthFill2" class="HealthFill" style="flex-grow: 0;" />
                     <engine:Label name="PlayerHealth2" text="100/100" class="HealthLabel" />
+                    <engine:Image name="ShieldRight" enabled="true" class="ShieldIcon ShieldRight" />
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>

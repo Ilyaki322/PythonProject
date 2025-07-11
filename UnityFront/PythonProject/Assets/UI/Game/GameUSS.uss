@@ -98,3 +98,29 @@ VisualElement {}
 	font-size: 25px;
 	color: white;
 }
+
+.ShieldIcon {
+	position: absolute;
+	--unity-image: url("../../../Assets/Sprites/Shield.png");
+
+	transition: width 1s ease-out, height 1s ease-out, opacity  1s ease-out;
+	height: 96px;
+	width: 96px;
+	opacity: 0;
+}
+
+.ShieldIcon.ShieldLeft {
+	left: 220px;
+	top: 3px;
+}
+
+.ShieldIcon.ShieldRight {
+	left: -33px;
+	top: 3px;
+}
+
+.ShieldIcon.ShieldIcon--enabled {
+	height: 32px;
+	width: 32px;
+	opacity: 1.0;
+}
