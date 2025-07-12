@@ -57,6 +57,7 @@ public class CharacterSelectionController : MonoBehaviour
 
     public void LoadCharacters(string json)
     {
+        m_characterList = new CharacterDTO[5];
         CharacterListWrapper wrapper = JsonUtility.FromJson<CharacterListWrapper>(json);
         if (wrapper.count > 5) wrapper.count = 5;
         if (wrapper.count > 0)
@@ -104,12 +105,12 @@ public class CharacterSelectionController : MonoBehaviour
     {
         m_selectionElement.style.display = DisplayStyle.Flex;
         m_creationElement.style.display = DisplayStyle.None;
-        m_dummy.SetActive(true);
-        m_creator.Generate(m_characterList[lastClickedIndex]);
+        m_dummy.SetActive(false);
     }
 
     private void onLogoutclick()
     {
+        m_dummy.SetActive(false);
         m_characterApi.Logout();
         m_loginElement.style.display = DisplayStyle.Flex;
         m_selectionElement.style.display = DisplayStyle.None;
@@ -121,17 +122,19 @@ public class CharacterSelectionController : MonoBehaviour
         
         if (selectedChar == null)
         {
+
             lastClickedIndex = m_charList.selectedIndex;
+            m_creator.Generate(new CharacterDTO());
             m_selectionElement.style.display = DisplayStyle.None;
             m_creationElement.style.display = DisplayStyle.Flex;
         }
         else
         {
+            m_selectedCharID = selectedChar.id;
             m_invetoryApi.setCharID(selectedChar.id);
             m_creator.Generate(selectedChar);
         }
 
-        m_selectedCharID = selectedChar.id;
         m_dummy.SetActive(true);
     }
 

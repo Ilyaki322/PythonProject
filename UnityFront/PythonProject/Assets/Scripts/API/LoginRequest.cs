@@ -39,19 +39,23 @@ public class LoginRequest
         return state;
     }
 
-    public IEnumerator PollForToken(string state,Func<bool> shouldCancel, Action<string> onError, Action<string> onSuccess)
+    public IEnumerator PollForToken(string state, Func<bool> shouldCancel,
+                                Action<string> onError, Action<string> onSuccess)
     {
         while (!shouldCancel())
         {
             using var req = UnityWebRequest.Get($"{BaseUrl}/login/status?state={state}");
             yield return req.SendWebRequest();
 
-            if (req.result == UnityWebRequest.Result.Success &&
-                !string.IsNullOrEmpty(req.downloadHandler.text))
+            if (req.result == UnityWebRequest.Result.Success)
             {
-                var tr = JsonUtility.FromJson<TokenResponse>(req.downloadHandler.text);
-                onSuccess(tr.token);
-                yield break;
+                if (!string.IsNullOrEmpty(req.downloadHandler.text))
+                {
+                    var tr = JsonUtility.FromJson<TokenResponse>(req.downloadHandler.text);
+                    onSuccess(tr.token);
+                    yield break;
+                }
+                // else 204: keep waiting
             }
             else if (req.result == UnityWebRequest.Result.ConnectionError ||
                      req.result == UnityWebRequest.Result.ProtocolError)
@@ -60,9 +64,9 @@ public class LoginRequest
                 yield break;
             }
 
-            // wait a second before polling again
             yield return new WaitForSeconds(1f);
         }
+        onError("Login canceled.");
     }
 
     [System.Serializable]

@@ -1,6 +1,7 @@
 import re
 import os
 
+from flask import current_app
 from db import db, bcrypt
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
@@ -8,16 +9,21 @@ from models.user import User
 
 
 def authenticate_or_create_google_user(id_token_str: str):
+    if not id_token_str:
+        return {"success": False, "message": "Missing ID token"}
+
     try:
-        idinfo = id_token.verify_oauth2_token(
+        id_info = id_token.verify_oauth2_token(
             id_token_str,
             google_requests.Request(),
-            os.getenv("GOOGLE_CLIENT_ID")
+            current_app.config["GOOGLE_CLIENT_ID"],
+            clock_skew_in_seconds = 10
         )
-    except ValueError:
+    except ValueError as e:
+        current_app.logger.error(f"ID token verification failed: {e}")
         return {"success": False, "message": "Invalid Google token"}
 
-    email = idinfo.get("email")
+    email = id_info.get("email")
     if not email:
         return {"success": False, "message": "Google token missing email"}
 

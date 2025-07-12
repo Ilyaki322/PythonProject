@@ -176,7 +176,7 @@ public class LoginController : MonoBehaviour
     {
         m_cancelPolling = true;
         if (m_pollingCoroutine != null) StopCoroutine(m_pollingCoroutine);
-
+        m_oauthState = null;
         LoginErrorReset();
 
         m_loadingOverlay.style.display = DisplayStyle.None;
