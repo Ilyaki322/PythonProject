@@ -29,6 +29,7 @@ Frontend/frontend/yarn-error.log*
 Frontend/frontend/.DS_Store
 
 ### Flask (Backend/flaskProject)
+**/__pycache__/
 Backend/flaskProject/__pycache__/
 Backend/flaskProject/*.py[cod]
 Backend/flaskProject/env/
