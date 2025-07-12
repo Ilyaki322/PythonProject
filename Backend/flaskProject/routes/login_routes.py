@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from service.user_service import authenticate_user, register_user, get_users, set_deleted
+from service.stats_service import *
 from flask_jwt_extended import create_access_token, jwt_required
 from errors.validators import validate_user_delete
 
@@ -73,3 +74,9 @@ def recover_user_route():
     validate_user_delete(data)
 
     return set_deleted(data, False), 200
+
+
+@login_route.route('/user_data/<user_id>', methods=['GET'])
+@jwt_required()
+def get_user_data_route(user_id):
+    return export_user_matches_to_excel(user_id)
