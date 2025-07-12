@@ -112,7 +112,8 @@ def start_match(player1, player2):
     json1 = {"player_character": char1, "enemy_character": char2, "is_starting": player1_starts}
     json2 = {"player_character": char2, "enemy_character": char1, "is_starting": not player1_starts}
 
-    ongoing_matches.append(GameManager(player1[0], player2[0], player1_starts, _socketio))
+    ongoing_matches.append(GameManager(player1[0], player2[0], player1_starts,
+                                       connected_players[player1[0]], connected_players[player2[0]]))
 
     emit("MatchFound", json1, to=player1[0])
     emit("MatchFound", json2, to=player2[0])

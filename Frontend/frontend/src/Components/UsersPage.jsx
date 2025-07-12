@@ -19,6 +19,7 @@ const UsersPage = () => {
     const [showUserInfo, setShowUserInfo] = useState(false);
     const [selectedUserIndex, setSelectedUserIndex] = useState(null);
     const [deleteError, setDeleteError] = useState(null);
+    const [excelError, setExcelError] = useState(null);
 
     /**
      * Renders a single bootstrap table entry.
@@ -43,7 +44,7 @@ const UsersPage = () => {
                 </td>
                 <td>
                     <div className="d-flex gap-2 justify-content-center">
-                        <IconButton icon="bi bi-download" className='bg-warning' onClick={() => { }} />
+                        <IconButton icon="bi bi-download" className='bg-warning' onClick={() => downloadUserStats(user.id)} />
                     </div>
                 </td>
             </tr>);
@@ -84,10 +85,44 @@ const UsersPage = () => {
             });
     }
 
-    if (error || deleteError) {
+    /**
+     * downloads an excel file with user stats on it
+     * @param {int} userId - id of the user
+     */
+    function downloadUserStats(userId) {
+        const token = sessionStorage.getItem('jwt');
+
+        fetch(`http://localhost:5000/user_data/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to download file');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `user_${userId}_matches.xlsx`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                setExcelError("Failed to download data");
+            });
+    }
+
+    if (error || deleteError || excelError) {
         return (
             <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-                <AlertComponent show='true' onHide={() => { }} msg={error || deleteError} />
+                <AlertComponent show='true' onHide={() => { }} msg={error || deleteError || excelError} />
             </div>
         )
     }
@@ -104,7 +139,7 @@ const UsersPage = () => {
 
     if (showUserInfo) {
         return (
-            <UserInfo user={data.users[selectedUserIndex]} onBack={() => setShowUserInfo(false)} />
+            <UserInfo user={data[selectedUserIndex]} onBack={() => setShowUserInfo(false)} />
         )
     }
 
@@ -122,7 +157,7 @@ const UsersPage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.users?.map((user, index) => renderTable(user, index))}
+                        {data?.map((user, index) => renderTable(user, index))}
                     </tbody>
                 </Table>
             </div>
