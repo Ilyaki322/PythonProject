@@ -102,6 +102,15 @@ def init_socket_handlers(app_instance, socketio_instance):
             print("ERROR, USER NOT IN MATCH")
         ongoing_matches.remove(game)
 
+    @_socketio.on('SkipTurn')
+    def handle_skip():
+        user_sid = request.sid
+        game = find_match(user_sid)
+        if game:
+            game.on_skip_turn(user_sid)
+        else:
+            print("ERROR, USER NOT IN MATCH")
+
 
 def start_match(player1, player2):
     print("MATCH FOUND!")

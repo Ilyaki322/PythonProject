@@ -141,8 +141,14 @@ public class GameController : MonoBehaviour
         {
             m_counter -= Time.deltaTime;
             float timerRatio = m_counter / m_maxTurnTimer;
-            float timerPercent = Mathf.Lerp(5, 100, timerRatio);
+            float timerPercent = Mathf.Lerp(0, 100, timerRatio);
             m_timeFill.style.width = Length.Percent(timerPercent);
+        }
+
+        if (m_gameStatus == status_t.PlayerTurn && m_counter < 0)
+        {
+            NextTurn();
+            m_socketManager.OnSkipTurn();
         }
     }
 

@@ -57,6 +57,14 @@ public class SocketManager : MonoBehaviour
                 m_gameController.OnLose();
             });
         });
+
+        m_socket.On("SkipTurn", (res) =>
+        {
+            MainThreadDispatcher.Instance.Enqueue(() =>
+            {
+                m_gameController.NextTurn();
+            });
+        });
     }
 
     public void Connect(Action onSuccess)
@@ -101,6 +109,7 @@ public class SocketManager : MonoBehaviour
     public void OnDefend() => m_socket.Emit("Defend");
     public void OnItemUse() => m_socket.Emit("UseItem");
     public void OnFourthButton() => m_socket.Emit("EndGame");
+    public void OnSkipTurn() => m_socket.Emit("SkipTurn");
 
     async void OnDestroy()
     {
