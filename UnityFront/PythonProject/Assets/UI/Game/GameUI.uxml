@@ -1,9 +1,9 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Game/GameUSS.uss?fileID=7433441132597879392&amp;guid=79468de2ebde4264da9d344272add9ae&amp;type=3#GameUSS" />
-    <engine:VisualElement name="Container" class="Container" style="display: flex;">
+    <engine:VisualElement name="Container" class="Container" style="display: flex; -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;);">
         <engine:Button text="Find Match" name="FindButton" enabled="true" class="UIButton" />
     </engine:VisualElement>
-    <engine:VisualElement name="CombatUI" class="Container" style="display: none;">
+    <engine:VisualElement name="CombatUI" class="Container" style="display: none; -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;);">
         <engine:VisualElement class="Container StatusContainer">
             <engine:Label name="StatusLabel" text="test" class="Header" />
             <engine:VisualElement class="TimerBackground">
@@ -38,7 +38,7 @@
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
-    <engine:VisualElement name="EndGameContainer" class="Container EndGameContainer" style="display: none;">
+    <engine:VisualElement name="EndGameContainer" class="Container EndGameContainer" style="display: none; -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;);">
         <engine:Label text="Result" name="ResultLabel" class="Header" />
         <engine:Button text="Continue" name="ContinueButton" class="ActionButton" />
     </engine:VisualElement>
