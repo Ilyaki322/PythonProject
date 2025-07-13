@@ -25,6 +25,11 @@ class GameManager:
         self.is_player1_turn = not self.is_player1_turn
         emit("Defend", to=dest)
 
+    def on_skip_turn(self, user_sid):
+        dest = self.player2_sid if self.is_player1_turn else self.player1_sid
+        self.is_player1_turn = not self.is_player1_turn
+        emit("SkipTurn", to=dest)
+
     def on_use_item(self, user_sid):
         dest = self.player2_sid if self.is_player1_turn else self.player1_sid
         self.is_player1_turn = not self.is_player1_turn
