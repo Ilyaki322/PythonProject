@@ -6,6 +6,8 @@
     <Style src="project://database/Assets/UI/Login/Uss/MainMenu.uss?fileID=7433441132597879392&amp;guid=d18ba038bb28f2a4188c89ccddf32cf6&amp;type=3#MainMenu" />
     <engine:Instance template="LoginPage" name="Login" class="background" style="height: 1081px; flex-direction: column; align-items: stretch; justify-content: space-around; flex-grow: 1; display: flex;" />
     <engine:Instance template="RegisterPage" name="Register" class="background display-none" style="height: 750px; flex-grow: 1;" />
-    <engine:Instance template="CharacterSelection" name="CharacterSelection" class="display-none" style="width: 100%; height: 100%;" />
+    <engine:Instance template="CharacterSelection" name="CharacterSelection" class="display-none" style="width: 100%; height: 100%;">
+        <AttributeOverrides element-name="CharacterSelection" focusable="false" />
+    </engine:Instance>
     <engine:Instance template="CharacterCreation" name="CharacterCreation" class="display-none" style="height: 798px;" />
 </engine:UXML>
