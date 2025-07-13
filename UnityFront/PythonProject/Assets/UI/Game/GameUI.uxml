@@ -1,12 +1,13 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Game/GameUSS.uss?fileID=7433441132597879392&amp;guid=79468de2ebde4264da9d344272add9ae&amp;type=3#GameUSS" />
-    <engine:VisualElement name="Container" class="Container" style="display: flex;">
+    <engine:VisualElement name="Container" class="Container" style="display: none;">
         <engine:Button text="Find Match" name="FindButton" enabled="true" class="UIButton" />
     </engine:VisualElement>
-    <engine:VisualElement name="CombatUI" class="Container" style="display: none;">
+    <engine:VisualElement name="CombatUI" class="Container" style="display: flex;">
         <engine:VisualElement class="Container StatusContainer">
             <engine:Label name="StatusLabel" text="test" class="Header" />
             <engine:VisualElement class="TimerBackground">
+                <engine:Image class="TimerIcon" />
                 <engine:VisualElement name="TimeFill" class="TimeFill" />
             </engine:VisualElement>
         </engine:VisualElement>
@@ -33,7 +34,7 @@
                 <engine:Button name="Button1" text="Attack" class="ActionButton" />
                 <engine:Button name="Button2" text="Defend" class="ActionButton" />
                 <engine:Button name="Button3" text="Items" class="ActionButton" />
-                <engine:Button name="Button4" text="Surrender" class="ActionButton SurrenderButton" />
+                <engine:Button name="Button4" text="Surrender" class="ActionButton SurrenderButton" style="background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);" />
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
