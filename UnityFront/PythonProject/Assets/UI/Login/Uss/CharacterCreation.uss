@@ -92,3 +92,15 @@
     border-top-color: rgba(1, 99, 98, 0.47);
     border-bottom-color: rgba(1, 99, 98, 0.47);
 }
+
+.btn-background {
+    background-color: rgba(214, 130, 39, 0.64);
+    border-top-width: 6px;
+    border-right-width: 6px;
+    border-bottom-width: 6px;
+    border-left-width: 6px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
