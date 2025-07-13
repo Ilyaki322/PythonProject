@@ -4,8 +4,8 @@
     <engine:Template name="CharacterSelection" src="project://database/Assets/UI/Login/Templates/CharacterSelection.uxml?fileID=9197481963319205126&amp;guid=38eba54a9e270c74986d46ddc4ea1c98&amp;type=3#CharacterSelection" />
     <engine:Template name="CharacterCreation" src="project://database/Assets/UI/Login/Templates/CharacterCreation.uxml?fileID=9197481963319205126&amp;guid=0fb01569f7fdfdd4db3057497fc558d6&amp;type=3#CharacterCreation" />
     <Style src="project://database/Assets/UI/Login/Uss/MainMenu.uss?fileID=7433441132597879392&amp;guid=d18ba038bb28f2a4188c89ccddf32cf6&amp;type=3#MainMenu" />
-    <engine:Instance template="LoginPage" name="Login" class="background" style="height: 1081px; flex-direction: column; align-items: stretch; justify-content: space-around; flex-grow: 1; display: flex;" />
-    <engine:Instance template="RegisterPage" name="Register" class="background display-none" style="height: 750px; flex-grow: 1;" />
-    <engine:Instance template="CharacterSelection" name="CharacterSelection" class="display-none" style="width: 100%; height: 100%;" />
-    <engine:Instance template="CharacterCreation" name="CharacterCreation" class="display-none" style="height: 798px;" />
+    <engine:Instance template="LoginPage" name="Login" class="background" style="height: 1081px; flex-direction: column; align-items: stretch; justify-content: space-around; flex-grow: 1; display: flex; -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;);" />
+    <engine:Instance template="RegisterPage" name="Register" class="background display-none" style="height: 750px; flex-grow: 1; -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;);" />
+    <engine:Instance template="CharacterSelection" name="CharacterSelection" class="display-none" style="width: 100%; height: 100%; -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;);" />
+    <engine:Instance template="CharacterCreation" name="CharacterCreation" class="display-none" style="height: 798px; -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;);" />
 </engine:UXML>
