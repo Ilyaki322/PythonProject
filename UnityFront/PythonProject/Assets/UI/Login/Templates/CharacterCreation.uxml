@@ -45,7 +45,8 @@
                     <engine:Button name="CreateButton" text="Create" class="btn-create btn-all" />
                     <engine:Button text="Cancel" name="CancelButton" class="btn-all btn-create" style="background-color: rgb(253, 193, 127);" />
                 </engine:VisualElement>
-                <engine:TextField name="CharacterNameField" placeholder-text="Enter name" class="input-name" style="border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; border-left-color: rgba(0, 0, 0, 0.37); border-right-color: rgba(0, 0, 0, 0.37); border-top-color: rgba(0, 0, 0, 0.37); border-bottom-color: rgba(0, 0, 0, 0.37); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px;" />
+                <engine:TextField name="CharacterNameField" placeholder-text="Enter name" class="input-name" style="border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; border-left-color: rgba(0, 0, 0, 0.37); border-right-color: rgba(0, 0, 0, 0.37); border-top-color: rgba(0, 0, 0, 0.37); border-bottom-color: rgba(0, 0, 0, 0.37); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; height: 72px; width: 291px; font-size: 35px;" />
+                <engine:Label text="Invalid Character Name" name="CreationError" style="background-color: rgba(243, 56, 56, 0.44); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; font-size: 26px; -unity-text-align: upper-center; display: none;" />
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>

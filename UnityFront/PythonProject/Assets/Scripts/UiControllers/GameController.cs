@@ -46,13 +46,18 @@ public class GameController : MonoBehaviour
     private Label m_statusBar;
     private Label m_endGameLabel;
 
+    // Character Menu
+    private Label m_charLevel;
+    private Label m_charMoney;
+    private Label m_charName;
+
     private bool m_inQueue = false;
 
     private float m_maxTurnTimer = 30f;
     private float m_counter = 0f;
 
     private string m_token;
-    private int m_selectedCharacterID;
+    private CharacterDTO m_selectedCharacter;
 
     private status_t m_gameStatus = status_t.Menu;
 
@@ -62,7 +67,7 @@ public class GameController : MonoBehaviour
         m_socketManager.SetToken(token);
     }
 
-    public void SetCharacter(int id) => m_selectedCharacterID = id;
+    public void SetCharacter(CharacterDTO character) => m_selectedCharacter = character;
 
     private void Start()
     {
@@ -94,6 +99,10 @@ public class GameController : MonoBehaviour
         m_statusBar = root.Q<Label>("StatusLabel");
 
         m_findGameButton = root.Q<Button>("FindButton");
+        m_charLevel = root.Q<Label>("LevelLabel");
+        m_charMoney = root.Q<Label>("CoinsLabel");
+        m_charName = root.Q<Label>("NameLabel");
+
         m_findGameButton.clicked += onFind;
 
         m_ActionButton1.clicked += () =>
@@ -152,6 +161,13 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private void setCharacterStatus()
+    {
+        m_charLevel.text = "Level: " + m_selectedCharacter.level;
+        m_charMoney.text = "Coins: " + m_selectedCharacter.money;
+        m_charName.text = m_selectedCharacter.name;
+    }
+
     public void Connect()
     {
         m_gameStatus = status_t.Menu;
@@ -159,7 +175,9 @@ public class GameController : MonoBehaviour
         m_socketManager.Connect(() =>
         {
             m_socketManager.InitSocket(m_enemyController);
-            MainThreadDispatcher.Instance.Enqueue(() => m_container.style.display = DisplayStyle.Flex);
+            MainThreadDispatcher.Instance.Enqueue(() => {
+                m_container.style.display = DisplayStyle.Flex;
+                setCharacterStatus();});
         });
     }
 
@@ -169,7 +187,7 @@ public class GameController : MonoBehaviour
         {
             m_inQueue = true;
             m_findGameButton.text = "Cancel";
-            m_socketManager.OnEnterQueue(m_selectedCharacterID);
+            m_socketManager.OnEnterQueue(m_selectedCharacter.id);
             return;
         }
 

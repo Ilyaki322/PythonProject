@@ -54,7 +54,7 @@ def update_character_route():
     return jsonify(edit_character(data)), 200
 
 
-@selection_route.route('/delete_character', methods=['PATCH'])
+@selection_route.route('/delete_character', methods=['DELETE'])
 @jwt_required()
 def delete_character_route():
     data = request.get_json()

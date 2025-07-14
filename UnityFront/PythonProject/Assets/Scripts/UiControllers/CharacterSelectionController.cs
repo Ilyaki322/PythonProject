@@ -12,16 +12,22 @@ public class CharacterSelectionController : MonoBehaviour
     private VisualElement m_selectionElement;
     private VisualElement m_creationElement;
     private VisualElement m_charList;
+    private VisualElement m_alertPopup;
 
     [SerializeField] private GameObject m_dummy;
     [SerializeField] private GameController m_gameController;
     [SerializeField] private CharacterCreator m_creator;
     [SerializeField] private Inventory m_invetory;
 
+    private Label m_nameError;
+    private Label m_alertText;
+
     private Button m_playButton;
     private Button m_deleteButton;
     private Button m_logoutButton;
     private Button m_cancelButton;
+    private Button m_alertYesButton;
+    private Button m_alertNoButton;
 
     private CharacterDTO[] m_characterList = new CharacterDTO[5];
 
@@ -30,7 +36,7 @@ public class CharacterSelectionController : MonoBehaviour
 
     private CharacterApi m_characterApi;
     private InventoryApi m_invetoryApi;
-    private Button TEST322;
+
     private void Awake()
     {
         m_characterApi = GetComponent<CharacterApi>();
@@ -43,16 +49,25 @@ public class CharacterSelectionController : MonoBehaviour
         m_selectionElement = root.Q<VisualElement>("CharacterSelection");
         m_creationElement = root.Q<VisualElement>("CharacterCreation");
         m_charList = root.Q<VisualElement>("CharacterList");
+        m_alertPopup = root.Q<VisualElement>("DeleteAlert");
+
+        m_nameError = root.Q<Label>("CreationError");
+        m_alertText = root.Q<Label>("AlertText");
         m_playButton = root.Q<Button>("PlayButton");
         m_deleteButton = root.Q<Button>("DeleteButton");
         m_logoutButton = root.Q<Button>("LogoutButton");
         m_cancelButton = root.Q<Button>("CancelButton");
+        m_alertYesButton = root.Q<Button>("AlertYes");
+        m_alertNoButton = root.Q<Button>("AlertNo");
 
         m_dummy.SetActive(false);
 
         m_playButton.clicked += OnPlayClicked;
         m_cancelButton.clicked += onCancelClick;
         m_logoutButton.clicked += onLogoutclick;
+        m_deleteButton.clicked += DeleteCharacter;
+        m_alertNoButton.clicked += () => { m_alertPopup.style.display = DisplayStyle.None; };
+        m_alertYesButton.clicked += ConfirmDeleteChar;
     }
 
     public void LoadCharacters(string json)
@@ -90,9 +105,10 @@ public class CharacterSelectionController : MonoBehaviour
 
     private void onCancelClick()
     {
+        m_dummy.SetActive(false);
         m_selectionElement.style.display = DisplayStyle.Flex;
         m_creationElement.style.display = DisplayStyle.None;
-        m_dummy.SetActive(false);
+        m_nameError.style.display = DisplayStyle.None;
     }
 
     private void onLogoutclick()
@@ -105,13 +121,11 @@ public class CharacterSelectionController : MonoBehaviour
 
     private void onCharacterClick(int index)
     {
-        Debug.Log("Character clicked: " + index);
         var selectedChar = m_characterList[index];
+        lastClickedIndex = index;
         
         if (selectedChar == null)
         {
-
-            lastClickedIndex = index;
             m_creator.Generate(new CharacterDTO());
             m_selectionElement.style.display = DisplayStyle.None;
             m_creationElement.style.display = DisplayStyle.Flex;
@@ -133,21 +147,66 @@ public class CharacterSelectionController : MonoBehaviour
         m_dummy.SetActive(false);
 
         //m_invetory.LoadInventory(m_invetoryApi);
-        m_gameController.SetCharacter(m_selectedCharID);
+        m_gameController.SetCharacter(m_characterList[lastClickedIndex]);
         m_gameController.Connect();
 
     }
 
+    private void DeleteCharacter()
+    {
+        Debug.Log("Delete Character Clicked lastIndex " + lastClickedIndex);
+        if(m_characterList[lastClickedIndex] == null) return;
+
+        m_alertPopup.style.display = DisplayStyle.Flex;
+        string alertText = "Are you sure you want to Delete";
+        m_alertText.text = alertText + " " + m_characterList[lastClickedIndex].name + "?";
+    }
+
+    private void ConfirmDeleteChar()
+    {
+        StartCoroutine(m_characterApi.DeleteCharacter(m_characterList[lastClickedIndex].id, (success) => {
+            if (success)
+            {
+                m_characterList[lastClickedIndex] = null;
+                m_dummy.SetActive(true);
+                StartCoroutine(m_characterApi.GetCharacters((json) => {LoadCharacters(json);}));
+                m_creator.Generate(new CharacterDTO());
+            }
+        }));
+
+        m_alertPopup.style.display = DisplayStyle.None;
+    }
+
     public void Save(CharacterDTO c)
     {
-        StartCoroutine(m_characterApi.AddCharacter(c));
-        m_characterList[lastClickedIndex] = c;
+        if (!ValidateCreatedChar(c))return;
 
-        m_selectionElement.style.display = DisplayStyle.Flex;
-        m_creationElement.style.display = DisplayStyle.None;
-        m_dummy.SetActive(true);
-        initializeChars();
-        m_creator.Generate(m_characterList[lastClickedIndex]);
+        StartCoroutine(m_characterApi.AddCharacter(c, success =>
+        {
+            if(success)
+            {
+                StartCoroutine(m_characterApi.GetCharacters((json) =>
+                {
+                    LoadCharacters(json);
+                    m_selectionElement.style.display = DisplayStyle.Flex;
+                    m_creationElement.style.display = DisplayStyle.None;
+                    m_dummy.SetActive(true);
+                }));
+            }
+        }));  
+    }
+
+    private bool ValidateCreatedChar(CharacterDTO c)
+    {
+        if (string.IsNullOrEmpty(c.name))
+        {
+            m_nameError.text = "Name cannot be empty!";
+            m_nameError.style.display = DisplayStyle.Flex;
+            return false;
+        }
+
+        m_nameError.style.display = DisplayStyle.None;
+        return true;
     }
 
     [System.Serializable]

@@ -1,150 +1,175 @@
-VisualElement {}
+VisualElement {
+}
 
 .Container {
-	flex-grow: 1;
+    flex-grow: 1;
 }
 
 .Container.StatusContainer {
-	align-items: center;
-	flex-grow: 0;
-	height: 80px;
+    align-items: center;
+    flex-grow: 0;
+    height: 80px;
 }
 
 .Container.HpContainer {
-	flex-direction: row;
+    flex-direction: row;
 }
 
 .Container.RightPlayer {
-	flex-direction: column;
-	align-items: flex-end;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .Container.EndGameContainer {
-	align-items: center;
-	justify-content: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .HealhBackground {
-	background-image: url("../../../Assets/Sprites/Health-background.png");
-	left: 60px;
-	top: -10px;
-	height: 40px;
-	width: 220px;
+    background-image: url("project://database/Assets/Sprites/Health-background.png?fileID=-4680812775765898967&guid=bf510efb8ddec7c41b9417047e693d94&type=3#Health-background_0");
+    left: 60px;
+    top: -10px;
+    height: 40px;
+    width: 220px;
 }
 
-
 .HealhBackgroundRight {
-	background-image: url("../../../Assets/Sprites/Health-background.png");
-	right: 60px;
-	top: -10px;
-	height: 40px;
-	width: 220px;
+    background-image: url("project://database/Assets/Sprites/Health-background.png?fileID=-4680812775765898967&guid=bf510efb8ddec7c41b9417047e693d94&type=3#Health-background_0");
+    right: 60px;
+    top: -10px;
+    height: 40px;
+    width: 220px;
 }
 
 .HealthFill {
-	background-color: red;
-	flex-shrink: 0;
-	height: 36px;
-	max-width: 216px;
-	top: 2px;
-	left: 2px;
+    background-color: red;
+    flex-shrink: 0;
+    height: 36px;
+    max-width: 216px;
+    top: 2px;
+    left: 2px;
     width: 100%;
-	position: absolute;
-	overflow: hidden;
+    position: absolute;
+    overflow: hidden;
 }
 
 .TimerBackground {
-	background-color: black;
-	height: 20px;
-	width: 80%;
+    background-color: black;
+    height: 20px;
+    width: 80%;
 }
 
 .TimeFill {
-	background-color: white;
-	flex-shrink: 0;
-	height: 100%;
+    background-color: white;
+    flex-shrink: 0;
+    height: 100%;
     width: 100%;
-	position: absolute;
-	overflow: hidden;
+    position: absolute;
+    overflow: hidden;
 }
 
 .TimerIcon {
-	position: absolute;
-	--unity-image: url("../../../Assets/Sprites/clock.png");
-	width: 32px;
-	height: 32px;
-	left: -35px;
-	top: -11px;
+    position: absolute;
+    --unity-image: url("project://database/Assets/Sprites/clock.png?fileID=8581363780399802525&guid=ed1381c1c6e02be4898fefddd32c8cf3&type=3#clock_0");
+    width: 32px;
+    height: 32px;
+    left: -35px;
+    top: -11px;
 }
 
 .Container.ButtonContainer {
-	flex-direction: row;
-	flex-wrap: wrap;
-	height: 180px;
-	width: 260px;
-	left: 320px;
-	bottom: -150px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 180px;
+    width: 260px;
+    left: 320px;
+    bottom: -150px;
 }
 
 .ActionButton {
-	height: 80px;
-	width: 120px;
-	font-size: 22px;
-	border-radius: 5px;
-	color: rgb(255, 255, 255);
-	background-image: url("../../../Assets/Sprites/button-background.png");
+    height: 80px;
+    width: 120px;
+    font-size: 22px;
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+    background-image: url("project://database/Assets/Sprites/button-background.png?fileID=-1826175718308935336&guid=b170ca8c320d2c14a8ae48ac709e3cef&type=3#button-background_0");
 }
 
 .ActionButton.SurrenderButton {
-	background-color: red;
+    background-color: red;
 }
 
 .Header {
-	font-size: 45px;
+    font-size: 45px;
 }
 
 .NameLabel {
-	font-size: 25px;
-	margin: 10px;
+    font-size: 25px;
+    margin: 10px;
 }
 
 .NameLabel.Left {
-	left: 50px;
+    left: 50px;
 }
 
 .NameLabel.Right {
-	right: 50px;
+    right: 50px;
 }
 
 .HealthLabel {
-	top: -3px;
-	align-self: center;
-	font-size: 25px;
-	color: white;
+    top: -3px;
+    align-self: center;
+    font-size: 25px;
+    color: white;
 }
 
 .ShieldIcon {
-	position: absolute;
-	--unity-image: url("../../../Assets/Sprites/Shield.png");
-
-	transition: width 1s ease-out, height 1s ease-out, opacity  1s ease-out;
-	height: 96px;
-	width: 96px;
-	opacity: 0;
+    position: absolute;
+    --unity-image: url("project://database/Assets/Sprites/Shield.png?fileID=-6717884257390833292&guid=d1a518ca52ae35343b556c0c1ad99b04&type=3#Shield_0");
+    transition: width 1s ease-out, height 1s ease-out, opacity 1s ease-out;
+    height: 96px;
+    width: 96px;
+    opacity: 0;
 }
 
 .ShieldIcon.ShieldLeft {
-	left: 220px;
-	top: 3px;
+    left: 220px;
+    top: 3px;
 }
 
 .ShieldIcon.ShieldRight {
-	left: -33px;
-	top: 3px;
+    left: -33px;
+    top: 3px;
 }
 
 .ShieldIcon.ShieldIcon--enabled {
-	height: 32px;
-	width: 32px;
-	opacity: 1.0;
+    height: 32px;
+    width: 32px;
+    opacity: 1;
+}
+
+.label-container {
+    flex-grow: 0;
+    flex-direction: row;
+    background-color: rgba(241, 241, 241, 0.39);
+    width: 15%;
+    height: 50%;
+}
+
+.buttons-style {
+    font-size: 30px;
+    -unity-text-align: middle-center;
+    background-color: rgba(113, 135, 207, 0.98);
+    border-left-color: rgba(153, 46, 236, 0.98);
+    border-right-color: rgba(153, 46, 236, 0.98);
+    border-top-color: rgba(153, 46, 236, 0.98);
+    border-bottom-color: rgba(153, 46, 236, 0.98);
+    border-top-width: 7px;
+    border-right-width: 7px;
+    border-bottom-width: 7px;
+    border-left-width: 7px;
+    border-top-left-radius: 31px;
+    border-top-right-radius: 31px;
+    border-bottom-right-radius: 31px;
+    border-bottom-left-radius: 31px;
 }

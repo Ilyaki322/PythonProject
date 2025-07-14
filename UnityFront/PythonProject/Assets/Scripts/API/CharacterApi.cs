@@ -13,7 +13,7 @@ public class CharacterApi : MonoBehaviour
 
     public void setToken(string token) => m_token = token;
     public void Logout() => m_token = string.Empty;
-    public IEnumerator AddCharacter(CharacterDTO character)
+    public IEnumerator AddCharacter(CharacterDTO character, Action<bool> onSuccess)
     {
         string json = JsonUtility.ToJson(character);
         byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
@@ -29,11 +29,38 @@ public class CharacterApi : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
+            onSuccess(true);
             Debug.Log("Character added: " + request.downloadHandler.text);
         }
         else
         {
+            onSuccess(false);
             Debug.LogError("Error adding character: " + request.error);
+        }
+    }
+
+    public IEnumerator DeleteCharacter(int characterId, Action<bool> onSuccess)
+    {
+        UnityWebRequest request = UnityWebRequest.Delete(m_url + "/delete_character");
+        request.SetRequestHeader("Authorization", "Bearer " + m_token);
+
+        string jsonData = JsonUtility.ToJson(new CharacterID { character_id = characterId });
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Character deleted successfully.");
+            onSuccess(true);
+        }
+        else
+        {
+            Debug.LogError("Error deleting character: " + request.error);
+            onSuccess(false);
         }
     }
 
@@ -53,4 +80,6 @@ public class CharacterApi : MonoBehaviour
             Debug.LogError("Error getting characters: " + request.error);
         }
     }
+
+    
 }
