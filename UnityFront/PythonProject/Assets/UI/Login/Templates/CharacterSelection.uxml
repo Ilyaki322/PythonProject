@@ -1,15 +1,10 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Login/Uss/CharacterSelection.uss?fileID=7433441132597879392&amp;guid=33d38666bc5bbf445a884265616c08da&amp;type=3#CharacterSelection" />
-    <engine:VisualElement name="CharacterSelection" class="selection-root">
-        <engine:VisualElement class="selection-content">
-            <engine:VisualElement name="ListContainer" class="left-panel" style="height: 505px; width: 282px;">
-                <engine:ListView name="CharacterList" class="character-list" style="display: flex;" />
-            </engine:VisualElement>
-            <engine:VisualElement class="preview-panel">
-                <engine:VisualElement name="CharacterPreview" class="preview-area" />
-            </engine:VisualElement>
+    <engine:VisualElement name="CharacterSelection" focusable="false" class="selection-root">
+        <engine:VisualElement focusable="false" class="selection-content">
+            <engine:VisualElement name="CharacterList" style="flex-grow: 0; flex-shrink: 0; width: 30%; height: 69%;" />
         </engine:VisualElement>
-        <engine:VisualElement name="ButtonsBar" class="action-bar" style="flex-direction: row; -unity-text-align: middle-left; justify-content: space-between; align-content: center; flex-shrink: 1; flex-grow: 0; background-color: rgba(51, 28, 28, 0.96);">
+        <engine:VisualElement name="ButtonsBar" focusable="false" class="action-bar" style="flex-direction: row; -unity-text-align: middle-left; justify-content: space-between; align-content: center; flex-shrink: 1; flex-grow: 0; background-color: rgba(51, 28, 28, 0.96);">
             <engine:Button name="DeleteButton" text="Delete" class="btn-delete" />
             <engine:Button name="PlayButton" text="Play" class="btn-play" />
             <engine:Button name="LogoutButton" text="Logout" class="btn-logout" />
