@@ -32,6 +32,8 @@ public class InventoryModel
     public Item Get(int index) => Items[index];
     public void Clear() => Items.Clear();
     public bool Add(Item item) => Items.TryAdd(item);
+
+    public bool TryAddAt(int index, Item item) => Items.TryAddAt(index, item);
     public bool Remove(Item item) => Items.TryRemove(item);
 
     public void Swap(int source, int target) => Items.Swap(source, target);

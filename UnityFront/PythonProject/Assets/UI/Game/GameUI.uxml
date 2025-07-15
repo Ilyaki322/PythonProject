@@ -15,17 +15,17 @@
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement name="ButtonContainer" style="flex-grow: 1; width: 840px; align-items: center; justify-content: space-around; display: flex; height: 75%;">
+        <engine:VisualElement name="ButtonContainer" style="flex-grow: 1; width: 840px; align-items: center; justify-content: space-around; display: none; height: 75%;">
             <engine:Button text="Find Match" name="FindButton" enabled="true" class="UIButton buttons-style" style="width: 60%; height: 10%; justify-content: space-between;" />
             <engine:Button text="Store" name="StoreButton" enabled="true" class="UIButton buttons-style" style="width: 60%; height: 10%; justify-content: space-between;" />
         </engine:VisualElement>
-        <engine:VisualElement name="Shop" style="flex-grow: 1; display: none; width: 100%; height: 90%; flex-direction: row; top: 5%;">
+        <engine:VisualElement name="Shop" style="flex-grow: 1; display: flex; width: 100%; height: 90%; flex-direction: row; top: 5%;">
             <engine:VisualElement name="LevelUp" style="flex-grow: 0; width: 22%; flex-shrink: 0; height: 11%; bottom: auto; top: 65%; left: 2%;">
                 <engine:Button text="Level Up" name="LevelUpButton" style="width: 100%; height: 100%; font-size: 35px; background-color: rgb(200, 196, 42);" />
             </engine:VisualElement>
-            <engine:VisualElement name="ShopContainer" style="flex-grow: 0; flex-shrink: 0; right: 0; height: 61%; width: 58%; top: 24%; left: 18%;">
-                <engine:VisualElement name="ShopInventory" style="flex-grow: 1; flex-direction: row;" />
-                <engine:VisualElement name="UserInventory" style="flex-grow: 1; flex-direction: row;" />
+            <engine:VisualElement name="ShopContainer" style="flex-grow: 0; flex-shrink: 0; right: 0; height: 61%; width: 58%; top: 24%; left: 18%; display: flex;">
+                <engine:VisualElement name="ShopInventory" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: space-between; align-self: stretch;" />
+                <engine:VisualElement name="UserInventory" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: space-between; align-self: stretch;" />
             </engine:VisualElement>
             <engine:VisualElement name="Bar" style="flex-grow: 0; width: 100%; flex-shrink: 0; height: 10%; top: 89%; left: -80%; background-color: rgba(231, 95, 95, 0.55); flex-direction: row; justify-content: center;">
                 <engine:Button text="Back" name="BackButton" style="justify-content: space-between; align-items: flex-end; width: 20%; font-size: 30px; background-color: rgb(95, 242, 248); border-left-color: rgb(133, 241, 216); border-right-color: rgb(133, 241, 216); border-top-color: rgb(133, 241, 216); border-bottom-color: rgb(133, 241, 216); border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
