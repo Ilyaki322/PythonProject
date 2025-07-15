@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,7 +11,7 @@ public class Slot : VisualElement
     public SerializableGuid ItemId {get; private set;} = SerializableGuid.Empty;
     public Sprite BaseSprite;
 
-    public event Action<Vector2, Slot> OnStartDrag = delegate { };
+    public event Action<Vector2, Slot, PointerDownEvent> OnStartDrag = delegate { };
 
     public Slot()
     {
@@ -22,8 +23,7 @@ public class Slot : VisualElement
     void OnPointerDown(PointerDownEvent e)
     {
         if (e.button != 0 || ItemId.Equals(SerializableGuid.Empty)) return;
-
-        OnStartDrag.Invoke(e.position, this);
+        OnStartDrag.Invoke(e.position, this, e);
         e.StopPropagation();
     }
 

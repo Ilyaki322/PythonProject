@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 429c90d0ae95d1646a130d4a1372e9c3
+guid: 1440b4575df149c408cbddb9ee4421de
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4583859643901737128
-    second: coins_3_0
+      213: -7812473716935476112
+    second: potion_4_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: coins_3_0
+      name: potion_4_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
+        x: 12
+        y: 6
+        width: 8
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8a8f20f4f042d9f30800000000000000
-      internalID: 4583859643901737128
+      spriteID: 07c3cf4fb84849390800000000000000
+      internalID: -7812473716935476112
       vertices: []
       indices: 
       edges: []
@@ -147,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      coins_3_0: 4583859643901737128
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

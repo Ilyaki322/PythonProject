@@ -13,7 +13,7 @@
 
 .inventory {
     background-image: url('/Assets/Sprites/InventoryBackground.png');
-    width: 300px;
+    width: 420px;
     padding: 10px;
     align-items: flex-start;
     justify-content: flex-start;

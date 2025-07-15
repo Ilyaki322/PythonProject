@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
 using UnityEngine;
 
 public class InventoryController
@@ -122,6 +123,12 @@ public class InventoryController
             }
             
             return new InventoryController(model, view, capacity);
+        }
+
+        public Builder WithContainer(VisualElement container)
+        {
+            view.SetInventoryHolder(container);
+            return this;
         }
     }
 

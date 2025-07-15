@@ -5,12 +5,13 @@ using UnityEngine.UIElements;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField] private ShopController m_shopController;
     private enum status_t {
         Menu,
         PlayerTurn,
         EnemyTurn
     }
-
+    [SerializeField] private GameObject m_inventoryTest;
     [SerializeField] private UIDocument m_document;
     [SerializeField] private SocketManager m_socketManager;
 
@@ -24,6 +25,7 @@ public class GameController : MonoBehaviour
     private VisualElement m_container;
     private VisualElement m_combatUI;
     private VisualElement m_endGameUI;
+    private VisualElement m_buttonContainer;
 
     private VisualElement m_timeFill;
     private VisualElement m_healthFillPlayer1;
@@ -38,6 +40,7 @@ public class GameController : MonoBehaviour
     private Button m_ActionButton2;
     private Button m_ActionButton3;
     private Button m_ActionButton4;
+    private Button m_storeButton;
 
     private Label m_namePlayer1;
     private Label m_namePlayer2;
@@ -69,6 +72,18 @@ public class GameController : MonoBehaviour
 
     public void SetCharacter(CharacterDTO character) => m_selectedCharacter = character;
 
+    public void ShowMenu()
+    {
+        m_buttonContainer.style.display = DisplayStyle.Flex;
+    }
+
+    public void ShowShop()
+    {
+        m_buttonContainer.style.display = DisplayStyle.None;
+        m_shopController.ShowShop();
+
+    }
+
     private void Start()
     {
         Application.runInBackground = true;
@@ -99,10 +114,13 @@ public class GameController : MonoBehaviour
         m_statusBar = root.Q<Label>("StatusLabel");
 
         m_findGameButton = root.Q<Button>("FindButton");
+        m_storeButton = root.Q<Button>("StoreButton");
         m_charLevel = root.Q<Label>("LevelLabel");
         m_charMoney = root.Q<Label>("CoinsLabel");
         m_charName = root.Q<Label>("NameLabel");
 
+        m_buttonContainer = root.Q<VisualElement>("ButtonContainer");
+        m_storeButton.clicked += ShowShop;
         m_findGameButton.clicked += onFind;
 
         m_ActionButton1.clicked += () =>

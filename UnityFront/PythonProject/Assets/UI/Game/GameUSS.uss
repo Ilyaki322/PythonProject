@@ -172,4 +172,8 @@ VisualElement {
     border-top-right-radius: 31px;
     border-bottom-right-radius: 31px;
     border-bottom-left-radius: 31px;
+    flex-grow: 0;
+    flex-basis: 20%;
+    flex-shrink: 0;
+    height: auto;
 }
