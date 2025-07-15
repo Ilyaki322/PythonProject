@@ -12,6 +12,11 @@ public class SocketManager : MonoBehaviour
 
     public void SetToken(string token) => m_token = token;
 
+    public void InitStore()
+    {
+
+    }
+
     public void InitSocket(CharacterCombatController enemyController)
     {
         m_socket.On("Attack", (res) =>

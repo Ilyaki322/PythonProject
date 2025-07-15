@@ -6,11 +6,15 @@ using UnityEngine.UIElements;
 public class GameController : MonoBehaviour
 {
     [SerializeField] private ShopController m_shopController;
+
     private enum status_t {
         Menu,
         PlayerTurn,
         EnemyTurn
     }
+
+    
+
     [SerializeField] private GameObject m_inventoryTest;
     [SerializeField] private UIDocument m_document;
     [SerializeField] private SocketManager m_socketManager;
@@ -61,7 +65,7 @@ public class GameController : MonoBehaviour
 
     private string m_token;
     private CharacterDTO m_selectedCharacter;
-
+    
     private status_t m_gameStatus = status_t.Menu;
 
     public void SetToken(string token)
@@ -70,7 +74,12 @@ public class GameController : MonoBehaviour
         m_socketManager.SetToken(token);
     }
 
-    public void SetCharacter(CharacterDTO character) => m_selectedCharacter = character;
+    public void SetCharacter(CharacterDTO character) {
+        m_selectedCharacter = character;
+        m_shopController.SelectedCharacter = character;
+
+        m_selectedCharacter.OnMoneyChanged += UpdateMoneyLabel;
+    }
 
     public void ShowMenu()
     {
@@ -184,6 +193,11 @@ public class GameController : MonoBehaviour
         m_charLevel.text = "Level: " + m_selectedCharacter.level;
         m_charMoney.text = "Coins: " + m_selectedCharacter.money;
         m_charName.text = m_selectedCharacter.name;
+    }
+
+    private void UpdateMoneyLabel(int newMoney)
+    {
+        m_charMoney.text = "Coins: " + newMoney;
     }
 
     public void Connect()

@@ -9,6 +9,7 @@ public class ItemDetails : ScriptableObject
 
     public Sprite Icon;
 
+    public int Price = 0;
     public string Description;
 
     public Item Create(int qty)

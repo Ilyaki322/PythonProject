@@ -12,6 +12,17 @@ public class ShopController : MonoBehaviour
     private Button m_levelUpButton;
     private Button m_backButton;
 
+    private CharacterDTO m_selectedCharacter;
+
+    public CharacterDTO SelectedCharacter
+    {
+        get => m_selectedCharacter;
+        set
+        {
+            m_selectedCharacter = value;
+        }
+    }
+
     private void Awake()
     {
         m_root = GetComponent<UIDocument>().rootVisualElement;
@@ -31,5 +42,25 @@ public class ShopController : MonoBehaviour
     public void ShowShop()
     {
         m_shopContainer.style.display = DisplayStyle.Flex;
+    }
+
+    public bool makePurchase(int cost)
+    {
+        if (m_selectedCharacter.money >= cost)
+        {
+            m_selectedCharacter.money -= cost;
+            return true;
+        }
+        return false;
+    }
+
+    public bool sellItem(int value)
+    {
+        if (m_selectedCharacter.money + value <= int.MaxValue)
+        {
+            m_selectedCharacter.money += value;
+            return true;
+        }
+        return false;
     }
 }

@@ -10,13 +10,11 @@ public class InventoryView : StorageView
 
     public override IEnumerator InitializeView(int size = 20)
     {
-        // 1) Decide where to build your slots:
         Slots = new Slot[size];
         m_root = m_inventoryHolder != null
                ? m_inventoryHolder
                : m_document.rootVisualElement;
 
-        // 2) Build slot grid under m_root:
         m_root.Clear();
         if (m_styleSheet != null)
             m_root.styleSheets.Add(m_styleSheet);
@@ -34,7 +32,7 @@ public class InventoryView : StorageView
 
         if (StorageView.m_ghostIcon == null)
         {
-            var parent = m_ghostContainer ?? m_document.rootVisualElement.Q<VisualElement>("Shop");
+            var parent = m_ghostContainer;
 
             StorageView.m_ghostIcon = new VisualElement();
             StorageView.m_ghostIcon.name = "ghostIcon";
@@ -48,7 +46,6 @@ public class InventoryView : StorageView
             parent.Add(StorageView.m_ghostIcon);
         }
 
-        // 4) Wire up the drag/drop callbacks
         InitView();
         yield return null;
     }

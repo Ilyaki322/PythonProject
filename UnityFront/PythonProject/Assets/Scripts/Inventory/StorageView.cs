@@ -26,8 +26,8 @@ public abstract class StorageView : MonoBehaviour
     {
 
         // Use trickle‑down so we catch move/up anywhere
-        m_ghostContainer.RegisterCallback<PointerMoveEvent>(OnPointerMove, TrickleDown.TrickleDown);
-        m_ghostContainer.RegisterCallback<PointerUpEvent>(OnPointerUp, TrickleDown.TrickleDown);
+        m_ghostIcon.RegisterCallback<PointerMoveEvent>(OnPointerMove, TrickleDown.TrickleDown);
+        m_ghostIcon.RegisterCallback<PointerUpEvent>(OnPointerUp, TrickleDown.TrickleDown);
 
         foreach (var slot in Slots)
             slot.OnStartDrag += OnPointerDown;
@@ -45,8 +45,6 @@ public abstract class StorageView : MonoBehaviour
         slot.Icon.image = null;
         slot.StackLabel.visible = false;
 
-        // Capture the pointer
-        slot.CapturePointer(evt.pointerId);
         m_ghostIcon.CapturePointer(evt.pointerId);
 
         // Show and position the ghost
@@ -64,13 +62,14 @@ public abstract class StorageView : MonoBehaviour
 
     static void OnPointerUp(PointerUpEvent e)
     {
-        if (!m_isDragging) return;
+        if (!m_isDragging || m_originalSlot == null)
+            return;
 
         // Broadcast the drop event to whatever is listening
         OnGlobalDrop?.Invoke(m_originalSlot, e.position);
 
         // Restore the original icon
-        m_originalSlot.Icon.image = m_originalSlot.BaseSprite.texture;
+        if(m_originalSlot.BaseSprite) m_originalSlot.Icon.image = m_originalSlot.BaseSprite.texture;
 
         // Release pointer capture
         m_originalSlot.ReleasePointer(e.pointerId);
