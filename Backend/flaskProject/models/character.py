@@ -9,6 +9,7 @@ class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     level = db.Column(db.Integer, default=1)
+    money = db.Column(db.Integer, default=0)
 
     hair = db.Column(db.Integer, default=0)
     helmet = db.Column(db.Integer, default=0)

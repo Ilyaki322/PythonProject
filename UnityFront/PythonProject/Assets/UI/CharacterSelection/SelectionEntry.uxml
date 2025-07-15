@@ -1,5 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement name="Container" style="background-color: rgba(188, 188, 188, 0);">
-        <engine:Button text="Button" name="CharButton" style="background-color: rgb(180, 97, 67); border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; border-left-color: rgb(9, 212, 73); border-right-color: rgb(9, 212, 73); border-top-color: rgb(9, 212, 73); border-bottom-color: rgb(9, 212, 73); border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px;" />
+    <Style src="project://database/Assets/UI/Login/Uss/CharacterSelection.uss?fileID=7433441132597879392&amp;guid=33d38666bc5bbf445a884265616c08da&amp;type=3#CharacterSelection" />
+    <engine:VisualElement name="Container" style="background-color: rgba(188, 188, 188, 0); height: 100%; width: 100%;">
+        <engine:Button text="Button" name="CharButton" class="btn-hover" style="background-color: rgb(180, 97, 67); border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; border-left-color: rgb(9, 212, 73); border-right-color: rgb(9, 212, 73); border-top-color: rgb(9, 212, 73); border-bottom-color: rgb(9, 212, 73); border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; flex-grow: 1; flex-shrink: 1;" />
     </engine:VisualElement>
 </engine:UXML>

@@ -59,6 +59,7 @@ public class CharacterCreationController : MonoBehaviour
 
         m_create = root.Q<Button>("CreateButton");
         m_name = root.Q<TextField>("CharacterNameField");
+        m_name.value = "";
 
         m_create.clicked += () => { m_generator.save(m_name.value); };
 
