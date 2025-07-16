@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -75,6 +76,7 @@ public class GameController : MonoBehaviour
     }
 
     public void SetCharacter(CharacterDTO character) {
+        character.m_money += 10; // Initial money for testing
         m_selectedCharacter = character;
         m_shopController.SelectedCharacter = character;
 
@@ -193,11 +195,19 @@ public class GameController : MonoBehaviour
         m_charLevel.text = "Level: " + m_selectedCharacter.level;
         m_charMoney.text = "Coins: " + m_selectedCharacter.money;
         m_charName.text = m_selectedCharacter.name;
+        m_selectedCharacter.PropertyChanged += OnCharacterPropertyChanged;
     }
 
     private void UpdateMoneyLabel(int newMoney)
     {
         m_charMoney.text = "Coins: " + newMoney;
+    }
+
+    private void OnCharacterPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        // Only care about level changes here
+        if (e.PropertyName == nameof(CharacterDTO.level))
+            m_charLevel.text = "Level: " + m_selectedCharacter.level;
     }
 
     public void Connect()

@@ -37,6 +37,7 @@ class Character(db.Model):
             'weapon': self.weapon,
             'back': self.back,
             'user_id': self.user_id,
+            'money': self.money,
         }
 
     def get_inventory_dict(self):

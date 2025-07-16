@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f87f7d36bc736914fae8332849e0bac5, type: 3}
-  m_Name: Item_1
+  m_Name: Potion
   m_EditorClassIdentifier: 
-  Name: Blood
+  Name: Potion
   maxStack: 1
   Id:
-    Part1: 4232665196
-    Part2: 1281729189
-    Part3: 3704874429
-    Part4: 789796731
-  Icon: {fileID: -6995123011722499173, guid: e95ba10753cb0e94da0e51911eca25de, type: 3}
-  Price: 1
-  Description: Drop of Blood.
+    Part1: 1252620804
+    Part2: 1339732073
+    Part3: 4215657396
+    Part4: 3167972626
+  Icon: {fileID: -5635166626045770638, guid: ed7289141c68ba2479bde91567e88c2b, type: 3}
+  Price: 3
+  Description: Helath Potion

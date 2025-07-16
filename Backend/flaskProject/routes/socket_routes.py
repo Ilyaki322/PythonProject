@@ -4,7 +4,7 @@ from flask_socketio import SocketIO, send, emit
 from game_controllers.game_manager import GameManager
 from service.character_service import *
 import random
-
+from routes.shop_socket_routes import init_shop_socket_handlers
 _app = None
 _socketio = None
 
@@ -17,6 +17,8 @@ def init_socket_handlers(app_instance, socketio_instance):
     global _app, _socketio, connected_players
     _app = app_instance
     _socketio = socketio_instance
+
+    init_shop_socket_handlers(app_instance, socketio_instance)
 
     @_socketio.on('connect')
     def handle_connect():

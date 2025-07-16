@@ -21,7 +21,7 @@ public class InventoryApi : MonoBehaviour
 
     private void Awake()
     {
-        //StartCoroutine(UpdateItems());
+        StartCoroutine(UpdateItems());
     }
 
     public IEnumerator UpdateItems()

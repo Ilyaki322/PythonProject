@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [Serializable]
@@ -15,11 +17,28 @@ public class CharacterDTO
         }
     }
 
+    public int level
+    {
+        get => m_level;
+        set
+        {
+            if (m_level == value) return;
+            m_level = value;
+            OnPropertyChanged();
+        }
+    }
+
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
     public event Action<int> OnMoneyChanged;
 
     public int id = -1;
     public string name = "empty";
-    public int level = 1;
+    public int m_level = 1;
     public int m_money = 0;
     
     public int hair = 0;

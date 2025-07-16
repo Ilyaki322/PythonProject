@@ -260,6 +260,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 42471fbc027c15e449105cfe207909eb, type: 2}
   - {fileID: 11400000, guid: b18ff0f4083444443b6addda0abcbd1f, type: 2}
   - {fileID: 11400000, guid: d54b942a8ad73984e946f94949ff16a4, type: 2}
+  - {fileID: 11400000, guid: 3adae8560390bdb479e52e2cda471ecd, type: 2}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,6 +616,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1073846898}
   - component: {fileID: 1073846897}
+  - component: {fileID: 1073846899}
   m_Layer: 0
   m_Name: SocketTest
   m_TagString: Untagged
@@ -650,6 +652,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1073846899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073846896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da8a599211894b448bea151b45f7eab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_socketManager: {fileID: 1073846897}
+  m_shopController: {fileID: 1329047026}
 --- !u!1 &1133075256
 GameObject:
   m_ObjectHideFlags: 0
@@ -866,6 +882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopView: {fileID: 809938122}
   userView: {fileID: 1908687860}
+  m_shopController: {fileID: 1329047026}
   shopItems:
   - {fileID: 11400000, guid: 42471fbc027c15e449105cfe207909eb, type: 2}
   - {fileID: 11400000, guid: b18ff0f4083444443b6addda0abcbd1f, type: 2}

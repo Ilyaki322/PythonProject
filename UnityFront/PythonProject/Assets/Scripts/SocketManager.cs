@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using UnityEngine;
 
 public class SocketManager : MonoBehaviour
@@ -12,9 +11,9 @@ public class SocketManager : MonoBehaviour
 
     public void SetToken(string token) => m_token = token;
 
-    public void InitStore()
+    public void Emit(string eventName, object payload)
     {
-
+        m_socket.Emit(eventName, payload);
     }
 
     public void InitSocket(CharacterCombatController enemyController)

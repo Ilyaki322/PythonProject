@@ -1,3 +1,5 @@
+from werkzeug.exceptions import NotFound
+
 from models.character import Character
 from models.user import User
 from db import db
@@ -70,3 +72,20 @@ def set_delete_character(data, to_delete):
     return character
 
 
+def character_levelUp(character_id: int, new_level: int, current_gold: int):
+    character = Character.query.get_or_404(character_id)
+    if not character:
+        raise NotFound(f"Character {character_id} not found")
+    character.level = new_level
+    character.money = current_gold
+    db.session.commit()
+    return character.to_dict()
+
+
+def update_character_gold(character_id: int, new_gold: int):
+    character = Character.query.get_or_404(character_id)
+    if not character:
+        raise NotFound(f"Character {character_id} not found")
+    character.money = new_gold
+    db.session.commit()
+    return character.to_dict()

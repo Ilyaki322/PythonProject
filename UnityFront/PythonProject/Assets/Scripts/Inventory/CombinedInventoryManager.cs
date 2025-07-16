@@ -70,14 +70,14 @@ public class CombinedInventoryManager : MonoBehaviour
 
         if (fromShop && toUser)
         {
-            var details = shopInvController.Model.Get(src.Index).Details;
-            if (!m_shopController.makePurchase(details.Price))
+            var item = shopInvController.Model.Get(src.Index);
+            if (!m_shopController.makePurchase(item, dst.Index))
             {
-                Debug.Log("Not enough money to buy item: " + details.name);
+                Debug.Log("Not enough money to buy item: " + item.Details.name);
                 return;
             }
 
-            var clone = details.Create(1);
+            var clone = item.Details.Create(1);
             userInvController.Model.TryAddAt(dst.Index, clone);
             userInvController.RefreshView();
             shopInvController.RefreshView();
@@ -87,7 +87,7 @@ public class CombinedInventoryManager : MonoBehaviour
         if (fromUser && toShop)
         {
             var item = userInvController.Model.Get(src.Index);
-            if(!m_shopController.sellItem(item.Details.Price))
+            if(!m_shopController.sellItem(item, src.Index))
             {
                 Debug.Log("Not enough money to sell item: " + item.Details.name);
                 return;
