@@ -866,6 +866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopView: {fileID: 809938122}
   userView: {fileID: 1908687860}
+  m_shopController: {fileID: 1329047026}
   shopItems:
   - {fileID: 11400000, guid: 42471fbc027c15e449105cfe207909eb, type: 2}
   - {fileID: 11400000, guid: b18ff0f4083444443b6addda0abcbd1f, type: 2}

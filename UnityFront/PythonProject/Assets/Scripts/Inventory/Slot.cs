@@ -8,10 +8,11 @@ public class Slot : VisualElement
     public Image Icon;
     public Label StackLabel;
     public int Index => parent.IndexOf(this);
-    public SerializableGuid ItemId {get; private set;} = SerializableGuid.Empty;
+    public SerializableGuid ItemId { get; private set; } = SerializableGuid.Empty;
     public Sprite BaseSprite;
 
     public event Action<Vector2, Slot, PointerDownEvent> OnStartDrag = delegate { };
+    public event Action<int, SerializableGuid> OnClick = delegate { };
 
     public Slot()
     {
@@ -22,7 +23,13 @@ public class Slot : VisualElement
 
     void OnPointerDown(PointerDownEvent e)
     {
-        if (e.button != 0 || ItemId.Equals(SerializableGuid.Empty)) return;
+        if (e.button != 0 || ItemId.Equals(SerializableGuid.Empty))
+        {
+            OnClick.Invoke(Index, ItemId);
+            return;
+        }
+
+        OnClick.Invoke(Index, ItemId);
         OnStartDrag.Invoke(e.position, this, e);
         e.StopPropagation();
     }
