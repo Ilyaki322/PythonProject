@@ -218,7 +218,6 @@ MonoBehaviour:
   m_dummy: {fileID: 2387464404727783760}
   m_gameController: {fileID: 1329047023}
   m_creator: {fileID: 1576498826}
-  m_invetory: {fileID: 0}
 --- !u!114 &280119586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -815,6 +814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_shopController: {fileID: 1329047026}
+  m_inventoryManager: {fileID: 1329047027}
   m_inventoryTest: {fileID: 0}
   m_document: {fileID: 1329047024}
   m_socketManager: {fileID: 1073846897}
@@ -882,11 +882,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopView: {fileID: 809938122}
   userView: {fileID: 1908687860}
+  userApi: {fileID: 280119588}
   m_shopController: {fileID: 1329047026}
   shopItems:
   - {fileID: 11400000, guid: 42471fbc027c15e449105cfe207909eb, type: 2}
   - {fileID: 11400000, guid: b18ff0f4083444443b6addda0abcbd1f, type: 2}
   - {fileID: 11400000, guid: d54b942a8ad73984e946f94949ff16a4, type: 2}
+  - {fileID: 11400000, guid: 3adae8560390bdb479e52e2cda471ecd, type: 2}
   shopCapacity: 10
   userCapacity: 10
 --- !u!114 &1576498826 stripped

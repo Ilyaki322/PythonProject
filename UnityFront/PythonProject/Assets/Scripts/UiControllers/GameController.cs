@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 public class GameController : MonoBehaviour
 {
     [SerializeField] private ShopController m_shopController;
+    [SerializeField] private CombinedInventoryManager m_inventoryManager;
     private Slot[] m_slots;
 
     private enum status_t {
@@ -75,9 +76,10 @@ public class GameController : MonoBehaviour
     }
 
     public void SetCharacter(CharacterDTO character) {
-        character.m_money += 10; // Initial money for testing
+        character.CharMoney += 10; // Initial money for testing
         m_selectedCharacter = character;
         m_shopController.SelectedCharacter = character;
+        m_inventoryManager.InitInventory();
 
         m_selectedCharacter.OnMoneyChanged += UpdateMoneyLabel;
     }
@@ -220,8 +222,8 @@ public class GameController : MonoBehaviour
 
     private void setCharacterStatus()
     {
-        m_charLevel.text = "Level: " + m_selectedCharacter.level;
-        m_charMoney.text = "Coins: " + m_selectedCharacter.money;
+        m_charLevel.text = "Level: " + m_selectedCharacter.CharLevel;
+        m_charMoney.text = "Coins: " + m_selectedCharacter.CharMoney;
         m_charName.text = m_selectedCharacter.name;
         m_selectedCharacter.PropertyChanged += OnCharacterPropertyChanged;
     }
@@ -234,8 +236,8 @@ public class GameController : MonoBehaviour
     private void OnCharacterPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         // Only care about level changes here
-        if (e.PropertyName == nameof(CharacterDTO.level))
-            m_charLevel.text = "Level: " + m_selectedCharacter.level;
+        if (e.PropertyName == nameof(CharacterDTO.CharLevel))
+            m_charLevel.text = "Level: " + m_selectedCharacter.CharLevel;
     }
 
     public void Connect()

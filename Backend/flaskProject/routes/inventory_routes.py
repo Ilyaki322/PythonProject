@@ -19,6 +19,7 @@ def update_items_route():
 @jwt_required()
 def get_inventory():
     char_id = request.headers.get('CharID')
+    print(char_id)
     if not char_id:
         raise BadRequest(f"Missing fields: CharID")
 

@@ -8,8 +8,10 @@ using static UnityEngine.PlayerLoop.PreUpdate;
 public class CombinedInventoryManager : MonoBehaviour
 {
     [Header("Views")]
-    [SerializeField] InventoryView shopView;
-    [SerializeField] InventoryView userView;
+    [SerializeField] private InventoryView shopView;
+    [SerializeField] private InventoryView userView;
+    [SerializeField] private InventoryApi userApi;
+
 
     [Header("Controller")]
     [SerializeField] ShopController m_shopController;
@@ -23,7 +25,6 @@ public class CombinedInventoryManager : MonoBehaviour
 
     InventoryController shopInvController, userInvController;
 
-
     void Awake()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
@@ -31,7 +32,11 @@ public class CombinedInventoryManager : MonoBehaviour
         playerContainer = root.Q<VisualElement>("UserInventory");
         ghostContainer = root;
 
-        // 1) Build both controllers (roles no longer needed inside them)
+        StorageView.OnGlobalDrop += HandleGlobalDrop;
+    }
+
+    public void InitInventory()
+    {
         shopInvController = new InventoryController.Builder(shopView)
             .WithStartingItems(shopItems)
             .WithCapacity(shopCapacity)
@@ -40,13 +45,11 @@ public class CombinedInventoryManager : MonoBehaviour
             .Build();
 
         userInvController = new InventoryController.Builder(userView)
-            .WithStartingItems(Array.Empty<ItemDetails>())
             .WithCapacity(userCapacity)
             .WithContainer(playerContainer)
             .WithGhostContainer(ghostContainer)
+            .WithApi(userApi)
             .Build();
-
-        StorageView.OnGlobalDrop += HandleGlobalDrop;
     }
 
     void HandleGlobalDrop(Slot src, Vector2 pointerPos)
@@ -71,14 +74,18 @@ public class CombinedInventoryManager : MonoBehaviour
         if (fromShop && toUser)
         {
             var item = shopInvController.Model.Get(src.Index);
-            if (!m_shopController.makePurchase(item, dst.Index))
+            var userSlot = userInvController.Model.Get(dst.Index);
+
+            if (userSlot != null) return;
+
+            var clone = item.Details.Create(1);
+            if (!userInvController.Model.TryAddAt(dst.Index, clone) 
+                || !m_shopController.makePurchase(item, dst.Index))
             {
                 Debug.Log("Not enough money to buy item: " + item.Details.name);
                 return;
             }
 
-            var clone = item.Details.Create(1);
-            userInvController.Model.TryAddAt(dst.Index, clone);
             userInvController.RefreshView();
             shopInvController.RefreshView();
             return;
@@ -101,13 +108,13 @@ public class CombinedInventoryManager : MonoBehaviour
 
         if (fromShop && toShop)
         {
-            //shopController.HandleDrop(src, src);
             shopInvController.RefreshView();
             return;
         }
 
         if (fromUser && toUser)
         {
+            m_shopController.SwapItems(src.Index, dst.Index);
             userInvController.HandleDrop(src, dst);
             userInvController.RefreshView();
             return;

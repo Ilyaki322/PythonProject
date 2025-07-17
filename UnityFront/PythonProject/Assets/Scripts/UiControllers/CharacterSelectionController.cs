@@ -17,7 +17,6 @@ public class CharacterSelectionController : MonoBehaviour
     [SerializeField] private GameObject m_dummy;
     [SerializeField] private GameController m_gameController;
     [SerializeField] private CharacterCreator m_creator;
-    [SerializeField] private Inventory m_invetory;
 
     private Label m_nameError;
     private Label m_alertText;
@@ -146,7 +145,7 @@ public class CharacterSelectionController : MonoBehaviour
         m_creationElement.style.display = DisplayStyle.None;
         m_dummy.SetActive(false);
 
-        //m_invetory.LoadInventory(m_invetoryApi);
+        m_invetoryApi.setCharID(m_characterList[lastClickedIndex].id);
         m_gameController.SetCharacter(m_characterList[lastClickedIndex]);
         m_gameController.Connect();
 

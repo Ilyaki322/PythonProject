@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -6,24 +7,24 @@ using UnityEngine;
 [Serializable]
 public class CharacterDTO
 {
-    public int money
+    public int CharMoney
     {
-        get => m_money;
+        get => money;
         set
         {
-            if (m_money == value) return;
-            m_money = value;
-            OnMoneyChanged?.Invoke(m_money);
+            if (money == value) return;
+            money = value;
+            OnMoneyChanged?.Invoke(money);
         }
     }
 
-    public int level
+    public int CharLevel
     {
-        get => m_level;
+        get => level;
         set
         {
-            if (m_level == value) return;
-            m_level = value;
+            if (level == value) return;
+            level = value;
             OnPropertyChanged();
         }
     }
@@ -38,8 +39,8 @@ public class CharacterDTO
 
     public int id = -1;
     public string name = "empty";
-    public int m_level = 1;
-    public int m_money = 0;
+    public int level = 1;
+    public int money = 0;
     
     public int hair = 0;
     public int helmet = 0;

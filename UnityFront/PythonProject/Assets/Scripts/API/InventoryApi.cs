@@ -58,6 +58,8 @@ public class InventoryApi : MonoBehaviour
 
     public IEnumerator GetItems(Action<string> onSuccess)
     {
+        Debug.Log($"{m_charID} hui");
+
         UnityWebRequest req = new UnityWebRequest(m_url + "/get", "GET");
         req.downloadHandler = new DownloadHandlerBuffer();
         req.SetRequestHeader("Authorization", "Bearer " + m_token);
@@ -67,7 +69,9 @@ public class InventoryApi : MonoBehaviour
 
         if (req.result == UnityWebRequest.Result.Success)
         {
+            Debug.Log(req.downloadHandler.text);
             onSuccess(req.downloadHandler.text);
+
         }
         else
         {

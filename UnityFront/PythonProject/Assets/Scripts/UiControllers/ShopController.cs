@@ -9,6 +9,7 @@ public class ShopController : MonoBehaviour
 
     public event Action<string, int, int> OnPurchase;
     public event Action<string, int, int> OnSale;
+    public event Action<int,int> OnSwapItems;
     public event Action<int> OnLevelUp;
 
     private VisualElement m_root;
@@ -33,7 +34,7 @@ public class ShopController : MonoBehaviour
             {
                 m_selectedCharacter.PropertyChanged += OnCharacterPropertyChanged;
                 // Initialize button text for current level
-                UpdateLevelUpText(m_selectedCharacter.level);
+                UpdateLevelUpText(m_selectedCharacter.CharLevel);
             }
         }
     }
@@ -46,7 +47,7 @@ public class ShopController : MonoBehaviour
         
         if(m_selectedCharacter != null)
         {
-            m_levelUpButton.text = $"Level Up ({m_selectedCharacter.level + 1})";
+            m_levelUpButton.text = $"Level Up ({m_selectedCharacter.CharLevel + 1})";
         }
 
         m_backButton = m_root.Q<Button>("BackButton");
@@ -57,8 +58,8 @@ public class ShopController : MonoBehaviour
 
     private void OnCharacterPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(CharacterDTO.level))
-            UpdateLevelUpText(m_selectedCharacter.level);
+        if (e.PropertyName == nameof(CharacterDTO.CharLevel))
+            UpdateLevelUpText(m_selectedCharacter.CharLevel);
     }
 
     private void UpdateLevelUpText(int level)
@@ -74,13 +75,13 @@ public class ShopController : MonoBehaviour
             return;
         }
 
-        int levelUpCost = m_selectedCharacter.level + 1; //cost calculation
+        int levelUpCost = m_selectedCharacter.CharLevel + 1; //cost calculation
 
         if (LevelUpCheck(levelUpCost))
         {
-            m_selectedCharacter.level++;
-            Debug.Log($"Character {m_selectedCharacter.name} leveled up to level {m_selectedCharacter.level}.");
-            OnLevelUp?.Invoke(m_selectedCharacter.level);
+            m_selectedCharacter.CharLevel++;
+            Debug.Log($"Character {m_selectedCharacter.name} leveled up to level {m_selectedCharacter.CharLevel}.");
+            OnLevelUp?.Invoke(m_selectedCharacter.CharLevel);
         }
         else
         {
@@ -90,9 +91,9 @@ public class ShopController : MonoBehaviour
 
     bool LevelUpCheck(int levelUpCost)
     {
-        if (m_selectedCharacter.money >= levelUpCost)
+        if (m_selectedCharacter.CharMoney >= levelUpCost)
         {
-            m_selectedCharacter.money -= levelUpCost;
+            m_selectedCharacter.CharMoney -= levelUpCost;
             return true;
         }
         return false;
@@ -111,9 +112,9 @@ public class ShopController : MonoBehaviour
 
     public bool makePurchase(Item item, int slotIndex)
     {
-        if (m_selectedCharacter.money >= item.Details.Price)
+        if (m_selectedCharacter.CharMoney >= item.Details.Price)
         {
-            m_selectedCharacter.money -= item.Details.Price;
+            m_selectedCharacter.CharMoney -= item.Details.Price;
             OnPurchase?.Invoke(item.Details.Id.ToHexString(), item.Quantity, slotIndex);
             return true;
         }
@@ -122,12 +123,17 @@ public class ShopController : MonoBehaviour
 
     public bool sellItem(Item item, int slotIndex)
     {
-        if (m_selectedCharacter.money + item.Details.Price <= int.MaxValue)
+        if (m_selectedCharacter.CharMoney + item.Details.Price <= int.MaxValue)
         {
-            m_selectedCharacter.money += item.Details.Price;
+            m_selectedCharacter.CharMoney += item.Details.Price;
             OnSale?.Invoke(item.Details.Id.ToHexString(), item.Quantity, slotIndex);
             return true;
         }
         return false;
+    }
+
+    public void SwapItems(int src, int dest)
+    {
+        OnSwapItems?.Invoke(src, dest);
     }
 }

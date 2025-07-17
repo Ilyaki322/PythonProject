@@ -3,7 +3,7 @@ import requests
 from flask import request
 from flask_socketio import emit
 from service.character_service import update_character_gold, character_levelUp
-from service.inventory_service import update_slot
+import service.inventory_service as inventory_service
 
 _app = None
 _socketio = None
@@ -42,7 +42,7 @@ def init_shop_socket_handlers(app_instance, socketio_instance):
                    'item_id': data['itemId'], 'count': data['count']}
 
         try:
-            service_response, code = update_slot(payload)
+            service_response = inventory_service.buy_item(payload)
             if service_response.get('success'):
                 update_character_gold(data.get('charId'), data.get('currentGold'))
 
@@ -55,12 +55,24 @@ def init_shop_socket_handlers(app_instance, socketio_instance):
         data: { 'charId': int, 'itemId': int, 'qty': int, 'slotIndex': int, currentGold': int' }
         """
         payload = {'character_id': data['charId'], 'index': data['slotIndex'],
-                   'item_id': data['itemId'], 'count': 0}
+                   'item_id': data['itemId'], 'count': data['count']}
 
         try:
-            service_response, code = update_slot(payload)
+            service_response = inventory_service.sell_item(payload)
             if service_response.get('success'):
                 update_character_gold(data.get('charId'), data.get('currentGold'))
 
+        except Exception as e:
+            print(f"[Shop] PurchaseItem request error: {e}")
+
+    @_socketio.on('SwapSlots')
+    def handle_swap(data):
+        """
+        data: {'characterId': int, 'indexSrc': int, 'indexDest': int}
+        """
+        payload = {'character_id': data['charId'], 'indexSrc': data['indexSrc'], 'indexDest': data['indexDest']}
+
+        try:
+            inventory_service.swap_items(payload)
         except Exception as e:
             print(f"[Shop] PurchaseItem request error: {e}")

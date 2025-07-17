@@ -25,7 +25,7 @@ def update_items(items_json):
 
 def get_char_inventory(char_id):
     inventory = CharacterInventory.query.filter_by(character_id=char_id).all()
-
+    print(inventory)
     return [
         {
             'item': entry.item.to_dict() if entry.item else None,
@@ -76,3 +76,74 @@ def update_slot(data):
 
     db.session.commit()
     return {"success": True}, code
+
+
+def buy_item(data):
+    entry = CharacterInventory.query.filter_by(character_id=data['character_id'], index=data['index']).first()
+
+    if not entry:
+        new_entry = CharacterInventory(
+            character_id=data['character_id'],
+            item_id=data['item_id'],
+            count=data['count'],
+            index=data['index']
+        )
+        db.session.add(new_entry)
+    else:
+        if data['item_id'] == entry.item_id:
+            entry.count += data['count']
+        else:
+            return {"success": False}
+
+    db.session.commit()
+    return {"success": True}
+
+
+def sell_item(data):
+    entry = CharacterInventory.query.filter_by(
+        character_id=data['character_id'],
+        item_id=data['item_id'],
+        count=data['count'],
+        index=data['index']).first()
+
+    if not entry:
+        return {"success": False}
+    else:
+        entry.count -= data['count']
+        if entry.count <= 0:
+            db.session.delete(entry)
+
+        return {"success": True}
+
+
+def swap_items(data):
+    entry_src = CharacterInventory.query.filter_by(character_id=data['character_id'], index=data['indexSrc']).first()
+    entry_dst = CharacterInventory.query.filter_by(character_id=data['character_id'], index=data['indexDest']).first()
+
+    if not entry_src:
+        return {"success": False, "error": "Source slot not found"}, 404
+
+    if entry_dst is None or entry_dst.item_id is None:
+        if entry_dst is None:
+            dst = CharacterInventory(
+                character_id=data['character_id'],
+                item_id=entry_src.item_id,
+                count=entry_src.count,
+                index=data['indexDest']
+            )
+            db.session.add(dst)
+        else:
+            entry_dst.item_id = entry_src.item_id
+            entry_dst.count = entry_src.count
+        db.session.delete(entry_src)
+
+    else:
+        # Both occupied: swap item_id and count
+        entry_dst.item_id, entry_src.item_id = entry_src.item_id, entry_dst.item_id
+        entry_dst.count, entry_src.count = entry_src.count, entry_dst.count
+
+    db.session.commit()
+    return {"success": True}
+
+
+

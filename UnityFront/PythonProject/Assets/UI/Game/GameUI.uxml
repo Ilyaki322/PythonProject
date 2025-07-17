@@ -24,7 +24,7 @@
             <engine:VisualElement name="LevelUp" style="flex-grow: 0; width: 22%; flex-shrink: 0; height: 11%; bottom: auto; top: 65%; left: 2%;">
                 <engine:Button text="Level Up" name="LevelUpButton" style="width: 100%; height: 100%; font-size: 35px; background-color: rgb(200, 196, 42);" />
             </engine:VisualElement>
-            <engine:VisualElement name="ShopContainer" style="flex-grow: 0; flex-shrink: 0; right: 0; height: 61%; width: 58%; top: 24%; left: 18%; display: flex;">
+            <engine:VisualElement name="ShopContainer" style="flex-grow: 0; flex-shrink: 0; right: 0; height: 61%; width: 58%; top: 24%; left: 18%; display: flex; background-image: url(&quot;project://database/Assets/Sprites/Inventory_background_new.png?fileID=2800000&amp;guid=c22417b59625ebd4fbee4394cc24dd85&amp;type=3#Inventory_background_new&quot;); background-size: 100px 100px; background-position-y: center 0; background-position-x: center 0; -unity-background-scale-mode: stretch-to-fill; -unity-slice-left: 1000; -unity-slice-top: 1000; -unity-slice-right: 1000; -unity-slice-bottom: 1000;">
                 <engine:VisualElement name="ShopInventory" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: space-between; align-self: stretch;" />
                 <engine:VisualElement name="UserInventory" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: space-between; align-self: stretch;" />
             </engine:VisualElement>
@@ -60,15 +60,13 @@
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement class="Container">
-            <engine:VisualElement class="Container ButtonContainer" name="CombatButtonContainer">
+            <engine:VisualElement name="CombatButtonContainer" class="Container ButtonContainer">
                 <engine:Button name="Button1" text="Attack" class="ActionButton" />
                 <engine:Button name="Button2" text="Defend" class="ActionButton" />
                 <engine:Button name="Button3" text="Items" class="ActionButton" />
                 <engine:Button name="Button4" text="Surrender" class="ActionButton SurrenderButton" style="background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);" />
             </engine:VisualElement>
-            <engine:VisualElement class="Container CombatInventoryContainer" name="CombatInventoryContainer">
-                
-            </engine:VisualElement>
+            <engine:VisualElement name="CombatInventoryContainer" class="Container CombatInventoryContainer" />
         </engine:VisualElement>
     </engine:VisualElement>
     <engine:VisualElement name="EndGameContainer" class="Container EndGameContainer" style="display: none; -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;);">

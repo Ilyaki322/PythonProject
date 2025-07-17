@@ -11,6 +11,7 @@ public class ShopSocketService : MonoBehaviour
         m_shopController.OnPurchase += HandlePurchase;
         m_shopController.OnSale += HandleSale;
         m_shopController.OnLevelUp += HandleLevelUp;
+        m_shopController.OnSwapItems += SwapItemsCall;
     }
     private void OnDestroy()
     {
@@ -18,6 +19,7 @@ public class ShopSocketService : MonoBehaviour
         m_shopController.OnPurchase -= HandlePurchase;
         m_shopController.OnSale -= HandleSale;
         m_shopController.OnLevelUp -= HandleLevelUp;
+        m_shopController.OnSwapItems -= SwapItemsCall;
     }
 
     private void HandlePurchase(string TargetitemId, int qty, int slotIndexTarget)
@@ -29,7 +31,7 @@ public class ShopSocketService : MonoBehaviour
             itemId = TargetitemId,
             count = qty,
             slotIndex = slotIndexTarget,
-            currentGold = dto.money
+            currentGold = dto.CharMoney
         });
     }
 
@@ -42,7 +44,7 @@ public class ShopSocketService : MonoBehaviour
             itemId = TargetitemId,
             count = qty,
             slotIndex = slotIndexTarget,
-            currentGold = dto.money
+            currentGold = dto.CharMoney
         });
         Debug.Log($"Emitting SellItem for {TargetitemId}");
     }
@@ -54,8 +56,17 @@ public class ShopSocketService : MonoBehaviour
         {
             charId = dto.id,
             newLevel = UpdatedLevel,
-            currentGold = dto.money
+            currentGold = dto.CharMoney
         });
     }
 
+    private void SwapItemsCall(int src, int dest)
+    {
+        m_socketManager.Emit("SwapSlots", new
+        {
+            charId = m_shopController.SelectedCharacter.id,
+            indexSrc = src,
+            indexDest = dest
+        });
+    }
 }
