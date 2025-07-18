@@ -104,3 +104,28 @@ Label {
     height: 40px;
     margin: 4px;
 }
+
+.Tooltip {
+    position: absolute;
+    background-color: black;
+    opacity: 0.7;
+}
+
+.Tooltip-name {
+    color: orange;
+}
+
+.Tooltip-desc {
+    color: grey;
+    font-size: 16px;
+}
+
+.Tooltip-use {
+    color: green;
+    font-size: 16px;
+}
+
+.Tooltip-price {
+    color: yellow;
+    font-size: 14px;
+}
