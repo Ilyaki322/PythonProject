@@ -19,9 +19,13 @@ public class InventoryView : StorageView
         if (m_styleSheet != null)
             m_root.styleSheets.Add(m_styleSheet);
 
-        m_container = m_root.CreateChild("container");
-        var header = m_container.CreateChild("inventoryHeader");
-        header.Add(new Label(m_panelName));
+        //m_container = m_root.CreateChild("container");
+        m_root.AddToClassList("inventory");
+        var header = m_root.CreateChild("inventoryHeader");
+        var label = new Label(m_panelName);
+        label.AddToClassList("labelProps");
+        header.Add(label);
+
 
         var slotsContainer = header.CreateChild("slotsContainer");
         for (int i = 0; i < size; i++)

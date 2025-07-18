@@ -28,6 +28,11 @@ public class InventoryController
     public InventoryModel Model => m_model;
     public InventoryView View => m_view;
 
+    public List<Item> GetSlots()
+    {
+       return m_model.GetAll();
+    }
+
     InventoryController(InventoryModel model, InventoryView view, int capacity)
     {
         Debug.Assert(model != null, "model is null");

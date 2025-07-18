@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 public class InventoryModel
 {
     public ObservableArray<Item> Items;
@@ -27,6 +27,19 @@ public class InventoryModel
         Items = new ObservableArray<Item>(capacity);
         m_inventoryApi = inventoryApi;
         inventoryApi.StartCoroutine(inventoryApi.GetItems(loadFromApi));
+    }
+
+    public List<Item> GetAll()
+    {
+        var list = new List<Item>();
+        for (int i = 0; i < Items.Length; i++)
+        {
+            var item = Items[i];
+            if (item != null)
+                list.Add(item);
+        }
+
+        return list;
     }
 
     public Item Get(int index) => Items[index];

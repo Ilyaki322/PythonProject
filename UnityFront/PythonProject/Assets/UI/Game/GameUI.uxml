@@ -1,7 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Game/GameUSS.uss?fileID=7433441132597879392&amp;guid=79468de2ebde4264da9d344272add9ae&amp;type=3#GameUSS" />
     <Style src="project://database/Assets/Scripts/Inventory/InventoryUSS.uss?fileID=7433441132597879392&amp;guid=8f3056dd80ab45644af273b7dd97d176&amp;type=3#InventoryUSS" />
-    <engine:VisualElement name="Container" class="Container" style="display: flex; -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;); align-items: center; justify-content: space-evenly; flex-direction: row;">
+    <engine:VisualElement name="Container" class="Container" style="display: flex; -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;); align-items: auto; justify-content: flex-end; flex-direction: flex-start; align-self: stretch;">
         <engine:VisualElement name="CharStatus" style="flex-grow: 1; position: absolute; top: 0; left: 0; width: 100%; height: 10%; background-color: rgba(94, 245, 198, 0.33); flex-direction: row; align-items: center; justify-content: flex-start; align-self: center;">
             <engine:VisualElement name="CharContainer" style="flex-grow: 0; width: 89%; height: 100%; flex-direction: row; justify-content: space-evenly; align-self: stretch; align-items: center; align-content: center;">
                 <engine:VisualElement name="NameContainer" class="label-container" style="flex-grow: 0; width: 25%; align-items: center; justify-content: space-between; align-self: center;">
@@ -16,23 +16,29 @@
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement name="ButtonContainer" style="flex-grow: 1; width: 840px; align-items: center; justify-content: space-around; display: none; height: 75%;">
-            <engine:Button text="Find Match" name="FindButton" enabled="true" class="UIButton buttons-style" style="width: 60%; height: 10%; justify-content: space-between;" />
-            <engine:Button text="Store" name="StoreButton" enabled="true" class="UIButton buttons-style" style="width: 60%; height: 10%; justify-content: space-between;" />
+        <engine:VisualElement name="ButtonContainer" style="flex-grow: 0; width: 100%; align-items: stretch; justify-content: center; display: flex; height: 100%; flex-direction: column; align-self: auto; flex-shrink: 0; left: auto;">
+            <engine:VisualElement style="flex-grow: 0; width: 1046px; align-self: center; justify-content: space-around; align-items: center; height: 599px; flex-shrink: 0;">
+                <engine:Button text="Find Match" name="FindButton" enabled="true" class="UIButton buttons-style" style="width: 60%; height: 10%; justify-content: space-between;" />
+                <engine:Button text="Store" name="StoreButton" enabled="true" class="UIButton buttons-style" style="width: 60%; height: 10%; justify-content: space-between;" />
+            </engine:VisualElement>
+            <engine:VisualElement name="Bar" style="flex-grow: 0; width: 100%; flex-shrink: 0; height: 10%; top: auto; left: auto; background-color: rgba(231, 95, 95, 0.55); flex-direction: row; justify-content: space-around; align-self: center; bottom: 0; position: absolute;">
+                <engine:Button text="Logout&#10;" name="Logout" style="justify-content: space-between; align-items: flex-end; width: 20%; font-size: 30px; background-color: rgb(95, 242, 248); border-left-color: rgb(133, 241, 216); border-right-color: rgb(133, 241, 216); border-top-color: rgb(133, 241, 216); border-bottom-color: rgb(133, 241, 216); border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+            </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement name="Shop" style="flex-grow: 1; display: flex; width: 100%; height: 90%; flex-direction: row; top: 5%;">
+        <engine:VisualElement name="Shop" style="flex-grow: 1; display: none; width: 100%; height: 90%; flex-direction: row; top: auto;">
             <engine:VisualElement name="LevelUp" style="flex-grow: 0; width: 22%; flex-shrink: 0; height: 11%; bottom: auto; top: 65%; left: 2%;">
                 <engine:Button text="Level Up" name="LevelUpButton" style="width: 100%; height: 100%; font-size: 35px; background-color: rgb(200, 196, 42);" />
             </engine:VisualElement>
-            <engine:VisualElement name="ShopContainer" style="flex-grow: 0; flex-shrink: 0; right: 0; height: 61%; width: 58%; top: 24%; left: 18%; display: flex; background-image: url(&quot;project://database/Assets/Sprites/Inventory_background_new.png?fileID=2800000&amp;guid=c22417b59625ebd4fbee4394cc24dd85&amp;type=3#Inventory_background_new&quot;); background-size: 100px 100px; background-position-y: center 0; background-position-x: center 0; -unity-background-scale-mode: stretch-to-fill; -unity-slice-left: 1000; -unity-slice-top: 1000; -unity-slice-right: 1000; -unity-slice-bottom: 1000;">
+            <engine:VisualElement name="ShopContainer" style="flex-grow: 0; flex-shrink: 0; right: 0; height: 61%; width: 58%; top: 24%; left: 18%; display: flex;">
                 <engine:VisualElement name="ShopInventory" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: space-between; align-self: stretch;" />
                 <engine:VisualElement name="UserInventory" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: space-between; align-self: stretch;" />
             </engine:VisualElement>
-            <engine:VisualElement name="Bar" style="flex-grow: 0; width: 100%; flex-shrink: 0; height: 10%; top: 89%; left: -80%; background-color: rgba(231, 95, 95, 0.55); flex-direction: row; justify-content: center;">
+            <engine:VisualElement name="Bar" style="flex-grow: 0; width: 100%; flex-shrink: 0; height: 10%; top: 90%; left: -80%; background-color: rgba(231, 95, 95, 0.55); flex-direction: row; justify-content: center;">
                 <engine:Button text="Back" name="BackButton" style="justify-content: space-between; align-items: flex-end; width: 20%; font-size: 30px; background-color: rgb(95, 242, 248); border-left-color: rgb(133, 241, 216); border-right-color: rgb(133, 241, 216); border-top-color: rgb(133, 241, 216); border-bottom-color: rgb(133, 241, 216); border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
+    <engine:Label text="Finding Match..." name="MatchText" style="font-size: 53px; height: 10%; width: 60%; bottom: auto; text-overflow: ellipsis; white-space: pre; -unity-text-align: middle-center; display: none; position: absolute; top: 10%; background-color: rgba(0, 255, 158, 0.34); border-top-width: 6px; border-right-width: 6px; border-bottom-width: 6px; border-left-width: 6px; border-top-left-radius: 62px; border-top-right-radius: 62px; border-bottom-right-radius: 62px; border-bottom-left-radius: 62px; border-left-color: rgba(17, 191, 217, 0.52); border-right-color: rgba(17, 191, 217, 0.52); border-top-color: rgba(17, 191, 217, 0.52); border-bottom-color: rgba(17, 191, 217, 0.52); left: 20%; right: 20%;" />
     <engine:VisualElement name="CombatUI" class="Container" style="display: none; -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;);">
         <engine:VisualElement class="Container StatusContainer">
             <engine:Label name="StatusLabel" text="test" class="Header" />

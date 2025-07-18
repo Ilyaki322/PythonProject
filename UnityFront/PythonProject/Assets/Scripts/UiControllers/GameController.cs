@@ -1,3 +1,4 @@
+using System.Collections;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -6,6 +7,7 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private ShopController m_shopController;
     [SerializeField] private CombinedInventoryManager m_inventoryManager;
+
     private Slot[] m_slots;
 
     private enum status_t {
@@ -53,7 +55,7 @@ public class GameController : MonoBehaviour
     private Label m_healthPlayer2;
     private Label m_statusBar;
     private Label m_endGameLabel;
-
+    private Label m_findMatch;
     // Character Menu
     private Label m_charLevel;
     private Label m_charMoney;
@@ -66,7 +68,7 @@ public class GameController : MonoBehaviour
 
     private string m_token;
     private CharacterDTO m_selectedCharacter;
-    
+    private Coroutine m_findMatchCoroutine;
     private status_t m_gameStatus = status_t.Menu;
 
     public void SetToken(string token)
@@ -106,7 +108,7 @@ public class GameController : MonoBehaviour
         m_endGameUI = root.Q<VisualElement>("EndGameContainer");
         m_inventoryContainer = root.Q<VisualElement>("CombatInventoryContainer");
         m_combatButtonContainer = root.Q<VisualElement>("CombatButtonContainer");
-
+        m_findMatch = root.Q<Label>("MatchText");
         m_timeFill = root.Q<VisualElement>("TimeFill");
         m_healthFillPlayer1 = root.Q<VisualElement>("HealthFill1");
         m_healthFillPlayer2 = root.Q<VisualElement>("HealthFill2");
@@ -259,6 +261,9 @@ public class GameController : MonoBehaviour
         {
             m_inQueue = true;
             m_findGameButton.text = "Cancel";
+
+            m_findMatch.style.display = DisplayStyle.Flex;
+            m_findMatchCoroutine = StartCoroutine(AnimateFindingMatch());
             m_socketManager.OnEnterQueue(m_selectedCharacter.id);
             return;
         }
@@ -267,8 +272,32 @@ public class GameController : MonoBehaviour
         {
             m_inQueue = false;
             m_findGameButton.text = "Find Match";
+
+            if (m_findMatchCoroutine != null)
+            {
+                StopCoroutine(m_findMatchCoroutine);
+                m_findMatchCoroutine = null;
+            }
+            m_findMatch.style.display = DisplayStyle.None;
             m_socketManager.OnLeaveQueue();
             return;
+        }
+    }
+
+    private IEnumerator AnimateFindingMatch()
+    {
+        // this will loop until you StopCoroutine it
+        var baseText = "Finding Match";
+        while (true)
+        {
+            for (int dots = 1; dots <= 3; ++dots)
+            {
+                m_findMatch.text = baseText + new string('.', dots);
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            m_findMatch.text = baseText;
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
