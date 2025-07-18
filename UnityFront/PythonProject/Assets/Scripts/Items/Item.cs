@@ -7,7 +7,7 @@ public class Item
     public int Quantity;
     public Item(ItemDetails details, int quantity)
     {
-        Id = SerializableGuid.NewGuid();
+        Id = details.Id;
         Details = details;
         Quantity = quantity;
     }

@@ -189,3 +189,7 @@ VisualElement {
     flex-shrink: 0;
     height: auto;
 }
+
+.Tooltip {
+    position: absolute;
+}

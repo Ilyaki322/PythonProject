@@ -13,12 +13,14 @@ public class Slot : VisualElement
 
     public event Action<Vector2, Slot, PointerDownEvent> OnStartDrag = delegate { };
     public event Action<int, SerializableGuid> OnClick = delegate { };
+    public event Action<Slot, PointerOverEvent> OnHover = delegate { };
 
     public Slot()
     {
         Icon = this.CreateChild<Image>("slotIcon");
         StackLabel = this.CreateChild("slotFrame").CreateChild<Label>("stackCount");
         RegisterCallback<PointerDownEvent>(OnPointerDown);
+        RegisterCallback<PointerOverEvent>(OnPointerOver);
     }
 
     void OnPointerDown(PointerDownEvent e)
@@ -31,6 +33,12 @@ public class Slot : VisualElement
 
         OnClick.Invoke(Index, ItemId);
         OnStartDrag.Invoke(e.position, this, e);
+        e.StopPropagation();
+    }
+
+    void OnPointerOver(PointerOverEvent e)
+    {
+        OnHover.Invoke(this, e);
         e.StopPropagation();
     }
 

@@ -16,6 +16,9 @@ public abstract class StorageView : MonoBehaviour
     static bool m_isDragging;
     static Slot m_originalSlot;
 
+    static Tooltip m_tooltip;
+    static Slot m_hoveredSlot;
+
     protected VisualElement m_root;
     protected VisualElement m_container;
 
@@ -24,13 +27,18 @@ public abstract class StorageView : MonoBehaviour
 
     public void InitView()
     {
+        if (m_tooltip == null) m_tooltip = m_root.parent.CreateChild<Tooltip>("Tooltip");
 
-        // Use trickle‑down so we catch move/up anywhere
         m_ghostIcon.RegisterCallback<PointerMoveEvent>(OnPointerMove, TrickleDown.TrickleDown);
         m_ghostIcon.RegisterCallback<PointerUpEvent>(OnPointerUp, TrickleDown.TrickleDown);
 
         foreach (var slot in Slots)
+        {
             slot.OnStartDrag += OnPointerDown;
+            slot.OnHover += OnPointerOver;
+            slot.RegisterCallback<PointerLeaveEvent>(e => OnPointerOutSlot(slot, e)); // Pass the slot to the handler
+        }
+            
     }
 
     public abstract IEnumerator InitializeView(int size = 20);
@@ -80,6 +88,30 @@ public abstract class StorageView : MonoBehaviour
 
         m_isDragging = false;
         m_originalSlot = null;
+    }
+
+    static void OnPointerOver(Slot slot, PointerOverEvent e)
+    {
+        if (m_hoveredSlot != slot || m_tooltip.style.visibility == Visibility.Hidden)
+        {
+            m_hoveredSlot = slot;
+        }
+
+        if (m_hoveredSlot.ItemId == SerializableGuid.Empty) return;
+
+        ItemDetails item = ItemDatabase.Instance.GetItemDetailsById(m_hoveredSlot.ItemId);
+        m_tooltip.Set(item.Name, item.Description, "ON USE", item.Price);
+        m_tooltip.Show();
+        m_tooltip.SetPosition(e.position);
+    }
+
+    static void OnPointerOutSlot(Slot slot, PointerLeaveEvent e)
+    {
+        if (!m_tooltip.worldBound.Contains(e.position))
+        {
+            m_tooltip.Hide();
+            m_hoveredSlot = null;
+        }
     }
 
     static void SetGhostIconPosition(Vector2 screenPos)
