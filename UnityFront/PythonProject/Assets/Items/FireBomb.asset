@@ -9,16 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f87f7d36bc736914fae8332849e0bac5, type: 3}
-  m_Name: Item_3
-  m_EditorClassIdentifier: 
-  Name: Diamond
-  maxStack: 2
+  m_Script: {fileID: 0}
+  m_Name: FireBomb
+  m_EditorClassIdentifier: Assembly-CSharp::FireBombDetails
+  Name: Fire Bomb
+  maxStack: 1
   Id:
-    Part1: 3050951138
-    Part2: 1229508890
-    Part3: 2470875822
-    Part4: 3960233803
+    Part1: 3595705207
+    Part2: 1080326773
+    Part3: 1117470080
+    Part4: 1578030846
   Icon: {fileID: 3244622203517571467, guid: 261f93352e8521a4ca2173c1fbe8280e, type: 3}
-  Price: 3
-  Description: Red Diamond Gem
+  Price: 7
+  Description: Sets your enemy on fire
+  damage: 15

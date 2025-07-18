@@ -29,14 +29,14 @@ public class InventoryModel
         inventoryApi.StartCoroutine(inventoryApi.GetItems(loadFromApi));
     }
 
-    public List<Item> GetAll()
+    public List<(Item, int)> GetAll()
     {
-        var list = new List<Item>();
+        var list = new List<(Item, int)>();
         for (int i = 0; i < Items.Length; i++)
         {
             var item = Items[i];
             if (item != null)
-                list.Add(item);
+                list.Add((item, i));
         }
 
         return list;

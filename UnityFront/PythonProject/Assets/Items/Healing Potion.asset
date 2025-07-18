@@ -9,16 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f87f7d36bc736914fae8332849e0bac5, type: 3}
-  m_Name: Potion
+  m_Script: {fileID: 11500000, guid: 541fe9bea6fd8ec47a28643b0090b181, type: 3}
+  m_Name: Healing Potion
   m_EditorClassIdentifier: 
-  Name: Potion
+  Name: Healing Potion
   maxStack: 1
   Id:
-    Part1: 1252620804
-    Part2: 1339732073
-    Part3: 4215657396
-    Part4: 3167972626
+    Part1: 2248746102
+    Part2: 1274944274
+    Part3: 505514654
+    Part4: 1578638025
   Icon: {fileID: -5635166626045770638, guid: ed7289141c68ba2479bde91567e88c2b, type: 3}
-  Price: 3
-  Description: Helath Potion
+  Price: 5
+  Description: Drink a red vial for health
+  healAmount: 20

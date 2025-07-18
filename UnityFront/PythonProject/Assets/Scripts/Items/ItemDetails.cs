@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
-public class ItemDetails : ScriptableObject
+public abstract class ItemDetails : ScriptableObject
 {
     public string Name;
     public int maxStack = 1;
@@ -16,4 +16,6 @@ public class ItemDetails : ScriptableObject
     {
         return new Item(this, qty);
     }
+
+    public abstract void Use(CharacterCombatController user, CharacterCombatController opponent);
 }

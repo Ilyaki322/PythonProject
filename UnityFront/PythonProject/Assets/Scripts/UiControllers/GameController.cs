@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour
     private Button m_ActionButton3;
     private Button m_ActionButton4;
     private Button m_storeButton;
+    private Button m_closeInventory;
 
     private Label m_namePlayer1;
     private Label m_namePlayer2;
@@ -70,6 +71,9 @@ public class GameController : MonoBehaviour
     private CharacterDTO m_selectedCharacter;
     private Coroutine m_findMatchCoroutine;
     private status_t m_gameStatus = status_t.Menu;
+
+    static Tooltip m_tooltip;
+    static Slot m_hoveredSlot;
 
     public void SetToken(string token)
     {
@@ -135,6 +139,8 @@ public class GameController : MonoBehaviour
         m_charMoney = root.Q<Label>("CoinsLabel");
         m_charName = root.Q<Label>("NameLabel");
 
+        m_closeInventory = root.Q<Button>("Close");
+
         m_buttonContainer = root.Q<VisualElement>("ButtonContainer");
         m_storeButton.clicked += ShowShop;
         m_findGameButton.clicked += onFind;
@@ -155,11 +161,14 @@ public class GameController : MonoBehaviour
 
         m_ActionButton3.clicked += () =>
         {
-            //m_playerController.OnItemUse();
-            //m_socketManager.OnItemUse();
-            //NextTurn();
             m_combatButtonContainer.style.display = DisplayStyle.None;
             m_inventoryContainer.style.display = DisplayStyle.Flex;
+        };
+
+        m_closeInventory.clicked += () =>
+        {
+            m_inventoryContainer.style.display = DisplayStyle.None;
+            m_combatButtonContainer.style.display = DisplayStyle.Flex;
         };
 
         m_ActionButton4.clicked += () =>
@@ -179,26 +188,58 @@ public class GameController : MonoBehaviour
         m_container.style.display = DisplayStyle.None;
         m_endGameUI.style.display = DisplayStyle.None;
         m_inventoryContainer.style.display = DisplayStyle.None;
-
-        initInventory();
     }
 
     private void initInventory()
     {
         var root = m_document.rootVisualElement;
         var container = root.Q<VisualElement>("CombatInventoryContainer");
-
+        m_tooltip = container.CreateChild<Tooltip>("Tooltip");
+        var itemsList = m_inventoryManager.userItems();
         m_slots = new Slot[10]; // abstract 10 away
 
         var slotsContainer = container.CreateChild("slotsContainer");
-        for (int i = 0; i < 10; i++) // same
+        for (int i = 0; i < 10; i++)
         {
             var slot = slotsContainer.CreateChild<Slot>("slot");
             slot.focusable = true;
             m_slots[i] = slot;
             slot.OnClick += onItemClick;
+            slot.OnHover += OnPointerOver;
+            slot.RegisterCallback<PointerLeaveEvent>(e => OnPointerOutSlot(slot, e));
+        }
+
+        foreach(var (item,index) in itemsList)
+        {
+            m_slots[index].Set(item.Id, item.Details.Icon, item.Quantity);
         }
     }
+
+    static void OnPointerOver(Slot slot, PointerOverEvent e)
+    {
+        if (m_hoveredSlot != slot || m_tooltip.style.visibility == Visibility.Hidden)
+        {
+            m_hoveredSlot = slot;
+        }
+
+        if (m_hoveredSlot.ItemId == SerializableGuid.Empty) return;
+
+        ItemDetails item = ItemDatabase.Instance.GetItemDetailsById(m_hoveredSlot.ItemId);
+        m_tooltip.Set(item.Name, "", "ON USE", item.Price);
+        m_tooltip.Show();
+        m_tooltip.BringToFront();
+        m_tooltip.SetPosition(e.position);
+    }
+
+    static void OnPointerOutSlot(Slot slot, PointerLeaveEvent e)
+    {
+        if (!m_tooltip.worldBound.Contains(e.position))
+        {
+            m_tooltip.Hide();
+            m_hoveredSlot = null;
+        }
+    }
+
 
     private void onItemClick(int index, SerializableGuid guid)
     {
@@ -333,6 +374,13 @@ public class GameController : MonoBehaviour
         m_inQueue = false;
         m_findGameButton.text = "Find Match";
 
+        if (m_findMatchCoroutine != null)
+        {
+            StopCoroutine(m_findMatchCoroutine);
+            m_findMatchCoroutine = null;
+        }
+
+        m_findMatch.style.display = DisplayStyle.None;
         m_container.style.display = DisplayStyle.None;
         m_combatUI.style.display = DisplayStyle.Flex;
 
@@ -343,6 +391,8 @@ public class GameController : MonoBehaviour
         m_enemy.SetActive(true);
         m_enemyCreator.Generate(enemy);
         m_namePlayer2.text = enemy.name;
+
+        initInventory();
 
         if (isStarting)
         {

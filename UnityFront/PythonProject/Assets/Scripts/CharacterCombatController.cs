@@ -77,7 +77,7 @@ public class CharacterCombatController : MonoBehaviour
         m_animator.SetFloat("NormalState", 0.0f);
     }
 
-    public void OnItemUse()
+    public void OnItemUse(int index)
     {
         Debug.Log("USE ITEM!");
 
@@ -87,5 +87,19 @@ public class CharacterCombatController : MonoBehaviour
     {
         m_animator.SetTrigger("Die");
         m_animator.SetBool("EditChk", false);
+    }
+
+    public void OnHeal(int healAmount) 
+    {
+        m_currentHealth += healAmount;
+        if (m_currentHealth > m_maxHealth) 
+        {
+            m_currentHealth = m_maxHealth;
+        }
+
+        float healthRatio = (float)m_currentHealth / m_maxHealth;
+        float healthPercent = Mathf.Lerp(0, 100, healthRatio);
+        m_healthFill.style.width = Length.Percent(healthPercent);
+        m_healthLabel.text = m_currentHealth.ToString() + "/100";
     }
 }

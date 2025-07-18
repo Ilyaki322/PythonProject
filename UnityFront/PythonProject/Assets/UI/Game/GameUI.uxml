@@ -1,7 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Game/GameUSS.uss?fileID=7433441132597879392&amp;guid=79468de2ebde4264da9d344272add9ae&amp;type=3#GameUSS" />
     <Style src="project://database/Assets/Scripts/Inventory/InventoryUSS.uss?fileID=7433441132597879392&amp;guid=8f3056dd80ab45644af273b7dd97d176&amp;type=3#InventoryUSS" />
-    <engine:VisualElement name="Container" class="Container" style="display: flex; -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;); align-items: auto; justify-content: flex-end; flex-direction: flex-start; align-self: stretch;">
+    <engine:VisualElement name="Container" class="Container" style="display: none; -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;); align-items: auto; justify-content: flex-end; flex-direction: flex-start; align-self: stretch;">
         <engine:VisualElement name="CharStatus" style="flex-grow: 1; position: absolute; top: 0; left: 0; width: 100%; height: 10%; background-color: rgba(94, 245, 198, 0.33); flex-direction: row; align-items: center; justify-content: flex-start; align-self: center;">
             <engine:VisualElement name="CharContainer" style="flex-grow: 0; width: 89%; height: 100%; flex-direction: row; justify-content: space-evenly; align-self: stretch; align-items: center; align-content: center;">
                 <engine:VisualElement name="NameContainer" class="label-container" style="flex-grow: 0; width: 25%; align-items: center; justify-content: space-between; align-self: center;">
@@ -72,7 +72,9 @@
                 <engine:Button name="Button3" text="Items" class="ActionButton" />
                 <engine:Button name="Button4" text="Surrender" class="ActionButton SurrenderButton" style="background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);" />
             </engine:VisualElement>
-            <engine:VisualElement name="CombatInventoryContainer" class="Container CombatInventoryContainer" />
+            <engine:VisualElement name="CombatInventoryContainer" class="Container CombatInventoryContainer" style="bottom: auto; right: auto; align-items: center; justify-content: space-evenly; align-self: center; align-content: center; left: auto;">
+                <engine:Button text="Close" name="Close" style="bottom: auto; right: auto; background-color: rgba(255, 201, 201, 0.76); border-top-left-radius: 24px; border-top-right-radius: 24px; border-bottom-right-radius: 24px; border-bottom-left-radius: 24px;" />
+            </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
     <engine:VisualElement name="EndGameContainer" class="Container EndGameContainer" style="display: none; -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;);">

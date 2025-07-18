@@ -9,16 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f87f7d36bc736914fae8332849e0bac5, type: 3}
-  m_Name: Item_1
+  m_Script: {fileID: 11500000, guid: 2fe57b9520e94f94bbde80a0342a4cd3, type: 3}
+  m_Name: Scratch
   m_EditorClassIdentifier: 
-  Name: Blood
+  Name: Scratch
   maxStack: 1
   Id:
-    Part1: 4232665196
-    Part2: 1281729189
-    Part3: 3704874429
-    Part4: 789796731
+    Part1: 93646769
+    Part2: 1144241213
+    Part3: 1780193939
+    Part4: 2298931831
   Icon: {fileID: -6995123011722499173, guid: e95ba10753cb0e94da0e51911eca25de, type: 3}
-  Price: 1
-  Description: Drop of Blood.
+  Price: 2
+  Description: Scratch enemys back
+  damage: 5

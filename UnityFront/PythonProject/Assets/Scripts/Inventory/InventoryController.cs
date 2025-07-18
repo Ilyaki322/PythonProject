@@ -28,7 +28,7 @@ public class InventoryController
     public InventoryModel Model => m_model;
     public InventoryView View => m_view;
 
-    public List<Item> GetSlots()
+    public List<(Item, int)> GetItems()
     {
        return m_model.GetAll();
     }

@@ -40,7 +40,7 @@ public class SocketManager : MonoBehaviour
         {
             MainThreadDispatcher.Instance.Enqueue(() =>
             {
-                enemyController.OnItemUse();
+                //enemyController.OnItemUse();
                 m_gameController.NextTurn();
             });
         });

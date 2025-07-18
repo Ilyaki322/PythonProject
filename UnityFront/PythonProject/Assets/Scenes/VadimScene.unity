@@ -256,10 +256,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_items:
-  - {fileID: 11400000, guid: 42471fbc027c15e449105cfe207909eb, type: 2}
-  - {fileID: 11400000, guid: b18ff0f4083444443b6addda0abcbd1f, type: 2}
-  - {fileID: 11400000, guid: d54b942a8ad73984e946f94949ff16a4, type: 2}
-  - {fileID: 11400000, guid: 3adae8560390bdb479e52e2cda471ecd, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,10 +885,10 @@ MonoBehaviour:
   userApi: {fileID: 280119588}
   m_shopController: {fileID: 1329047026}
   shopItems:
-  - {fileID: 11400000, guid: 42471fbc027c15e449105cfe207909eb, type: 2}
-  - {fileID: 11400000, guid: b18ff0f4083444443b6addda0abcbd1f, type: 2}
-  - {fileID: 11400000, guid: d54b942a8ad73984e946f94949ff16a4, type: 2}
-  - {fileID: 11400000, guid: 3adae8560390bdb479e52e2cda471ecd, type: 2}
+  - {fileID: 11400000, guid: 4e527e5ebfd13bb4393c2443cffd29e7, type: 2}
+  - {fileID: 11400000, guid: dabc05846a3f2454ab4fb00f53ce103f, type: 2}
+  - {fileID: 11400000, guid: a340f71ca0fbde24489ed4cb38e5505a, type: 2}
+  - {fileID: 11400000, guid: 608a1b778d609574d9b5de35314f046f, type: 2}
   shopCapacity: 10
   userCapacity: 10
 --- !u!114 &1576498826 stripped
@@ -932,10 +932,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDetailsList:
-  - {fileID: 11400000, guid: 42471fbc027c15e449105cfe207909eb, type: 2}
-  - {fileID: 11400000, guid: b18ff0f4083444443b6addda0abcbd1f, type: 2}
-  - {fileID: 11400000, guid: d54b942a8ad73984e946f94949ff16a4, type: 2}
-  - {fileID: 11400000, guid: 3adae8560390bdb479e52e2cda471ecd, type: 2}
+  - {fileID: 11400000, guid: 4e527e5ebfd13bb4393c2443cffd29e7, type: 2}
+  - {fileID: 11400000, guid: dabc05846a3f2454ab4fb00f53ce103f, type: 2}
+  - {fileID: 11400000, guid: a340f71ca0fbde24489ed4cb38e5505a, type: 2}
+  - {fileID: 11400000, guid: 608a1b778d609574d9b5de35314f046f, type: 2}
 --- !u!4 &1796986418
 Transform:
   m_ObjectHideFlags: 0

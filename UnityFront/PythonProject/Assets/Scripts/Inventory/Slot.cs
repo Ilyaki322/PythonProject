@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -22,12 +23,6 @@ public class Slot : VisualElement
         RegisterCallback<PointerOverEvent>(OnPointerOver);
     }
 
-    void OnPointerOver(PointerOverEvent e)
-    {
-        OnHover.Invoke(this, e);
-        e.StopPropagation();
-    }
-
     void OnPointerDown(PointerDownEvent e)
     {
         if (e.button != 0 || ItemId.Equals(SerializableGuid.Empty))
@@ -38,6 +33,12 @@ public class Slot : VisualElement
 
         OnClick.Invoke(Index, ItemId);
         OnStartDrag.Invoke(e.position, this, e);
+        e.StopPropagation();
+    }
+
+    void OnPointerOver(PointerOverEvent e)
+    {
+        OnHover.Invoke(this, e);
         e.StopPropagation();
     }
 

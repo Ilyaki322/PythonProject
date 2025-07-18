@@ -35,6 +35,11 @@ public class CombinedInventoryManager : MonoBehaviour
         StorageView.OnGlobalDrop += HandleGlobalDrop;
     }
 
+    public List<(Item, int)> userItems()
+    {
+        return userInvController.GetItems();
+    }
+
     public void InitInventory()
     {
         shopInvController = new InventoryController.Builder(shopView)
