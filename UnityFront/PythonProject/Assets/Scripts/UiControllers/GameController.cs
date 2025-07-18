@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,14 +5,13 @@ using UnityEngine.UIElements;
 public class GameController : MonoBehaviour
 {
     [SerializeField] private ShopController m_shopController;
+    private Slot[] m_slots;
 
     private enum status_t {
         Menu,
         PlayerTurn,
         EnemyTurn
     }
-
-    
 
     [SerializeField] private GameObject m_inventoryTest;
     [SerializeField] private UIDocument m_document;
@@ -31,6 +28,8 @@ public class GameController : MonoBehaviour
     private VisualElement m_combatUI;
     private VisualElement m_endGameUI;
     private VisualElement m_buttonContainer;
+    private VisualElement m_inventoryContainer;
+    private VisualElement m_combatButtonContainer;
 
     private VisualElement m_timeFill;
     private VisualElement m_healthFillPlayer1;
@@ -103,6 +102,8 @@ public class GameController : MonoBehaviour
         m_container = root.Q<VisualElement>("Container");
         m_combatUI = root.Q<VisualElement>("CombatUI");
         m_endGameUI = root.Q<VisualElement>("EndGameContainer");
+        m_inventoryContainer = root.Q<VisualElement>("CombatInventoryContainer");
+        m_combatButtonContainer = root.Q<VisualElement>("CombatButtonContainer");
 
         m_timeFill = root.Q<VisualElement>("TimeFill");
         m_healthFillPlayer1 = root.Q<VisualElement>("HealthFill1");
@@ -150,9 +151,11 @@ public class GameController : MonoBehaviour
 
         m_ActionButton3.clicked += () =>
         {
-            m_playerController.OnItemUse();
-            m_socketManager.OnItemUse();
-            NextTurn();
+            //m_playerController.OnItemUse();
+            //m_socketManager.OnItemUse();
+            //NextTurn();
+            m_combatButtonContainer.style.display = DisplayStyle.None;
+            m_inventoryContainer.style.display = DisplayStyle.Flex;
         };
 
         m_ActionButton4.clicked += () =>
@@ -171,6 +174,31 @@ public class GameController : MonoBehaviour
 
         m_container.style.display = DisplayStyle.None;
         m_endGameUI.style.display = DisplayStyle.None;
+        m_inventoryContainer.style.display = DisplayStyle.None;
+
+        initInventory();
+    }
+
+    private void initInventory()
+    {
+        var root = m_document.rootVisualElement;
+        var container = root.Q<VisualElement>("CombatInventoryContainer");
+
+        m_slots = new Slot[10]; // abstract 10 away
+
+        var slotsContainer = container.CreateChild("slotsContainer");
+        for (int i = 0; i < 10; i++) // same
+        {
+            var slot = slotsContainer.CreateChild<Slot>("slot");
+            slot.focusable = true;
+            m_slots[i] = slot;
+            slot.OnClick += onItemClick;
+        }
+    }
+
+    private void onItemClick(int index, SerializableGuid guid)
+    {
+        Debug.Log($"Item clicked at: {index} with guid: {guid}");
     }
 
     private void Update()

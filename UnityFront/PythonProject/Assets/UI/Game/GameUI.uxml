@@ -60,11 +60,14 @@
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement class="Container">
-            <engine:VisualElement class="Container ButtonContainer">
+            <engine:VisualElement class="Container ButtonContainer" name="CombatButtonContainer">
                 <engine:Button name="Button1" text="Attack" class="ActionButton" />
                 <engine:Button name="Button2" text="Defend" class="ActionButton" />
                 <engine:Button name="Button3" text="Items" class="ActionButton" />
                 <engine:Button name="Button4" text="Surrender" class="ActionButton SurrenderButton" style="background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);" />
+            </engine:VisualElement>
+            <engine:VisualElement class="Container CombatInventoryContainer" name="CombatInventoryContainer">
+                
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
