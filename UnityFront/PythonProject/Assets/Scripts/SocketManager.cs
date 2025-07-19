@@ -29,7 +29,7 @@ public class SocketManager : MonoBehaviour
         {
             MainThreadDispatcher.Instance.Enqueue(() =>
             {
-                enemyController.OnAttack();
+                enemyController.OnAttack(res.GetValue<int>());
                 m_gameController.NextTurn();
             });
         });
@@ -120,7 +120,7 @@ public class SocketManager : MonoBehaviour
 
     public void OnItemUse(int slotIndex, SerializableGuid itemId) => m_socket.Emit("UseItem", new { index = slotIndex, itemId = itemId.ToHexString()});
     public void OnLeaveQueue() => m_socket.Emit("LeaveQueue");
-    public void OnAttack() => m_socket.Emit("Attack");
+    public void OnAttack(int damage) => m_socket.Emit("Attack", new { damageDealt = damage});
     public void OnDefend() => m_socket.Emit("Defend");
     public void OnItemUse() => m_socket.Emit("UseItem");
     public void OnFourthButton() => m_socket.Emit("EndGame");

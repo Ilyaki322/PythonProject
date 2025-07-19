@@ -69,11 +69,12 @@ def init_socket_handlers(app_instance, socketio_instance):
             print("SID not found in connected_players")
 
     @_socketio.on('Attack')
-    def handle_attack():
+    def handle_attack(data):
+        damage = data.get('damageDealt')
         user_sid = request.sid
         game = find_match(user_sid)
         if game:
-            game.on_attack(user_sid)
+            game.on_attack(user_sid, damage)
         else:
             print("ERROR, USER NOT IN MATCH")
 

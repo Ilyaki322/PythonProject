@@ -69,13 +69,25 @@ public class CharacterCombatController : MonoBehaviour
         m_healthLabel.text = m_currentHealth.ToString() + "/100";
     }
 
-    public void OnAttack()
+    public int OnAttack()
     {
         int minDamage = Mathf.Max(0, m_attack - 2);
         int maxDamage = m_attack + 2;
         int damage = Random.Range(minDamage, maxDamage + 1);
 
         m_enemyController.TakeDamage(damage);
+
+        m_animator.SetTrigger("Attack");
+        m_animator.SetFloat("AttackState", 0.0f);
+        m_animator.SetFloat("NormalState", 0.0f);
+
+        return damage;
+    }
+
+    public void OnAttack(int damage)
+    {
+        m_enemyController.TakeDamage(damage);
+
         m_animator.SetTrigger("Attack");
         m_animator.SetFloat("AttackState", 0.0f);
         m_animator.SetFloat("NormalState", 0.0f);

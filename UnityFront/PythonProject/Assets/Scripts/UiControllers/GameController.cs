@@ -61,6 +61,7 @@ public class GameController : MonoBehaviour
     private Label m_statusBar;
     private Label m_endGameLabel;
     private Label m_findMatch;
+    private Label m_rewardLabel;
 
     // Character Menu
     private Label m_charLevel;
@@ -87,7 +88,6 @@ public class GameController : MonoBehaviour
     }
 
     public void SetCharacter(CharacterDTO character) {
-        character.CharMoney += 10; // Initial money for testing
         m_selectedCharacter = character;
         m_shopController.SelectedCharacter = character;
         m_inventoryManager.InitInventory();
@@ -122,6 +122,8 @@ public class GameController : MonoBehaviour
         m_healthFillPlayer1 = root.Q<VisualElement>("HealthFill1");
         m_healthFillPlayer2 = root.Q<VisualElement>("HealthFill2");
 
+        m_rewardLabel = root.Q<Label>("RewardLabel");
+
         m_shieldLeft = root.Q<Image>("ShieldLeft");
         m_shieldRight = root.Q<Image>("ShieldRight");
 
@@ -153,8 +155,8 @@ public class GameController : MonoBehaviour
 
         m_ActionButton1.clicked += () =>
         {
-            m_playerController.OnAttack();
-            m_socketManager.OnAttack();
+            int damage = m_playerController.OnAttack();
+            m_socketManager.OnAttack(damage);
             NextTurn();
         };
 
@@ -463,22 +465,24 @@ public class GameController : MonoBehaviour
 
     public void OnWin()
     {
-        endGameUI("Victory!");
-
+        endGameUI("Victory!", "3");
+        m_selectedCharacter.CharMoney += 3;
     }
 
     public void OnLose()
     {
-        endGameUI("Defeat!");
+        endGameUI("Defeat!", "1");
+        m_selectedCharacter.CharMoney += 1;
     }
 
-    private void endGameUI(string result)
+    private void endGameUI(string result, string reward)
     {
         m_player.SetActive(false);
         m_enemy.SetActive(false);
         m_combatUI.style.display = DisplayStyle.None;
         m_endGameUI.style.display = DisplayStyle.Flex;
         m_endGameLabel.text = result;
+        m_rewardLabel.text = reward;
         m_shieldLeft.RemoveFromClassList("ShieldIcon--enabled");
         m_shieldRight.RemoveFromClassList("ShieldIcon--enabled");
 

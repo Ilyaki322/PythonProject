@@ -100,7 +100,7 @@ public abstract class StorageView : MonoBehaviour
         if (m_hoveredSlot.ItemId == SerializableGuid.Empty) return;
 
         ItemDetails item = ItemDatabase.Instance.GetItemDetailsById(m_hoveredSlot.ItemId);
-        m_tooltip.Set(item.Name, item.Description, "ON USE", item.Price);
+        m_tooltip.Set(item.Name, item.Description, item.OnUse, item.Price);
         m_tooltip.Show();
         m_tooltip.SetPosition(e.position);
     }

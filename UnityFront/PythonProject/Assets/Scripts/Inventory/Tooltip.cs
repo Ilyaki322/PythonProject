@@ -17,14 +17,21 @@ public class Tooltip : VisualElement
         m_description = this.CreateChild<Label>("Tooltip-desc");
         m_onUse = this.CreateChild<Label>("Tooltip-use");
         m_price = this.CreateChild<Label>("Tooltip-price");
+        pickingMode = PickingMode.Ignore;
     }
 
     public void Set(string name, string desc, string use, int price)
     {
         m_name.text = name;
-        m_description.text = desc;
-        m_onUse.text = "On Use: " + use;
-        m_price.text = price.ToString();
+
+        if (string.IsNullOrEmpty(desc)) m_description.text = "";
+        else { m_description.text = desc; }
+
+        if (string.IsNullOrEmpty(use)) m_onUse.text = "";
+        else{m_onUse.text = "On Use: " + use;}
+
+        if (price < 0) m_price.text = "";
+        else{ m_price.text = price.ToString();}  
     }
 
     public void SetPosition(Vector2 screenPos)

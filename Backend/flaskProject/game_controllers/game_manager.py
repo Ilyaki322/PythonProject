@@ -15,10 +15,10 @@ class GameManager:
     def has_player(self, sid):
         return sid == self.player1_sid or sid == self.player2_sid
 
-    def on_attack(self, user_sid):
+    def on_attack(self, user_sid, damage):
         dest = self.get_next_turn_player()
         self.is_player1_turn = not self.is_player1_turn
-        emit("Attack", to=dest)
+        emit("Attack", damage, to=dest)
 
     def on_defend(self, user_sid):
         dest = self.get_next_turn_player()
@@ -37,6 +37,7 @@ class GameManager:
     def on_end_game(self, user_sid):
         loser = user_sid
         winner = self.player1_sid if user_sid == self.player2_sid else self.player2_sid
+
         winner_id = self.player1_id if winner == self.player1_sid else self.player2_id
 
         # Create Match entry
