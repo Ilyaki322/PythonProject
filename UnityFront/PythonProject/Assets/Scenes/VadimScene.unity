@@ -815,7 +815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_shopController: {fileID: 1329047026}
   m_inventoryManager: {fileID: 1329047027}
-  m_inventoryTest: {fileID: 0}
+  m_loginController: {fileID: 280119584}
   m_document: {fileID: 1329047024}
   m_socketManager: {fileID: 1073846897}
   m_player: {fileID: 8092338049133831742}

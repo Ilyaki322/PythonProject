@@ -116,6 +116,14 @@ public class LoginController : MonoBehaviour
         m_googleLoginBtn.clicked += OnGoogleLoginClicked;
     }
 
+    public void Logout()
+    {
+        m_loginUsernameField.value ="";
+        m_loginPasswordField.value ="";
+        ClearRegisterForm();
+        m_characterApi.Logout();
+        showLoginUI();
+    }
 
     private void Update()
     {
@@ -189,8 +197,6 @@ public class LoginController : MonoBehaviour
 
     private void showLoginUI(DisplayStyle regSucess = DisplayStyle.None)
     {
-
-
         if (m_loginElement != null) m_loginElement.style.display = DisplayStyle.Flex;
         if (m_registerElement != null) m_registerElement.style.display = DisplayStyle.None;
 

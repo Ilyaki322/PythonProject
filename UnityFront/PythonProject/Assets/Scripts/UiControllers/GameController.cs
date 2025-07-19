@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private ShopController m_shopController;
     [SerializeField] private CombinedInventoryManager m_inventoryManager;
+    [SerializeField] private LoginController m_loginController;
 
     private Slot[] m_slots;
 
@@ -51,6 +52,7 @@ public class GameController : MonoBehaviour
     private Button m_ActionButton4;
     private Button m_storeButton;
     private Button m_closeInventory;
+    private Button m_logout;
 
     private Label m_namePlayer1;
     private Label m_namePlayer2;
@@ -128,6 +130,7 @@ public class GameController : MonoBehaviour
         m_ActionButton2 = root.Q<Button>("Button2");
         m_ActionButton3 = root.Q<Button>("Button3");
         m_ActionButton4 = root.Q<Button>("Button4");
+        m_logout = root.Q<Button>("Logout");
 
         m_endGameLabel = root.Q<Label>("ResultLabel");
         m_namePlayer1 = root.Q<Label>("PlayerName1");
@@ -187,10 +190,25 @@ public class GameController : MonoBehaviour
             m_container.style.display = DisplayStyle.Flex;
         };
 
+        m_logout.clicked += logout;
+
         m_container.style.display = DisplayStyle.None;
         m_endGameUI.style.display = DisplayStyle.None;
         m_inventoryContainer.style.display = DisplayStyle.None;
     }
+
+    private void logout()
+    {
+        m_container.style.display = DisplayStyle.None;
+        m_endGameUI.style.display = DisplayStyle.None;
+        m_inventoryContainer.style.display = DisplayStyle.None;
+
+        m_token = null;
+        m_selectedCharacter = null;
+        m_gameStatus = status_t.Menu;
+        m_socketManager.Logout();
+        m_loginController.Logout();
+}
 
     private void OpenInventory()
     {
