@@ -38,6 +38,7 @@ public class GameController : MonoBehaviour
     private VisualElement m_timeFill;
     private VisualElement m_healthFillPlayer1;
     private VisualElement m_healthFillPlayer2;
+    private VisualElement m_battleInventoryContainer;
 
     private Image m_shieldLeft;
     private Image m_shieldRight;
@@ -211,10 +212,10 @@ public class GameController : MonoBehaviour
         var itemsList = m_inventoryManager.userItems();
         m_slots = new Slot[10]; // abstract 10 away
 
-        var slotsContainer = container.CreateChild("slotsContainer");
+        m_battleInventoryContainer = container.CreateChild("slotsContainer");
         for (int i = 0; i < 10; i++)
         {
-            var slot = slotsContainer.CreateChild<Slot>("slot");
+            var slot = m_battleInventoryContainer.CreateChild<Slot>("slot");
             slot.focusable = true;
             m_slots[i] = slot;
             slot.OnClick += onItemClick;
@@ -463,10 +464,7 @@ public class GameController : MonoBehaviour
         m_shieldLeft.RemoveFromClassList("ShieldIcon--enabled");
         m_shieldRight.RemoveFromClassList("ShieldIcon--enabled");
 
-        var root = m_document.rootVisualElement; 
-        var container = root.Q<VisualElement>("CombatInventoryContainer");
-       if(container != null) container.Clear();
-
+        m_battleInventoryContainer.Clear();
         m_slots = null;
     }
 
