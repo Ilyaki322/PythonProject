@@ -3,6 +3,7 @@ from flask_jwt_extended import decode_token
 from flask_socketio import SocketIO, send, emit
 from game_controllers.game_manager import GameManager
 from service.character_service import *
+from service.inventory_service import *
 import random
 from routes.shop_socket_routes import init_shop_socket_handlers
 _app = None
@@ -86,11 +87,22 @@ def init_socket_handlers(app_instance, socketio_instance):
             print("ERROR, USER NOT IN MATCH")
 
     @_socketio.on('UseItem')
-    def handle_attack():
+    def handle_use_item(data):
         user_sid = request.sid
+
+        slot_index = data.get('index')
+        item_id = data.get('itemId')
+
+        char_id = connected_players.get(user_sid)
+        if not char_id:
+            return
+
+        """ character_id, item_id, count, index """
+        update_slot({'character_id': char_id, 'index': slot_index, 'count': 0, 'item_id': None})
+
         game = find_match(user_sid)
         if game:
-            game.on_use_item(user_sid)
+            game.on_use_item(user_sid, item_id)
         else:
             print("ERROR, USER NOT IN MATCH")
 

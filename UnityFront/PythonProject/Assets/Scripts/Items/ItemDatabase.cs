@@ -52,4 +52,15 @@ public class ItemDatabase : MonoBehaviour
         Debug.LogWarning($"Item with ID {id} not found in ItemDatabase.");
         return null;
     }
+
+    public ItemDetails GetItemDetailsById(string id)
+    {
+        if (itemDetailsById.TryGetValue(id, out var details))
+        {
+            return details;
+        }
+
+        Debug.LogWarning($"Item with ID {id} not found in ItemDatabase.");
+        return null;
+    }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using static InventoryModel;
 using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class CharacterCombatController : MonoBehaviour
@@ -17,16 +18,16 @@ public class CharacterCombatController : MonoBehaviour
 
     private bool m_def;
 
+    private readonly int BASE_HEALTH = 100;
     private readonly int ATTACK_DAMAGE = 10;
+    private int m_attack;
 
     public void Init(Label healthLabel, VisualElement healthFill, 
         CharacterCombatController enemy, GameController gameController)
     {
+        m_animator.SetBool("EditChk", true);
         m_gameController = gameController;
         m_enemyController = enemy;
-
-        m_maxHealth = 100;
-        m_currentHealth = 100;
 
         m_def = false;
 
@@ -35,6 +36,14 @@ public class CharacterCombatController : MonoBehaviour
 
         m_healthLabel.text = "100/100";
         m_healthFill.style.width = Length.Percent(100);
+    }
+
+    public void SetPlayer(CharacterDTO player)
+    {
+        m_maxHealth = player.CharLevel + BASE_HEALTH;
+        m_currentHealth = m_maxHealth;
+
+        m_attack = player.CharLevel + ATTACK_DAMAGE;
     }
 
     public void TakeDamage(int damage)
@@ -62,7 +71,11 @@ public class CharacterCombatController : MonoBehaviour
 
     public void OnAttack()
     {
-        m_enemyController.TakeDamage(ATTACK_DAMAGE);
+        int minDamage = Mathf.Max(0, m_attack - 2);
+        int maxDamage = m_attack + 2;
+        int damage = Random.Range(minDamage, maxDamage + 1);
+
+        m_enemyController.TakeDamage(damage);
         m_animator.SetTrigger("Attack");
         m_animator.SetFloat("AttackState", 0.0f);
         m_animator.SetFloat("NormalState", 0.0f);
@@ -77,10 +90,23 @@ public class CharacterCombatController : MonoBehaviour
         m_animator.SetFloat("NormalState", 0.0f);
     }
 
-    public void OnItemUse(int index)
+    public void OnItemUse(int index, SerializableGuid itemdId)
     {
-        Debug.Log("USE ITEM!");
+       var item = ItemDatabase.Instance.GetItemDetailsById(itemdId);
+        if (item)
+        {
+            item.Use(this, m_enemyController);
+            m_gameController.RemoveItem(index);
+        }
+    }
 
+    public void OnItemUse(string itemId)
+    {
+        var item = ItemDatabase.Instance.GetItemDetailsById(itemId);
+        if (item)
+        {
+            item.Use(this, m_enemyController);
+        }
     }
 
     public void OnFourthButton()

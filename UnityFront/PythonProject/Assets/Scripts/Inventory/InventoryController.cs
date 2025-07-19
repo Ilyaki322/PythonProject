@@ -33,6 +33,16 @@ public class InventoryController
        return m_model.GetAll();
     }
 
+    public void RemoveItem(int index)
+    {
+        if (index < 0 || index >= m_capacity)
+        {
+            Debug.LogError($"Index {index} is out of bounds for inventory of capacity {m_capacity}");
+            return;
+        }
+        m_model.RemoveAt(index);
+    }
+
     InventoryController(InventoryModel model, InventoryView view, int capacity)
     {
         Debug.Assert(model != null, "model is null");

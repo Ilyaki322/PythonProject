@@ -22,4 +22,5 @@ MonoBehaviour:
   Icon: {fileID: -6995123011722499173, guid: e95ba10753cb0e94da0e51911eca25de, type: 3}
   Price: 2
   Description: Scratch enemys back
+  OnUse: Deals 5 Scratchy Damage
   damage: 5

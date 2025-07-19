@@ -11,6 +11,7 @@ public abstract class ItemDetails : ScriptableObject
 
     public int Price = 0;
     public string Description;
+    public string OnUse;
 
     public Item Create(int qty)
     {

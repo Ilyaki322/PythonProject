@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -16,7 +18,6 @@ public class GameController : MonoBehaviour
         EnemyTurn
     }
 
-    [SerializeField] private GameObject m_inventoryTest;
     [SerializeField] private UIDocument m_document;
     [SerializeField] private SocketManager m_socketManager;
 
@@ -57,6 +58,7 @@ public class GameController : MonoBehaviour
     private Label m_statusBar;
     private Label m_endGameLabel;
     private Label m_findMatch;
+
     // Character Menu
     private Label m_charLevel;
     private Label m_charMoney;
@@ -64,7 +66,7 @@ public class GameController : MonoBehaviour
 
     private bool m_inQueue = false;
 
-    private float m_maxTurnTimer = 30f;
+    private float m_maxTurnTimer = 10f; // was 30 seconds
     private float m_counter = 0f;
 
     private string m_token;
@@ -161,8 +163,7 @@ public class GameController : MonoBehaviour
 
         m_ActionButton3.clicked += () =>
         {
-            m_combatButtonContainer.style.display = DisplayStyle.None;
-            m_inventoryContainer.style.display = DisplayStyle.Flex;
+            OpenInventory();
         };
 
         m_closeInventory.clicked += () =>
@@ -187,6 +188,18 @@ public class GameController : MonoBehaviour
 
         m_container.style.display = DisplayStyle.None;
         m_endGameUI.style.display = DisplayStyle.None;
+        m_inventoryContainer.style.display = DisplayStyle.None;
+    }
+
+    private void OpenInventory()
+    {
+        m_combatButtonContainer.style.display = DisplayStyle.None;
+        m_inventoryContainer.style.display = DisplayStyle.Flex;
+    }
+
+    private void CloseInventory()
+    {
+        m_combatButtonContainer.style.display = DisplayStyle.Flex;
         m_inventoryContainer.style.display = DisplayStyle.None;
     }
 
@@ -225,7 +238,7 @@ public class GameController : MonoBehaviour
         if (m_hoveredSlot.ItemId == SerializableGuid.Empty) return;
 
         ItemDetails item = ItemDatabase.Instance.GetItemDetailsById(m_hoveredSlot.ItemId);
-        m_tooltip.Set(item.Name, "", "ON USE", item.Price);
+        m_tooltip.Set(item.Name, "", item.OnUse, item.Price);
         m_tooltip.Show();
         m_tooltip.BringToFront();
         m_tooltip.SetPosition(e.position);
@@ -240,10 +253,26 @@ public class GameController : MonoBehaviour
         }
     }
 
-
     private void onItemClick(int index, SerializableGuid guid)
     {
-        Debug.Log($"Item clicked at: {index} with guid: {guid}");
+        if (m_slots[index] == null) return;
+
+        m_playerController.OnItemUse(index, guid);
+        m_socketManager.OnItemUse(index, guid);
+        m_ActionButton3.SetEnabled(false);
+        CloseInventory();
+    }
+
+    public void RemoveItem(int index)
+    {
+        if (index < 0 || index >= m_slots.Length)
+        {
+            Debug.LogError("Index out of bounds for slots array.");
+            return;
+        }
+
+        m_inventoryManager.RemoveItem(index);
+        m_slots[index].Remove();
     }
 
     private void Update()
@@ -327,7 +356,6 @@ public class GameController : MonoBehaviour
 
     private IEnumerator AnimateFindingMatch()
     {
-        // this will loop until you StopCoroutine it
         var baseText = "Finding Match";
         while (true)
         {
@@ -357,6 +385,7 @@ public class GameController : MonoBehaviour
         {
             m_gameStatus = status_t.EnemyTurn;
             m_statusBar.text = "Enemy Turn";
+            CloseInventory();
             activateButtons(false);
         }
         else
@@ -408,7 +437,9 @@ public class GameController : MonoBehaviour
         }
 
         m_playerController.Init(m_healthPlayer1, m_healthFillPlayer1, m_enemyController, this);
+        m_playerController.SetPlayer(player);
         m_enemyController.Init(m_healthPlayer2, m_healthFillPlayer2, m_playerController, this);
+        m_enemyController.SetPlayer(enemy);
     }
 
     public void OnWin()
@@ -431,6 +462,12 @@ public class GameController : MonoBehaviour
         m_endGameLabel.text = result;
         m_shieldLeft.RemoveFromClassList("ShieldIcon--enabled");
         m_shieldRight.RemoveFromClassList("ShieldIcon--enabled");
+
+        var root = m_document.rootVisualElement; 
+        var container = root.Q<VisualElement>("CombatInventoryContainer");
+       if(container != null) container.Clear();
+
+        m_slots = null;
     }
 
     public void OnDead()

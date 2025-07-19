@@ -49,6 +49,7 @@ public class InventoryModel
     public bool TryAddAt(int index, Item item) => Items.TryAddAt(index, item);
     public bool Remove(Item item) => Items.TryRemove(item);
 
+    public void RemoveAt(int index) => Items.TryRemoveAt(index);
     public void Swap(int source, int target) => Items.Swap(source, target);
 
     public int Combine(int source, int target)

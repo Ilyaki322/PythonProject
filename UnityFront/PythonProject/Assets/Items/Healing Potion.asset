@@ -22,4 +22,5 @@ MonoBehaviour:
   Icon: {fileID: -5635166626045770638, guid: ed7289141c68ba2479bde91567e88c2b, type: 3}
   Price: 5
   Description: Drink a red vial for health
+  OnUse: Heals 20 HitPoints
   healAmount: 20

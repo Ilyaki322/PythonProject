@@ -36,14 +36,16 @@ public class SocketManager : MonoBehaviour
             });
         });
 
-        m_socket.On("UseItem", (res) =>
+        m_socket.On("UseItem", res =>
         {
             MainThreadDispatcher.Instance.Enqueue(() =>
             {
-                //enemyController.OnItemUse();
-                m_gameController.NextTurn();
+                var guid = res.GetValue<string>();
+                enemyController.OnItemUse(guid);
+
             });
         });
+
 
         m_socket.On("Win", (res) =>
         {
@@ -108,6 +110,8 @@ public class SocketManager : MonoBehaviour
     }
 
     public void OnEnterQueue(int charID) => m_socket.Emit("EnterQueue", new {charID = charID});
+
+    public void OnItemUse(int slotIndex, SerializableGuid itemId) => m_socket.Emit("UseItem", new { index = slotIndex, itemId = itemId.ToHexString()});
     public void OnLeaveQueue() => m_socket.Emit("LeaveQueue");
     public void OnAttack() => m_socket.Emit("Attack");
     public void OnDefend() => m_socket.Emit("Defend");

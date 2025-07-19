@@ -16,24 +16,23 @@ class GameManager:
         return sid == self.player1_sid or sid == self.player2_sid
 
     def on_attack(self, user_sid):
-        dest = self.player2_sid if self.is_player1_turn else self.player1_sid
+        dest = self.get_next_turn_player()
         self.is_player1_turn = not self.is_player1_turn
         emit("Attack", to=dest)
 
     def on_defend(self, user_sid):
-        dest = self.player2_sid if self.is_player1_turn else self.player1_sid
+        dest = self.get_next_turn_player()
         self.is_player1_turn = not self.is_player1_turn
         emit("Defend", to=dest)
 
     def on_skip_turn(self, user_sid):
-        dest = self.player2_sid if self.is_player1_turn else self.player1_sid
+        dest = self.get_next_turn_player()
         self.is_player1_turn = not self.is_player1_turn
         emit("SkipTurn", to=dest)
 
-    def on_use_item(self, user_sid):
-        dest = self.player2_sid if self.is_player1_turn else self.player1_sid
-        self.is_player1_turn = not self.is_player1_turn
-        emit("UseItem", to=dest)
+    def on_use_item(self, user_sid, item_guid):
+        dest = self.get_next_turn_player()
+        emit("UseItem", item_guid, to=dest)
 
     def on_end_game(self, user_sid):
         loser = user_sid
@@ -53,3 +52,8 @@ class GameManager:
         emit("Win", to=winner)
         emit("Lose", to=loser)
 
+    def get_current_turn_player(self):
+        return self.player1_sid if self.is_player1_turn else self.player2_sid
+
+    def get_next_turn_player(self):
+        return self.player2_sid if self.is_player1_turn else self.player1_sid

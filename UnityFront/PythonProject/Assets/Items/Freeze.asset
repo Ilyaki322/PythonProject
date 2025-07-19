@@ -9,17 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 394f38f895dff71449634dfa6160e819, type: 3}
   m_Name: Freeze
   m_EditorClassIdentifier: Assembly-CSharp::FreezeDetails
-  Name: Freeze
+  Name: Freeze Bomb
   maxStack: 1
   Id:
-    Part1: 2468111286
-    Part2: 1257148378
-    Part3: 500885404
-    Part4: 2633864947
+    Part1: 183179749
+    Part2: 1289737509
+    Part3: 3292487312
+    Part4: 1434949468
   Icon: {fileID: -2413806693520163455, guid: abfa66a18a5d69644bbbc10ff4faec82, type: 3}
   Price: 3
-  Description: Freezes enemys
+  Description: Deals cold damage
+  OnUse: Deals 7 Damage
   damage: 7

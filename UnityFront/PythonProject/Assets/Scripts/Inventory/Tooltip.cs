@@ -23,7 +23,7 @@ public class Tooltip : VisualElement
     {
         m_name.text = name;
         m_description.text = desc;
-        m_onUse.text = use;
+        m_onUse.text = "On Use: " + use;
         m_price.text = price.ToString();
     }
 

@@ -40,6 +40,11 @@ public class CombinedInventoryManager : MonoBehaviour
         return userInvController.GetItems();
     }
 
+    public void RemoveItem(int index)
+    {
+        userInvController.Model.RemoveAt(index);
+    }
+
     public void InitInventory()
     {
         shopInvController = new InventoryController.Builder(shopView)

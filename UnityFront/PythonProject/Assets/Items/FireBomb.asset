@@ -9,17 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 69cfebc8ed2c45a4e9473c67c8bb9605, type: 3}
   m_Name: FireBomb
   m_EditorClassIdentifier: Assembly-CSharp::FireBombDetails
-  Name: Fire Bomb
+  Name: Firebomb
   maxStack: 1
   Id:
-    Part1: 3595705207
-    Part2: 1080326773
-    Part3: 1117470080
-    Part4: 1578030846
+    Part1: 4175888257
+    Part2: 1259527007
+    Part3: 562422417
+    Part4: 2475152472
   Icon: {fileID: 3244622203517571467, guid: 261f93352e8521a4ca2173c1fbe8280e, type: 3}
-  Price: 7
-  Description: Sets your enemy on fire
+  Price: 5
+  Description: Blows enemy
+  OnUse: Deals 15 damage
   damage: 15
