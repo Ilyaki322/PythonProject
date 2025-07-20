@@ -47,6 +47,8 @@ def authenticate_user(username: str, password: str):
         return {'status': 'error', 'message': 'Please enter your username and password'}
 
     user = User.query.filter_by(username=username).first()
+    if user is None:
+        return {'status': 'error', 'message': 'Wrong username or password'}
     if user.is_deleted:
         return {'status': 'error', 'message': 'Your account was suspended.'}
     if user and bcrypt.check_password_hash(user.password, password):
