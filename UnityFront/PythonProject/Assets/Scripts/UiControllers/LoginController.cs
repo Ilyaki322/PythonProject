@@ -234,7 +234,6 @@ public class LoginController : MonoBehaviour
         if (m_passwordError != null) m_passwordError.style.display = DisplayStyle.None;
     }
 
-    //to fix. /* =========================================================================== */
     private void showSelection(string json)
     {
         m_loginElement.style.display = DisplayStyle.None;
@@ -243,11 +242,12 @@ public class LoginController : MonoBehaviour
         m_characterSelectionController.LoadCharacters(json);
     }
 
-    /* =========================================================================== */
-
     #region button events
     private void OnLoginClicked()
     {
+        m_regSuccess.style.display = DisplayStyle.None;
+        LoginErrorReset();
+
         string username = m_loginUsernameField.value;
         string password = m_loginPasswordField.value;
 
@@ -256,7 +256,7 @@ public class LoginController : MonoBehaviour
             (string error) =>
             {
                 m_errorContainer.style.display = DisplayStyle.Flex;
-                m_loginError.text = "password or username are incorrect";
+                m_loginError.text = error;
                 m_loginError.style.display = DisplayStyle.Flex;
             },
             (string text) =>

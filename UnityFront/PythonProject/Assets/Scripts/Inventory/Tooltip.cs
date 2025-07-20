@@ -1,7 +1,5 @@
-using System;
 using UnityEngine.UIElements;
 using UnityEngine;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class Tooltip : VisualElement
 {
@@ -17,7 +15,12 @@ public class Tooltip : VisualElement
         m_description = this.CreateChild<Label>("Tooltip-desc");
         m_onUse = this.CreateChild<Label>("Tooltip-use");
         m_price = this.CreateChild<Label>("Tooltip-price");
+
         pickingMode = PickingMode.Ignore;
+        m_name.pickingMode = PickingMode.Ignore;
+        m_description.pickingMode = PickingMode.Ignore;
+        m_onUse.pickingMode = PickingMode.Ignore;
+        m_price.pickingMode = PickingMode.Ignore;
     }
 
     public void Set(string name, string desc, string use, int price)
@@ -31,14 +34,17 @@ public class Tooltip : VisualElement
         else{m_onUse.text = "On Use: " + use;}
 
         if (price < 0) m_price.text = "";
-        else{ m_price.text = price.ToString();}  
+        else{ m_price.text = price.ToString() + " Gold";}  
     }
 
     public void SetPosition(Vector2 screenPos)
     {
         Vector2 local = parent.WorldToLocal(screenPos);
+
+        float tooltipHeight = resolvedStyle.height;
+
         style.left = local.x;
-        style.top = local.y;
+        style.top = local.y - tooltipHeight;
     }
 
     public void Show()

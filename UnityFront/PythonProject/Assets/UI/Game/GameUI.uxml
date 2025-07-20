@@ -90,4 +90,8 @@
             <engine:Button text="Continue" name="ContinueButton" class="ActionButton" />
         </engine:VisualElement>
     </engine:VisualElement>
+    <engine:VisualElement name="Connecting" style="flex-grow: 1; align-items: center; align-self: center; justify-content: center; color: rgb(0, 0, 0); -unity-font-definition: url(&quot;project://database/Assets/UI/Minecraft.ttf?fileID=12800000&amp;guid=8f2070e8cf28a7f4e8f4568c7e2daa8b&amp;type=3#Minecraft&quot;); display: none;">
+        <engine:Label text="Label" name="ConnectionLoading" style="font-size: 50px;" />
+        <engine:Label text="Label" name="ConnectionError" style="color: rgb(255, 0, 0); font-size: 40px;" />
+    </engine:VisualElement>
 </engine:UXML>

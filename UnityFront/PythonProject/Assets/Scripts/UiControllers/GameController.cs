@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour
     private VisualElement m_buttonContainer;
     private VisualElement m_inventoryContainer;
     private VisualElement m_combatButtonContainer;
+    private VisualElement m_connectionContainer;
 
     private VisualElement m_timeFill;
     private VisualElement m_healthFillPlayer1;
@@ -62,6 +63,8 @@ public class GameController : MonoBehaviour
     private Label m_endGameLabel;
     private Label m_findMatch;
     private Label m_rewardLabel;
+    private Label m_connectLoading;
+    private Label m_connectError;
 
     // Character Menu
     private Label m_charLevel;
@@ -75,8 +78,10 @@ public class GameController : MonoBehaviour
 
     private string m_token;
     private CharacterDTO m_selectedCharacter;
-    private Coroutine m_findMatchCoroutine;
     private status_t m_gameStatus = status_t.Menu;
+
+    private Coroutine m_findMatchCoroutine;
+    private Coroutine m_connectionCoroutine;
 
     static Tooltip m_tooltip;
     static Slot m_hoveredSlot;
@@ -117,6 +122,7 @@ public class GameController : MonoBehaviour
         m_endGameUI = root.Q<VisualElement>("EndGameContainer");
         m_inventoryContainer = root.Q<VisualElement>("CombatInventoryContainer");
         m_combatButtonContainer = root.Q<VisualElement>("CombatButtonContainer");
+        m_connectionContainer = root.Q<VisualElement>("Connecting");
         m_findMatch = root.Q<Label>("MatchText");
         m_timeFill = root.Q<VisualElement>("TimeFill");
         m_healthFillPlayer1 = root.Q<VisualElement>("HealthFill1");
@@ -140,6 +146,8 @@ public class GameController : MonoBehaviour
         m_healthPlayer1 = root.Q<Label>("PlayerHealth1");
         m_healthPlayer2 = root.Q<Label>("PlayerHealth2");
         m_statusBar = root.Q<Label>("StatusLabel");
+        m_connectLoading = root.Q<Label>("ConnectionLoading");
+        m_connectError = root.Q<Label>("ConnectionError");
 
         m_findGameButton = root.Q<Button>("FindButton");
         m_storeButton = root.Q<Button>("StoreButton");
@@ -197,6 +205,7 @@ public class GameController : MonoBehaviour
         m_container.style.display = DisplayStyle.None;
         m_endGameUI.style.display = DisplayStyle.None;
         m_inventoryContainer.style.display = DisplayStyle.None;
+        m_connectionContainer.style.display = DisplayStyle.None;
     }
 
     private void logout()
@@ -336,12 +345,19 @@ public class GameController : MonoBehaviour
     public void Connect()
     {
         m_gameStatus = status_t.Menu;
-        
+        m_connectionContainer.style.display = DisplayStyle.Flex;
+        m_connectError.text = "";
+        m_connectLoading.text = "";
+        m_connectionCoroutine = StartCoroutine(AnimateConnection());
+
+
         m_socketManager.Connect(() =>
         {
             m_socketManager.InitSocket(m_enemyController);
             MainThreadDispatcher.Instance.Enqueue(() => {
                 m_container.style.display = DisplayStyle.Flex;
+                m_connectionContainer.style.display = DisplayStyle.None;
+                StopCoroutine(m_connectionCoroutine);
                 setCharacterStatus();});
         });
     }
@@ -387,6 +403,22 @@ public class GameController : MonoBehaviour
             }
 
             m_findMatch.text = baseText;
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    private IEnumerator AnimateConnection()
+    {
+        var baseText = "Connecting";
+        while (true)
+        {
+            for (int dots = 1; dots <= 3; ++dots)
+            {
+                m_connectLoading.text = baseText + new string('.', dots);
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            m_connectLoading.text = baseText;
             yield return new WaitForSeconds(0.5f);
         }
     }

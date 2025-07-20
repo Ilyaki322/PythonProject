@@ -26,9 +26,12 @@ public class LoginRequest
             LoginResponse resp = JsonUtility.FromJson<LoginResponse>(request.downloadHandler.text);
             onSuccuess(resp.token);
         }
+
+        if (request.result == UnityWebRequest.Result.ConnectionError) onError("Could not connect to game server.");
         else
         {
-            onError(request.error);
+            ErrorResponse error = JsonUtility.FromJson<ErrorResponse>(request.downloadHandler.text);
+            onError(error.message);
         }
     }
 
@@ -89,4 +92,9 @@ public class LoginRequest
         public string token;
     }
 
+    [System.Serializable]
+    public class ErrorResponse
+    {
+        public string message;
+    }
 }

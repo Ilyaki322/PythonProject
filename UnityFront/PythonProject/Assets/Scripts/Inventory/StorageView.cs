@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -36,9 +35,8 @@ public abstract class StorageView : MonoBehaviour
         {
             slot.OnStartDrag += OnPointerDown;
             slot.OnHover += OnPointerOver;
-            slot.RegisterCallback<PointerLeaveEvent>(e => OnPointerOutSlot(slot, e)); // Pass the slot to the handler
+            slot.RegisterCallback<PointerLeaveEvent>(e => OnPointerOutSlot(slot, e));
         }
-            
     }
 
     public abstract IEnumerator InitializeView(int size = 20);
@@ -102,7 +100,9 @@ public abstract class StorageView : MonoBehaviour
         ItemDetails item = ItemDatabase.Instance.GetItemDetailsById(m_hoveredSlot.ItemId);
         m_tooltip.Set(item.Name, item.Description, item.OnUse, item.Price);
         m_tooltip.Show();
-        m_tooltip.SetPosition(e.position);
+
+        var worldBottomRight = slot.LocalToWorld(new Vector2(slot.resolvedStyle.width, slot.resolvedStyle.height));
+        m_tooltip.SetPosition(worldBottomRight);
     }
 
     static void OnPointerOutSlot(Slot slot, PointerLeaveEvent e)

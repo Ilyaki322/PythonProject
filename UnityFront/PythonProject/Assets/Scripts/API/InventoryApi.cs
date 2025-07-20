@@ -35,8 +35,6 @@ public class InventoryApi : MonoBehaviour
         ItemDetailsDTOList wrapper = new ItemDetailsDTOList(dtoArray);
         string json = JsonUtility.ToJson(wrapper);
 
-        Debug.Log("Sending JSON:\n" + json);
-
         UnityWebRequest req = new UnityWebRequest(m_url + "/update", "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
 
@@ -58,8 +56,6 @@ public class InventoryApi : MonoBehaviour
 
     public IEnumerator GetItems(Action<string> onSuccess)
     {
-        Debug.Log($"{m_charID} hui");
-
         UnityWebRequest req = new UnityWebRequest(m_url + "/get", "GET");
         req.downloadHandler = new DownloadHandlerBuffer();
         req.SetRequestHeader("Authorization", "Bearer " + m_token);
@@ -69,9 +65,7 @@ public class InventoryApi : MonoBehaviour
 
         if (req.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log(req.downloadHandler.text);
             onSuccess(req.downloadHandler.text);
-
         }
         else
         {

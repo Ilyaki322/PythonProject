@@ -30,7 +30,6 @@ public class CharacterApi : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             onSuccess(true);
-            Debug.Log("Character added: " + request.downloadHandler.text);
         }
         else
         {
