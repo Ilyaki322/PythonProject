@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UIElements;
 
 public class LoginController : MonoBehaviour
@@ -123,6 +120,13 @@ public class LoginController : MonoBehaviour
         ClearRegisterForm();
         m_characterApi.Logout();
         showLoginUI();
+    }
+
+    public void ShowLoginError(string error)
+    {
+        m_errorContainer.style.display = DisplayStyle.Flex;
+        m_loginError.text = error;
+        m_loginError.style.display = DisplayStyle.Flex;
     }
 
     private void Update()

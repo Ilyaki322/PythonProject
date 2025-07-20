@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using UnityEngine;
 
 public class SocketManager : MonoBehaviour
@@ -98,6 +97,14 @@ public class SocketManager : MonoBehaviour
             Debug.Log("Connected: " + response);
             onSuccess();
         });
+
+        m_socket.OnDisconnected += (sender, e) =>
+        {
+            MainThreadDispatcher.Instance.Enqueue(() =>
+            {
+                m_gameController.HandleDisconnect();
+            });
+        };
 
         m_socket.On("MatchFound", (response) =>
         {

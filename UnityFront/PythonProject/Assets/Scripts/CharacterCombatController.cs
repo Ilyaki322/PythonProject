@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.UIElements;
-using static InventoryModel;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class CharacterCombatController : MonoBehaviour
 {
