@@ -5,8 +5,30 @@ from sqlalchemy import or_, func
 from io import BytesIO
 from db import db
 
+"""
+export_service module
+
+Provides functionality to export a user’s match history to an Excel file,
+including detailed match records and summary statistics, streamed via Flask.
+"""
+
 
 def export_user_matches_to_excel(user_id: int):
+    """
+        Export a user’s match history and summary stats to an Excel file.
+
+        Args:
+            user_id (int): The ID of the user whose matches will be exported.
+
+        Returns:
+            A Flask Response streaming an .xlsx file attachment named
+            "user_{user_id}_matches.xlsx", with two sheets:
+              - "Matches": Detailed list of matches.
+              - "Summary": Total matches, wins, win rate, and last match time.
+
+        Raises:
+            404 if the user has no matches.
+        """
     matches = Match.query.filter(
         or_(
             Match.player_1_id == user_id,

@@ -1,7 +1,27 @@
 import os
 
+"""
+Configuration for development environment.
+
+Loads settings from environment variables with fallback defaults,
+including JWT secret, database URI, and Google OAuth2 credentials.
+"""
+
 
 class DevConfig:
+    """
+        Development configuration for the Flask application.
+
+        Attributes:
+            JWT_SECRET_KEY (str): Secret key for signing JWTs.
+            SQLALCHEMY_DATABASE_URI (str): Database connection URI.
+            SQLALCHEMY_TRACK_MODIFICATIONS (bool): Disable SQLAlchemy event tracking.
+            GOOGLE_CLIENT_ID (str): OAuth2 client ID for Google login.
+            GOOGLE_CLIENT_SECRET (str): OAuth2 client secret for Google login.
+            GOOGLE_REDIRECT_URI (str): OAuth2 callback URL.
+            FRONTEND_URI (str): Custom URI scheme for returning tokens to front end.
+        """
+
     # JWT
     JWT_SECRET_KEY = os.getenv('SECRET_KEY', "wellwellwell322")
 

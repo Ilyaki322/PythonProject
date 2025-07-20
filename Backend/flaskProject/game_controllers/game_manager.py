@@ -4,7 +4,30 @@ from models.match import Match
 from datetime import datetime, UTC
 from service.character_service import update_character_gold as upd_gold
 
+"""
+GameManager module
+
+This module defines the GameManager class, which orchestrates a turn‑based
+match between two players connected via Flask‑SocketIO. It handles real‑time
+events (attack, defend, skip, use item), manages turn switching, updates
+player gold, persists match results to the database, and emits outcome
+events to the clients.
+"""
+
+
 class GameManager:
+    """
+        Manages a two‑player, turn‑based game session.
+
+        Attributes:
+            player1_sid (str): Socket ID for player1.
+            player2_sid (str): Socket ID for player2.
+            is_player1_turn (bool): True if it is currently player1’s turn.
+            player1_id (int): Database user ID for player1.
+            player2_id (int): Database user ID for player2.
+            player1_char_id (int): Character ID for player1.
+            player2_char_id (int): Character ID for player2.
+        """
     def __init__(self, player1_sid, player2_sid,
                  is_player1_turn, player1_id, player2_id,
                  player1_char_id, player2_char_id):

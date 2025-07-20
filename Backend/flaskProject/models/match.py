@@ -1,8 +1,29 @@
 from db import db
 from datetime import datetime
 
+"""
+match module
+
+Defines the Match SQLAlchemy model for recording the start time,
+participants, and outcome of completed matches in the 'matches' table.
+"""
+
 
 class Match(db.Model):
+    """
+        Represents an entry in the 'matches' table recording a completed game.
+
+        Attributes:
+            id (int): Primary key, unique match identifier.
+            match_start (datetime): UTC timestamp of when the match began.
+            player_1_id (int): Foreign key to users.id for the first participant.
+            player_2_id (int): Foreign key to users.id for the second participant.
+            winner_id (int | None): Foreign key to users.id for the winner, or None if draw.
+            player_1 (User): Relationship to the first User object.
+            player_2 (User): Relationship to the second User object.
+            winner (User | None): Relationship to the winning User, if any.
+        """
+
     __tablename__ = 'matches'
 
     id = db.Column(db.Integer, primary_key=True)

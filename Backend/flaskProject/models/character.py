@@ -1,7 +1,31 @@
 from db import db
 
+"""
+character module
+
+Defines the Character SQLAlchemy model for storing players,
+their appearance/equipment, and associated inventory records.
+"""
+
 
 class Character(db.Model):
+    """
+        Represents a player’s avatar and stats in the 'characters' table.
+
+        Attributes:
+            is_deleted (bool): Soft‑delete flag, defaults to False.
+            id (int): Primary key.
+            name (str): Character name, required.
+            level (int): Character level, default 1.
+            money (int): In‑game currency, default 0.
+            hair, helmet, beard, armor, pants, weapon, back (int):
+                IDs of equipped items, each defaults to 0.
+            user_id (int): Foreign key to users.id.
+            user (User): Back‑reference to owner.
+            inventory (list[CharacterInventory]):
+                All inventory entries for this character.
+        """
+
     __tablename__ = 'characters'
 
     is_deleted = db.Column(db.Boolean, default=False, nullable=False)

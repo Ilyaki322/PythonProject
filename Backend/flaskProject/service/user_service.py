@@ -7,6 +7,17 @@ from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 from models.user import User
 
+"""
+user_service module
+
+Provides core user management functions:
+- Google OAuth2 verification and automatic user creation.
+- Username/password authentication.
+- New user registration with regex validation.
+- Listing users by deletion status.
+- Soft‑deleting and recovering user accounts.
+"""
+
 
 def authenticate_or_create_google_user(id_token_str: str):
     if not id_token_str:
@@ -43,6 +54,21 @@ def authenticate_or_create_google_user(id_token_str: str):
 
 
 def authenticate_user(username: str, password: str):
+    """
+        Authenticate a user with a username and password.
+
+        Args:
+            username (str): The user's login name.
+            password (str): The plaintext password to verify.
+
+        Returns:
+            dict:
+                {
+                    'status': 'success' or 'error',
+                    'message': str,
+                    'user_id': int (on success)
+                }
+        """
     if not username or not password:
         return {'status': 'error', 'message': 'Please enter your username and password'}
 
@@ -58,6 +84,23 @@ def authenticate_user(username: str, password: str):
 
 
 def register_user(username: str, password: str, email: str):
+    """
+        Validate input and register a new user.
+
+        Args:
+            username (str): 4‑10 letters only (a–z, A–Z).
+            password (str): At least 5 characters, letters and digits only.
+            email (str): Valid email format.
+
+        Returns:
+            dict:
+                {
+                    'success': bool,
+                    'field': str (on error),
+                    'error' or 'message': str
+                }
+    """
+
     if not re.fullmatch(r'[a-zA-Z]{4,10}', username):
         return {'success': False, 'field': 'username', 'error': 'Username must be 4-10 letters only'}
 

@@ -1,15 +1,26 @@
-# shop_socket_handlers.py
-import requests
-from flask import request
-from flask_socketio import emit
 from service.character_service import update_character_gold, character_levelUp
 import service.inventory_service as inventory_service
 
 _app = None
 _socketio = None
 
+"""
+shop_socket_handlers module
+
+Initializes and registers Socket.IO event handlers under the shop
+namespace. Handles level‑up, purchase, sale, and slot swap events,
+invoking service‑layer functions and emitting results to clients.
+"""
+
 
 def init_shop_socket_handlers(app_instance, socketio_instance):
+    """
+        Configure Flask‑SocketIO handlers for shop events.
+
+        Args:
+            app_instance: The Flask app object.
+            socketio_instance: The Flask‑SocketIO instance.
+        """
     global _app, _socketio
     _app = app_instance
     _socketio = socketio_instance
@@ -17,7 +28,14 @@ def init_shop_socket_handlers(app_instance, socketio_instance):
     @_socketio.on('LevelUp')
     def handle_level_up(data):
         """
-        data = {'charId'     : int, 'newLevel'   : int, 'currentGold': int}
+               LevelUp handler
+
+               Expected data:
+                   {
+                       "charId": int,
+                       "newLevel": int,
+                       "currentGold": int
+                   }
         """
         char_id = data.get('charId')
         new_level = data.get('newLevel')
@@ -35,7 +53,16 @@ def init_shop_socket_handlers(app_instance, socketio_instance):
     @_socketio.on('PurchaseItem')
     def handle_purchase(data):
         """
-        data: { 'charId': int, 'itemId': int, 'qty': int, 'slotIndex': int, cost': int' }
+                PurchaseItem handler
+
+                Expected data:
+                    {
+                        "charId": int,
+                        "itemId": int,
+                        "count": int,
+                        "slotIndex": int,
+                        "cost": int
+                    }
         """
 
         payload = {'character_id': data['charId'], 'index': data['slotIndex'],
@@ -52,7 +79,16 @@ def init_shop_socket_handlers(app_instance, socketio_instance):
     @_socketio.on('SellItem')
     def handle_sale(data):
         """
-        data: { 'charId': int, 'itemId': int, 'qty': int, 'slotIndex': int, cost': int' }
+        SellItem handler
+
+        Expected data:
+            {
+                "charId": int,
+                "itemId": int,
+                "count": int,
+                "slotIndex": int,
+                "cost": int
+            }
         """
         payload = {'character_id': data['charId'], 'index': data['slotIndex'],
                    'item_id': data['itemId'], 'count': data['count']}
@@ -68,7 +104,14 @@ def init_shop_socket_handlers(app_instance, socketio_instance):
     @_socketio.on('SwapSlots')
     def handle_swap(data):
         """
-        data: {'characterId': int, 'indexSrc': int, 'indexDest': int}
+        SwapSlots handler
+
+        Expected data:
+            {
+                "charId": int,
+                "indexSrc": int,
+                "indexDest": int
+            }
         """
         payload = {'character_id': data['charId'], 'indexSrc': data['indexSrc'], 'indexDest': data['indexDest']}
 

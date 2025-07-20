@@ -9,10 +9,28 @@ import requests
 from urllib.parse import urlencode
 
 
+"""
+oauth_routes module
+
+Defines OAuth 2.0 login flows for Google under the '/login' Blueprint,
+handling authorization redirection, callback processing, and login status checks.
+"""
+
 oauth_bp = Blueprint("oauth_bp", __name__, url_prefix="/login")
 
 @oauth_bp.route("/google")
 def google_authorize():
+    """
+        GET /login/google
+
+        Initiates Google OAuth 2.0 authorization by generating a CSRF‑safe state
+        and redirecting the user to Google's consent page.
+
+        - Generates a random state nonce stored via OAuthService. :contentReference[oaicite:0]{index=0}
+        - Constructs the authorization URL with client ID, scope, redirect URI,
+          and state parameter.
+        - Returns a Flask redirect to the Google OAuth endpoint.
+        """
     state = OAuthService.create_state(request.args.get("state"))
 
     params = {
@@ -28,6 +46,17 @@ def google_authorize():
 
 @oauth_bp.route("/google/callback")
 def google_callback():
+    """
+        GET /login/google/callback
+
+        Handles the OAuth callback from Google:
+
+        - Validates presence of `code` and `state`; aborts with 400 on failure.
+        - Exchanges authorization code for tokens via Google's token endpoint.
+        - Parses the ID token and creates or retrieves a user.
+        - Issues a JWT access token and associates it with the state entry.
+        - Returns an HTML confirmation page instructing the client to proceed.
+        """
     code = request.args.get("code")
     state = request.args.get("state")
     entry = OAuthService.get_entry(state)
@@ -64,6 +93,16 @@ def google_callback():
 
 @oauth_bp.route("/status")
 def login_status():
+    """
+        GET /login/status
+
+        Checks if a JWT has been issued for the given state:
+
+        - Reads `state` from query parameters.
+        - Retrieves and clears the associated token via OAuthService.
+        - Returns JSON `{ "token": <jwt> }` with HTTP200 if available.
+        - Returns empty body with HTTP204 if no token yet.
+        """
     state = request.args.get("state")
     token = OAuthService.pop_token(state)
 
