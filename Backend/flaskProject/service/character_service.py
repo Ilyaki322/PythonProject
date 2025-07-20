@@ -82,10 +82,11 @@ def character_levelUp(character_id: int, new_level: int, current_gold: int):
     return character.to_dict()
 
 
-def update_character_gold(character_id: int, new_gold: int):
+def update_character_gold(character_id: int, amount: int):
     character = Character.query.get_or_404(character_id)
     if not character:
         raise NotFound(f"Character {character_id} not found")
-    character.money = new_gold
+    character.money += amount
     db.session.commit()
     return character.to_dict()
+

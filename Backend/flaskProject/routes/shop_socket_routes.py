@@ -35,7 +35,7 @@ def init_shop_socket_handlers(app_instance, socketio_instance):
     @_socketio.on('PurchaseItem')
     def handle_purchase(data):
         """
-        data: {'character_id', 'index', 'item_id', 'count'}
+        data: { 'charId': int, 'itemId': int, 'qty': int, 'slotIndex': int, cost': int' }
         """
 
         payload = {'character_id': data['charId'], 'index': data['slotIndex'],
@@ -44,7 +44,7 @@ def init_shop_socket_handlers(app_instance, socketio_instance):
         try:
             service_response = inventory_service.buy_item(payload)
             if service_response.get('success'):
-                update_character_gold(data.get('charId'), data.get('currentGold'))
+                update_character_gold(data.get('charId'), -data.get('cost'))
 
         except Exception as e:
             print(f"[Shop] PurchaseItem request error: {e}")
@@ -52,7 +52,7 @@ def init_shop_socket_handlers(app_instance, socketio_instance):
     @_socketio.on('SellItem')
     def handle_sale(data):
         """
-        data: { 'charId': int, 'itemId': int, 'qty': int, 'slotIndex': int, currentGold': int' }
+        data: { 'charId': int, 'itemId': int, 'qty': int, 'slotIndex': int, cost': int' }
         """
         payload = {'character_id': data['charId'], 'index': data['slotIndex'],
                    'item_id': data['itemId'], 'count': data['count']}
@@ -60,7 +60,7 @@ def init_shop_socket_handlers(app_instance, socketio_instance):
         try:
             service_response = inventory_service.sell_item(payload)
             if service_response.get('success'):
-                update_character_gold(data.get('charId'), data.get('currentGold'))
+                update_character_gold(data.get('charId'), data.get('cost'))
 
         except Exception as e:
             print(f"[Shop] PurchaseItem request error: {e}")

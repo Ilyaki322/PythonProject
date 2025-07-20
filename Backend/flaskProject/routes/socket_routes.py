@@ -6,6 +6,7 @@ from service.character_service import *
 from service.inventory_service import *
 import random
 from routes.shop_socket_routes import init_shop_socket_handlers
+
 _app = None
 _socketio = None
 
@@ -128,36 +129,40 @@ def init_socket_handlers(app_instance, socketio_instance):
 
 
 def start_match(player1, player2):
-    print("MATCH FOUND!")
-    char1 = get_char_by_id(player1[1])
-    char2 = get_char_by_id(player2[1])
+    player1_sid, player1_db_id = player1
+    player2_sid, player2_db_id = player2
+
+    char1_dto = get_char_by_id(player1_db_id)
+    char2_dto = get_char_by_id(player2_db_id)
 
     player1_starts = random.choice([True, False])
-    json1 = {"player_character": char1, "enemy_character": char2, "is_starting": player1_starts}
-    json2 = {"player_character": char2, "enemy_character": char1, "is_starting": not player1_starts}
 
-    ongoing_matches.append(GameManager(player1[0], player2[0], player1_starts,
-                                       connected_players[player1[0]], connected_players[player2[0]]))
+    game = GameManager(
+        player1_sid=player1_sid,
+        player2_sid=player2_sid,
+        is_player1_turn=player1_starts,
+        player1_id=connected_players[player1_sid],
+        player2_id=connected_players[player2_sid],
+        player1_char_id=player1_db_id,
+        player2_char_id=player2_db_id
+    )
+    ongoing_matches.append(game)
 
-    emit("MatchFound", json1, to=player1[0])
-    emit("MatchFound", json2, to=player2[0])
+    # tell each client their own DTOs
+    emit("MatchFound", {
+        "player_character": char1_dto,
+        "enemy_character": char2_dto,
+        "is_starting": player1_starts
+    }, to=player1_sid)
+
+    emit("MatchFound", {
+        "player_character": char2_dto,
+        "enemy_character": char1_dto,
+        "is_starting": not player1_starts
+    }, to=player2_sid)
 
 
 def find_match(user_sid):
     for game in ongoing_matches:
         if game.has_player(user_sid):
             return game
-
-
-
-
-
-
-
-
-
-
-
-
-
-

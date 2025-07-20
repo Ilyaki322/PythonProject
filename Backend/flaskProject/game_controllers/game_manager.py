@@ -2,15 +2,19 @@ from flask_socketio import emit
 from db import db
 from models.match import Match
 from datetime import datetime, UTC
-
+from service.character_service import update_character_gold as upd_gold
 
 class GameManager:
-    def __init__(self, player1_sid, player2_sid, is_player1_turn, player1_id, player2_id):
+    def __init__(self, player1_sid, player2_sid,
+                 is_player1_turn, player1_id, player2_id,
+                 player1_char_id, player2_char_id):
         self.player1_sid = player1_sid
         self.player2_sid = player2_sid
         self.is_player1_turn = is_player1_turn
         self.player1_id = player1_id
         self.player2_id = player2_id
+        self.player1_char_id = player1_char_id
+        self.player2_char_id = player2_char_id
 
     def has_player(self, sid):
         return sid == self.player1_sid or sid == self.player2_sid
@@ -37,6 +41,13 @@ class GameManager:
     def on_end_game(self, user_sid):
         loser = user_sid
         winner = self.player1_sid if user_sid == self.player2_sid else self.player2_sid
+
+        if winner == self.player1_sid:
+            upd_gold(self.player1_char_id, 3)
+            upd_gold(self.player2_char_id, 1)
+        else:
+            upd_gold(self.player1_char_id, 1)
+            upd_gold(self.player2_char_id, 3)
 
         winner_id = self.player1_id if winner == self.player1_sid else self.player2_id
 

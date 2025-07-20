@@ -31,7 +31,7 @@ public class ShopSocketService : MonoBehaviour
             itemId = TargetitemId,
             count = qty,
             slotIndex = slotIndexTarget,
-            currentGold = dto.CharMoney
+            cost = ItemDatabase.Instance.GetItemDetailsById(TargetitemId).Price,
         });
     }
 
@@ -44,7 +44,7 @@ public class ShopSocketService : MonoBehaviour
             itemId = TargetitemId,
             count = qty,
             slotIndex = slotIndexTarget,
-            currentGold = dto.CharMoney
+            cost = ItemDatabase.Instance.GetItemDetailsById(TargetitemId).Price,
         });
         Debug.Log($"Emitting SellItem for {TargetitemId}");
     }
