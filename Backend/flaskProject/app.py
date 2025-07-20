@@ -1,4 +1,6 @@
 import eventlet
+eventlet.monkey_patch()
+
 from flask import Flask
 from flask_socketio import SocketIO
 from db import db
@@ -14,7 +16,6 @@ from flask_cors import CORS
 from errors.errors import register_error_handlers
 import routes.socket_routes
 
-eventlet.monkey_patch()
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000"])
