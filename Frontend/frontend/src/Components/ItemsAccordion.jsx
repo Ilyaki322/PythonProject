@@ -4,7 +4,7 @@ import { Spinner } from 'react-bootstrap';
 import ItemModal from "./ItemModal";
 import { useState } from "react";
 
-const INVENTORY_SIZE = 20;
+const INVENTORY_SIZE = 10;
 
 /**
  * A bootstrap Accordion to represent the characters inventories.

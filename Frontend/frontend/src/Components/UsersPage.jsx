@@ -74,10 +74,7 @@ const UsersPage = () => {
             })
             .then(data => {
                 if (data.success) {
-                    setData(prevData => ({
-                        ...prevData,
-                        users: prevData.users.filter(user => user.id !== userID)
-                    }));
+                    setData(prevData => prevData.filter(user => user.id !== userID));
                 }
             })
             .catch(err => {
