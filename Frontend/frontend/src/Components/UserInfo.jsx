@@ -105,7 +105,7 @@ const UserInfo = ({ user, onBack }) => {
     function deleteChar(charID) {
         const token = sessionStorage.getItem('jwt');
         fetch('characters/delete_character', {
-            method: 'PATCH',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
