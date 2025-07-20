@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
 using UnityEngine;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 public enum InventoryRole { Shop, User }
 

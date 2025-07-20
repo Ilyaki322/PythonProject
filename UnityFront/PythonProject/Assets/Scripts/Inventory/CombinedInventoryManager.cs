@@ -3,7 +3,6 @@ using System.Linq;
 using System;
 using UnityEngine.UIElements;
 using UnityEngine;
-using static UnityEngine.PlayerLoop.PreUpdate;
 
 public class CombinedInventoryManager : MonoBehaviour
 {
@@ -89,8 +88,13 @@ public class CombinedInventoryManager : MonoBehaviour
             if (userSlot != null) return;
 
             var clone = item.Details.Create(1);
-            if (!userInvController.Model.TryAddAt(dst.Index, clone) 
-                || !m_shopController.makePurchase(item, dst.Index))
+            //if (!userInvController.Model.TryAddAt(dst.Index, clone) 
+            //    || !m_shopController.makePurchase(item, dst.Index))
+            //{
+            //    Debug.Log("Not enough money to buy item: " + item.Details.name);
+            //    return;
+            //}
+            if (!(m_shopController.makePurchase(item, dst.Index) && userInvController.Model.TryAddAt(dst.Index, clone)))
             {
                 Debug.Log("Not enough money to buy item: " + item.Details.name);
                 return;
