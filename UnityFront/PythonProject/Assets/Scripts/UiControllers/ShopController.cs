@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UIElements;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System;
+
 public class ShopController : MonoBehaviour
 {
     [SerializeField] GameController m_gameController;

@@ -1,8 +1,6 @@
-using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using UnityEngine;
 
 [Serializable]
 public class CharacterDTO

@@ -1,23 +1,22 @@
-using System;
 using System.Collections;
 using System.ComponentModel;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private ShopController m_shopController;
-    [SerializeField] private CombinedInventoryManager m_inventoryManager;
-    [SerializeField] private LoginController m_loginController;
-
-    private Slot[] m_slots;
-
-    private enum status_t {
+    private enum status_t
+    {
         Menu,
         PlayerTurn,
         EnemyTurn
     }
+
+    private Slot[] m_slots;
+
+    [SerializeField] private ShopController m_shopController;
+    [SerializeField] private CombinedInventoryManager m_inventoryManager;
+    [SerializeField] private LoginController m_loginController;
 
     [SerializeField] private UIDocument m_document;
     [SerializeField] private SocketManager m_socketManager;
@@ -72,8 +71,9 @@ public class GameController : MonoBehaviour
     private Label m_charName;
 
     private bool m_inQueue = false;
+    private bool m_clickedLogout = false;
 
-    private float m_maxTurnTimer = 10f; // was 30 seconds
+    private float m_maxTurnTimer = 30f;
     private float m_counter = 0f;
 
     private string m_token;
@@ -200,7 +200,11 @@ public class GameController : MonoBehaviour
             m_container.style.display = DisplayStyle.Flex;
         };
 
-        m_logout.clicked += logout;
+        m_logout.clicked += () =>
+        {
+            m_clickedLogout = true;
+            logout();
+        };
 
         m_container.style.display = DisplayStyle.None;
         m_endGameUI.style.display = DisplayStyle.None;
@@ -219,7 +223,15 @@ public class GameController : MonoBehaviour
         m_gameStatus = status_t.Menu;
         m_socketManager.Logout();
         m_loginController.Logout();
-}
+    }
+
+    public void HandleDisconnect()
+    {
+        m_player.SetActive(false);
+        m_enemy.SetActive(false);
+        logout();
+        if (!m_clickedLogout) m_loginController.ShowLoginError("Lost connection to server.");
+    }
 
     private void OpenInventory()
     {
@@ -344,6 +356,7 @@ public class GameController : MonoBehaviour
 
     public void Connect()
     {
+        m_clickedLogout = false;
         m_gameStatus = status_t.Menu;
         m_connectionContainer.style.display = DisplayStyle.Flex;
         m_connectError.text = "";
